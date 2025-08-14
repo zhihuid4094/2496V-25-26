@@ -292,25 +292,25 @@ TEST.move(127);
     if(con.get_digital(E_CONTROLLER_DIGITAL_Y)){
       hoodToggle = !hoodToggle;
       if(hoodToggle == true){
-        hood.set(false);
+        hood.set_value(false);
       }
       else{//store mode
-        hood.set(true);
+        hood.set_value(true);
       }
     }
     if(con.get_digital(E_CONTROLLER_DIGITAL_DOWN)){
       blockerToggle = !blockerToggle;
       if(blockerToggle == true){
-        blocker.set(false);
+        blocker.set_value(false);
       }
       else{//store mode
-        blocker.set(true);
+        blocker.set_value(true);
       }
     }
 
     if (con.get_digital(E_CONTROLLER_DIGITAL_R1)) {
-      hood.set(true);
-      blocker.set(true);
+      hood.set_value(true);
+      blocker.set_value(true);
 			FMintake.move(127);
       Mintake.move(-127);
       FTintake.move(127);
@@ -319,8 +319,8 @@ TEST.move(127);
       FMintake.tare_position();
 		} 
     else if (con.get_digital(E_CONTROLLER_DIGITAL_R2)) {
-	    hood.set(false);
-      blocker.set(false);
+	    hood.set_value(false);
+      blocker.set_value(false);
 			FMintake.move(-127);
       Mintake.move(127);
       FTintake.move(-127);

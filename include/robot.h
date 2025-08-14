@@ -30,11 +30,14 @@ extern pros::Motor TEST;
 extern pros::Motor TEST2;
 
 //lift
-extern pros::Motor LadyBrown;
+extern pros::Motor Mintake;
 
 //hooks
-extern pros::Motor HOOKS;
+extern pros::Motor FTintake;
+extern pros::Motor FMintake;
 
+extern pros::Motor HOOKS;
+extern pros::Motor LadyBrown;
 
 
 //sensors
@@ -47,9 +50,10 @@ extern pros::Imu imu;
 
 //pneumatics
 extern pros::ADIDigitalOut mogo;
-extern pros::ADIDigitalOut doinker;
 extern pros::ADIDigitalOut doinkerClamp;
-extern pros::ADIDigitalOut intake;
+extern pros::ADIDigitalOut doinker;
+extern pros::ADIDigitalOut hood;
+extern pros::ADIDigitalOut blocker;
 extern pros::ADIDigitalOut hang;
 extern pros::ADIDigitalOut colorSorter;
 //gps

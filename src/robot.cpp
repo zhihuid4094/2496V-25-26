@@ -52,7 +52,7 @@ pros::Motor TEST2 (TEST_PORT2, pros::E_MOTOR_GEARSET_06, false);
 pros::Motor Mintake (Mintake_PORT, pros::E_MOTOR_GEARSET_06, false);
 pros::Motor FTintake (FTintake_PORT, pros::E_MOTOR_GEARSET_06, false);
 pros::Motor FMintake (FMintake_PORT, pros::E_MOTOR_GEARSET_06, false);
-pros::Motor_Group intake({Mintake_PORT,FMintake_PORT,FTintake_PORT},pros::E_MOTOR_GEARSET_06,false);
+pros::Motor_Group intake({FMintake, Mintake, FTintake});
 
 
 //pneumatics
