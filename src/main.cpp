@@ -80,7 +80,7 @@ void disabled() {}
  
 
 int atn = 8;
-int RingColor = 2;
+int ballColor = 2;
 int color = 0;
 int pressed = 0;
 string autstr;
@@ -210,7 +210,7 @@ void opcontrol() {
 
 
   imu.tare_heading();
-  LadyBrown.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+  // LadyBrown.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
 
 
 
@@ -237,11 +237,11 @@ TEST.move(127);
     // ColorSort();
     //ColorSorter.set_value(true);
 //MACROO!!!!!!!!!!!!!!!!!!!!!
-    liftAngle = 36000-roto.get_angle();
+    // liftAngle = 36000-roto.get_angle();
     
-    if(liftAngle > 30000){
-      liftAngle -= 36000;
-    }
+    // if(liftAngle > 30000){
+    //   liftAngle -= 36000;
+    // }
     if(con.get_digital(E_CONTROLLER_DIGITAL_L1)){
       // if(liftAngle < 15500){
       // LadyBrown.move(-127);
@@ -251,14 +251,14 @@ TEST.move(127);
       //   macro = 1;
       // }
 
-        LadyBrown.move(127);
-        macroControl = false;
+        // LadyBrown.move(127);
+        // macroControl = false;
 
     } else if(con.get_digital(E_CONTROLLER_DIGITAL_L2)){
-      LadyBrown.move(-127);
-      macroControl = false;
+      // LadyBrown.move(-127);
+      // macroControl = false;
     } else if (macroControl == false){
-      LadyBrown.move(0);
+      // LadyBrown.move(0);
     }
 
     if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_B)){
@@ -281,47 +281,53 @@ TEST.move(127);
     }
 
     if (con.get_digital(E_CONTROLLER_DIGITAL_R1)) {
-			HOOKS.move(127);
-      HOOKS.tare_position();
+			FMintake.move(127);
+      FTintake.move(127);
+      FTintake.tare_position();
+      FMintake.tare_position();
       hookControl = false;
 		} 
     else if (con.get_digital(E_CONTROLLER_DIGITAL_R2)) {
-	    HOOKS.move(-127);
-      HOOKS.tare_position();
+	    FMintake.move(-127);
+      FTintake.move(-127);
+      FTintake.tare_position();
+      FMintake.tare_position();
       hookControl = false;
 		} 
     else if(hookControl == false) {
-			HOOKS.move(0);
-      HOOKS.tare_position();
+			FMintake.move(0);
+      FTintake.move(0);
+      FMintake.tare_position();
+      FTintake.tare_position();
 		}
 
-    if(macroControl){
+    // if(macroControl){
       
-      if(macro == 0){
-        setConstants2(0.7, 0, 0);
-        LadyBrown.move(-calcPIDlift(16000, liftAngle, 0, 0, 1.0));
-      } else if(macro == 1){
-        setConstants2(0.05, 0, 0);
-        LadyBrown.move(-calcPIDlift(16000, liftAngle, 0, 0, 1.0));
-      } else if(macro == 2){
-        setConstants2(0.03, 0, 500);
-        LadyBrown.move(-calcPIDlift(2700, liftAngle, 0, 0, 1.0));// clamp(-calcPIDlift(2000, liftAngle, 0, 0, 1.0), -80.0, 80.0)
-      } else if(macro == 3){
-        setConstants2(0.05, 0, 500);
-        LadyBrown.move(-calcPIDlift(5200, liftAngle, 0, 0, 1.0));
-      } else {
-        macro = 2;
-      }
-    }
+    //   if(macro == 0){
+    //     setConstants2(0.7, 0, 0);
+    //     LadyBrown.move(-calcPIDlift(16000, liftAngle, 0, 0, 1.0));
+    //   } else if(macro == 1){
+    //     setConstants2(0.05, 0, 0);
+    //     LadyBrown.move(-calcPIDlift(16000, liftAngle, 0, 0, 1.0));
+    //   } else if(macro == 2){
+    //     setConstants2(0.03, 0, 500);
+    //     LadyBrown.move(-calcPIDlift(2700, liftAngle, 0, 0, 1.0));// clamp(-calcPIDlift(2000, liftAngle, 0, 0, 1.0), -80.0, 80.0)
+    //   } else if(macro == 3){
+    //     setConstants2(0.05, 0, 500);
+    //     LadyBrown.move(-calcPIDlift(5200, liftAngle, 0, 0, 1.0));
+    //   } else {
+    //     macro = 2;
+    //   }
+    // }
 
 
-    if(hookControl){
-      setConstants(1, 0, 0);
-      HOOKS.move(calcPID2(120, HOOKS.get_position(), 0, 0, true));
-      if(abs(120 - HOOKS.get_position()) < 10){
-        hookControl = false;
-      }
-    } 
+    // if(hookControl){
+    //   setConstants(1, 0, 0);
+    //   intake.move(calcPID2(120, intake.get_position(), 0, 0, true));
+    //   if(abs(120 - intake.get_position()) < 10){
+    //     hookControl = false;
+    //   }
+    // } 
 
     
 
@@ -657,25 +663,20 @@ TEST.move(127);
         liftToggle = !liftToggle;
     }
 
-  intake.set_value(intakeToggle);
-      if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_A)){
-        doinkerClampToggle = !doinkerClampToggle;
-    }
-
-  doinkerClamp.set_value(doinkerClampToggle);
+  // doinkerClamp.set_value(doinkerClampToggle);
 
 
     if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_DOWN)){
         mogoToggle = !mogoToggle;
     }
 
-  mogo.set_value(mogoToggle);
+  // mogo.set_value(mogoToggle);
 
       if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_X)){
         doinkerToggle = !doinkerToggle;
     }
 
-  doinker.set_value(doinkerToggle);
+  // doinker.set_value(doinkerToggle);
   //piston2.set_value(wingToggle);
 
 
@@ -695,7 +696,7 @@ TEST.move(127);
       //con.print(1, 0, "error: %f           ",float(chasstempC));
       con.print(1, 0, "prox: %f           ",float( OpticalC.get_proximity()));
     } else if (time % 150 == 0){
-      con.print(2, 0, "C:%i H:%i LB:%i        ", int(chasstempC), int(HOOKS.get_temperature()), int(LadyBrown.get_temperature())); 
+      con.print(2, 0, "C:%i FMi:%i FTi:%i Mi:%i ", int(chasstempC), int(FMintake.get_temperature()), int(FTintake.get_temperature()),int(Mintake.get_temperature())); 
       // pros::lcd::print(1, "errorp:%f ", float(error));
     } 
 
