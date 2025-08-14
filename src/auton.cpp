@@ -26,29 +26,27 @@ void autonomous() {
   
   //INDEX
     //AUTON 0: SKILLS
-    //AUTON 1: Red right
-    //AUTON 2: red left
-    //AUTON 3:blue right
-    //AUTON 4: blue left
+    //AUTON 1: blue right
+    //AUTON 2: blue left
+    //AUTON 3:red right
+    //AUTON 4: red left
     //AUTON 5: elims
 
 //111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
 
 
   if (atn == 0) {
-    //skills
-
+ 
   } 
     
   else if (atn == 1) {
-    //red right auton
-    driveStraight2(200);
+
   }
 
   else if (atn == 2) { 
 
   }
-   else if (atn == 3) { 
+    else if (atn == 3) { 
       
   } 
   else if(atn == 4) {

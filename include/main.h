@@ -73,7 +73,7 @@ void opcontrol(void);
 #endif
 extern bool Global; 
 extern int atn;
-extern int ballColor;
+extern int RingColor;
 extern int color;
 extern float errorp;
 extern bool mogoValues;

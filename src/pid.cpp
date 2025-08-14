@@ -135,38 +135,38 @@ void stall(){
 
     // direc = HOOKS.get_voltage()/1000.0;
 
-    // if(stallProtection){
-    //     prevhookpos = hookpos;
-    //     hookpos = intake.get_position();
+    if(stallProtection){
+        prevhookpos = hookpos;
+        hookpos = HOOKS.get_position();
 
-    //     if((hookpos == prevhookpos)){
-    //         stallC += 10;
-    //     } else {
-    //         stallC = 0;
-    //     }
+        if((hookpos == prevhookpos)){
+            stallC += 10;
+        } else {
+            stallC = 0;
+        }
 
-    //     if(stallC>400){
-    //         stalled = true;
-    //     }
+        if(stallC>400){
+            stalled = true;
+        }
 
-    //     if (stalled){
-    //        intake.move(127);
-    //        // INTAKE.move(-direc2);
-    //         stallTime += 10;
-    //         if(stallTime >= 300){
-    //             stalled = false;
-    //             stallTime = 0;
-    //         }
-    //         view = 1;
-    //     } else {
-    //         intake.move(-127);
-    //         //INTAKE.move(direc2);
-    //         stallTime = 0;
-    //         view = 0;
-    //     }
+        if (stalled){
+           HOOKS.move(127);
+           // INTAKE.move(-direc2);
+            stallTime += 10;
+            if(stallTime >= 300){
+                stalled = false;
+                stallTime = 0;
+            }
+            view = 1;
+        } else {
+            HOOKS.move(-127);
+            //INTAKE.move(direc2);
+            stallTime = 0;
+            view = 0;
+        }
 
         
-    // }
+    }
 }
 
 
@@ -281,39 +281,39 @@ double calcPIDH(double target, double input, int integralKi, int maxIntegral, bo
 }
 
 
-// void LadyBrownMacro(){
-//     LBPos = 36000-roto.get_angle();
-//     if(LBPos > 30000){
-//         LBPos -= 36000;
-//     }
-//     if(hookControl2){
-//         setConstants2(1, 0, 0);
-//         intake.move(calcPIDH(175, intake.get_position(), 0, 0, true));
-//         if(abs(150 - intake.get_position()) < 10){
-//           //hookControl2 = false;
-//         }
-//     } else {
-//         intake.tare_position();
-//     }
-//     setConstants2(0.04, 0, 0);
-//     if(LBMacro == 1){
-//        // setConstants2(0.04, 0, 100);
-//         LadyBrown.move(-calcPIDlift(2800, LBPos, 0, 0, 1.0));
-//     } else if(LBMacro == 2){
-//         //setConstants2(0.05, 0, 500);
-//         LadyBrown.move(-calcPIDlift(4900, LBPos, 0, 0, 1.0)); //5200
-//     } else if(LBMacro == 3){
-//         //setConstants2(0.03, 0, 0);
-//         LadyBrown.move(-calcPIDlift(18000, LBPos, 0, 0, 1.0));
-//     } else if(LBMacro == 4){
-//         setConstants2(0.03, 0, 0);
-//         LadyBrown.move(-calcPIDlift(10000, LBPos, 0, 0, 1.0));
-//     } else if(LBMacro == 5){
-//         LadyBrown.move(-calcPIDlift(22000, LBPos, 0, 0, 1.0));
-//     } else if (LBMacro == 6){
-//         LadyBrown.move(-calcPIDlift(14000, LBPos, 0, 0, 1.0));
-//     }
-// }
+void LadyBrownMacro(){
+    LBPos = 36000-roto.get_angle();
+    if(LBPos > 30000){
+        LBPos -= 36000;
+    }
+    if(hookControl2){
+        setConstants2(1, 0, 0);
+        HOOKS.move(calcPIDH(175, HOOKS.get_position(), 0, 0, true));
+        if(abs(150 - HOOKS.get_position()) < 10){
+          //hookControl2 = false;
+        }
+    } else {
+        HOOKS.tare_position();
+    }
+    setConstants2(0.04, 0, 0);
+    if(LBMacro == 1){
+       // setConstants2(0.04, 0, 100);
+        LadyBrown.move(-calcPIDlift(2800, LBPos, 0, 0, 1.0));
+    } else if(LBMacro == 2){
+        //setConstants2(0.05, 0, 500);
+        LadyBrown.move(-calcPIDlift(4900, LBPos, 0, 0, 1.0)); //5200
+    } else if(LBMacro == 3){
+        //setConstants2(0.03, 0, 0);
+        LadyBrown.move(-calcPIDlift(18000, LBPos, 0, 0, 1.0));
+    } else if(LBMacro == 4){
+        setConstants2(0.03, 0, 0);
+        LadyBrown.move(-calcPIDlift(10000, LBPos, 0, 0, 1.0));
+    } else if(LBMacro == 5){
+        LadyBrown.move(-calcPIDlift(22000, LBPos, 0, 0, 1.0));
+    } else if (LBMacro == 6){
+        LadyBrown.move(-calcPIDlift(14000, LBPos, 0, 0, 1.0));
+    }
+}
 
 bool InitColor = false;
 //bool InitCorrect = false;
@@ -834,9 +834,9 @@ void driveClamp(int target, int clampDistance, int speed) {
         heading_error = calcPID2(trueTarget, position, HEADING_INTEGRAL_KI, HEADING_MAX_INTEGRAL);
 
 
-        // if(abs(error) < clampDistance){
-        //     mogo.set_value(true);
-        // }
+        if(abs(error) < clampDistance){
+            mogo.set_value(true);
+        }
 
         if(voltage > 127 * double(speed)/100.0){
             voltage = 127 * double(speed)/100.0;
@@ -897,9 +897,9 @@ void driveClampD(int target, int clampDistance, int intakeDistance, int speed) {
 
     while(true) {
 
-        // if(abs(error)< intakeDistance){
-        //     intake.move(-127);
-        // }
+        if(abs(error)< intakeDistance){
+            HOOKS.move(-127);
+        }
 
         if(abs(target - encoderAvg)<25){
             setConstants(2.5, 0, 0);
@@ -958,9 +958,9 @@ void driveClampD(int target, int clampDistance, int intakeDistance, int speed) {
             voltage = -127;
         }
 
-        // if(abs(error) < clampDistance){
-        //     doinkerClamp.set_value(true);
-        // }
+        if(abs(error) < clampDistance){
+            doinkerClamp.set_value(true);
+        }
 
         if(voltage > 127 * double(speed)/100.0){
             voltage = 127 * double(speed)/100.0;
@@ -1153,11 +1153,11 @@ void driveStraightR(int target, int speed) {
         setConstants(STRAIGHT_KP, STRAIGHT_KI, STRAIGHT_KD);
     }
 
-    // if(OpticalC.get_hue()<16 || OpticalC.get_hue()>350){
-    //     intake.move(0);
-    // } else {
-    //     intake.move(-127);
-    // }
+    if(OpticalC.get_hue()<16 || OpticalC.get_hue()>350){
+        HOOKS.move(0);
+    } else {
+        HOOKS.move(-127);
+    }
   
 
     encoderAvg = (LF.get_position() + RF.get_position()) / 2;
@@ -1646,9 +1646,9 @@ void driveTurnD(int target) { //target is inputted in autons
             setConstants(TURN_KP, TURN_KI, variKD); 
         }
 
-        // if(position < -50){
-        //     doinker.set_value(false);
-        // }
+        if(position < -50){
+            doinker.set_value(false);
+        }
 
 
      

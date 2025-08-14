@@ -29,10 +29,11 @@ extern pros::Motor LM;
 extern pros::Motor TEST;
 extern pros::Motor TEST2;
 
-//intake
-extern pros::Motor Mintake;
-extern pros::Motor FMintake;
-extern pros::Motor FTintake;
+//lift
+extern pros::Motor LadyBrown;
+
+//hooks
+extern pros::Motor HOOKS;
 
 
 
@@ -45,9 +46,11 @@ extern pros::Motor FTintake;
 extern pros::Imu imu;
 
 //pneumatics
-extern pros::ADIDigitalOut hood;
-extern pros::ADIDigitalOut blocker;
-
+extern pros::ADIDigitalOut mogo;
+extern pros::ADIDigitalOut doinker;
+extern pros::ADIDigitalOut doinkerClamp;
+extern pros::ADIDigitalOut intake;
+extern pros::ADIDigitalOut hang;
 extern pros::ADIDigitalOut colorSorter;
 //gps
 // extern pros::Gps gps1;
