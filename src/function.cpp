@@ -90,7 +90,7 @@ int sgn(double number) {
     return 1;
 }
 
-//
+//setting motor power
 int setMotorPct(int Value) {
   if (Value < 0) {
     Value = -PutPct[-Value];
@@ -98,4 +98,37 @@ int setMotorPct(int Value) {
     Value = PutPct[Value];
   }
   return 0;
+}
+
+//setting the motor voltage
+int setMotorVol(int Value) {
+  if (Value < 0) {
+    Value = -PutVol[-Value];
+  } else if (Value > 0) {
+    Value = PutVol[Value];
+  }
+  return 0;
+}
+
+void AllMotorStop(int mode = 0) {
+  if (mode == 1) {
+    .stop(brake);
+    LeftMotor2.stop(brake);
+    LeftMotor3.stop(brake);
+    RightMotor1.stop(brake);
+    RightMotor2.stop(brake);
+    RightMotor3.stop(brake);
+    intake1.stop(brake);
+    updown1.stop(brake);
+  }
+  else {
+    LeftMotor1.stop(coast);
+    LeftMotor2.stop(coast);
+    LeftMotor3.stop(coast);
+    RightMotor1.stop(coast);
+    RightMotor2.stop(coast);
+    RightMotor3.stop(coast);
+    intake1.stop(coast);
+    updown1.stop(coast);
+  }
 }
