@@ -1,12 +1,8 @@
-#include "vex.h"
 #include "robot.h"
+#include "pros/vision.hpp"
 
-using namespace vex;
 using namespace pros;
 using namespace std;
-
-using signature = vision::signature;
-using code = vision::code;
 
 void set_location(float X_value,float Y_value){
 X_position=X_value;
@@ -35,12 +31,12 @@ float compute(float error){
 
 //getting the x position
 float get_X_position(){
-  return(X_position);
+  return X_position;
 }
 
 // getting the y position
 float get_Y_position(){
-  return(Y_position);
+  return Y_position;
 }
 
 //making sure angle is within -180 and 180
@@ -108,27 +104,4 @@ int setMotorVol(int Value) {
     Value = PutVol[Value];
   }
   return 0;
-}
-
-void AllMotorStop(int mode = 0) {
-  if (mode == 1) {
-    .stop(brake);
-    LeftMotor2.stop(brake);
-    LeftMotor3.stop(brake);
-    RightMotor1.stop(brake);
-    RightMotor2.stop(brake);
-    RightMotor3.stop(brake);
-    intake1.stop(brake);
-    updown1.stop(brake);
-  }
-  else {
-    LeftMotor1.stop(coast);
-    LeftMotor2.stop(coast);
-    LeftMotor3.stop(coast);
-    RightMotor1.stop(coast);
-    RightMotor2.stop(coast);
-    RightMotor3.stop(coast);
-    intake1.stop(coast);
-    updown1.stop(coast);
-  }
 }

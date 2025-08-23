@@ -56,6 +56,7 @@ extern pros::ADIDigitalOut hood;
 extern pros::ADIDigitalOut blocker;
 extern pros::ADIDigitalOut hang;
 extern pros::ADIDigitalOut colorSorter;
+extern pros::ADIDigitalOut scraper;
 //gps
 // extern pros::Gps gps1;
 // extern pros::c::gps_status_s_t gpsData;
@@ -67,5 +68,42 @@ extern pros::Optical OpticalC;
 
 //vision
 // extern pros::Vision vision;
+
+extern const unsigned int PutPct[];
+extern const unsigned int PutVol[];
+
+class PID
+{
+public:
+  float error = 0;
+  float kp = 0;
+  float ki = 0;
+  float kd = 0;
+  float starti = 0;
+  float settle_error = 0;
+  float settle_time = 0;
+  float timeout = 0;
+  float accumulated_error = 0;
+  float previous_error = 0;
+  float output = 0;
+  float time_spent_settled = 0;
+  float time_spent_running = 0;
+  float update_period = 10;
+
+  PID(float error, float kp, float kd, float starti);
+
+  PID(float error, float kp, float ki, float kd, float starti);
+
+  PID(float error, float kp, float ki, float kd, float starti, float settle_error, float settle_time, float timeout);
+
+  PID(float error, float kp, float ki, float kd, float starti, float settle_error, float settle_time, float timeout, float update_period);
+
+  float compute(float error);
+
+  bool is_settled();
+};
+
+extern double  X_position;
+extern double  Y_position;
 
 #endif

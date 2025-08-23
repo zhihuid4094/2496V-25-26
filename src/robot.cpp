@@ -12,8 +12,8 @@
 
 // 2496v
 #define LF_PORT 6
-#define LM_PORT 8
-#define LB_PORT 9
+#define LM_PORT 9
+#define LB_PORT 8
 #define RF_PORT 3
 #define RM_PORT 4
 #define RB_PORT 5
@@ -66,6 +66,8 @@ pros::Motor_Group intake({FMintake, Mintake, FTintake});
     pros::ADIDigitalIn selec ('F');
 
     pros::ADIDigitalOut colorSorter('C', false);
+
+    pros::ADIDigitalOut scraper ('D', false);
 
 
 

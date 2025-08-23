@@ -86,6 +86,8 @@ int pressed = 0;
 string autstr;
 float errorp;
 bool mogoToggle = false;
+bool scraperToggle = false;
+bool blockerToggle = false;
 
 
  
@@ -277,19 +279,6 @@ TEST.move(127);
     }
 
     if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_B)){
-      macro ++;
-      macroControl = true;
-      //hookControl = true;
-      if(macro == 2 || macro == 3){
-        hookControl = true;
-      }
-    }
-
-    // if(con.get_digital(E_CONTROLLER_DIGITAL_Y)){
-    //   macroControl = true;
-    //   macro = 0;
-    // }
-    if(con.get_digital(E_CONTROLLER_DIGITAL_Y)){
       hoodToggle = !hoodToggle;
       if(hoodToggle == true){
         hood.set_value(false);
@@ -297,20 +286,46 @@ TEST.move(127);
       else{//store mode
         hood.set_value(true);
       }
+      // macro ++;
+      // macroControl = true;
+      // //hookControl = true;
+      // if(macro == 2 || macro == 3){
+      //   hookControl = true;
+      // }
     }
-    if(con.get_digital(E_CONTROLLER_DIGITAL_DOWN)){
+
+    if(con.get_digital(E_CONTROLLER_DIGITAL_Y)){
+      scraperToggle  = !scraperToggle;
+      if(scraperToggle == true){
+        scraper.set_value(false);
+      }
+      else{
+        scraper.set_value(true);
+      }
+    }
+    // if(con.get_digital(E_CONTROLLER_DIGITAL_Y)){
+      // hoodToggle = !hoodToggle;
+      // if(hoodToggle == true){
+      //   hood.set_value(false);
+      // }
+      // else{//store mode
+      //   hood.set_value(true);
+      // }
+    
+    
+    if(con.get_digital(E_CONTROLLER_DIGITAL_RIGHT)){
       blockerToggle = !blockerToggle;
       if(blockerToggle == true){
         blocker.set_value(false);
       }
-      else{//store mode
+      else{
         blocker.set_value(true);
       }
     }
 
-    if (con.get_digital(E_CONTROLLER_DIGITAL_R1)) {
-      hood.set_value(true);
-      blocker.set_value(true);
+    if (con.get_digital(E_CONTROLLER_DIGITAL_R1)) {//score mode
+      hood.set_value(false);
+      blocker.set_value(false);
 			FMintake.move(127);
       Mintake.move(-127);
       FTintake.move(127);
@@ -318,16 +333,49 @@ TEST.move(127);
       Mintake.tare_position();
       FMintake.tare_position();
 		} 
-    else if (con.get_digital(E_CONTROLLER_DIGITAL_R2)) {
-	    hood.set_value(false);
-      blocker.set_value(false);
-			FMintake.move(-127);
-      Mintake.move(127);
-      FTintake.move(-127);
+    else if (con.get_digital(E_CONTROLLER_DIGITAL_L1)) {//score mode
+	    hood.set_value(true);
+      blocker.set_value(true);
+			FMintake.move(127);
+      Mintake.move(-127);
+      FTintake.move(127);
       FMintake.tare_position();
       FTintake.tare_position();
       Mintake.tare_position();
 		} 
+    else if (con.get_digital(E_CONTROLLER_DIGITAL_L2)) {//score mode
+      hood.set_value(false);
+      blocker.set_value(false);
+			FMintake.move(127);
+      Mintake.move(-127);
+      FTintake.move(-127);
+      FTintake.tare_position();
+      Mintake.tare_position();
+      FMintake.tare_position();
+		} 
+    else if (con.get_digital(E_CONTROLLER_DIGITAL_UP)) {//score mode
+			FMintake.move(127);
+      Mintake.move(-127);
+      FTintake.move(127);
+      FTintake.tare_position();
+      Mintake.tare_position();
+      FMintake.tare_position();
+		} 
+    else if (con.get_digital(E_CONTROLLER_DIGITAL_DOWN)) {//score mode
+			FMintake.move(127);
+      Mintake.move(-127);
+      FTintake.move(127);
+      FMintake.tare_position();
+      FTintake.tare_position();
+      Mintake.tare_position();
+		} 
+    else {
+      FMintake.move(0);
+      Mintake.move(0);
+      FTintake.move(0);
+    }
+    
+    
 
     // if(hookControl){
     //   setConstants(1, 0, 0);
@@ -473,17 +521,17 @@ TEST.move(127);
       atn = 0;
     }
 
-  if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_R1)){
-    NEWR1 = true;
-  } else {
-    NEWR1 = false;
-  }
+  // if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_R1)){
+  //   NEWR1 = true;
+  // } else {
+  //   NEWR1 = false;
+  // }
 
-  if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_R2)){
-    NEWR2 = true;
-  } else {
-    NEWR2 = false;
-  }
+  // if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_R2)){
+  //   NEWR2 = true;
+  // } else {
+  //   NEWR2 = false;
+  // }
 
   // if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_L2)){
   //   NEWL2 = true;
@@ -702,5 +750,6 @@ TEST.move(127);
 	  	time += 1;
 		  delay(1);
 	  }
-    
   }
+  
+    
