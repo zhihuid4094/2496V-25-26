@@ -49,7 +49,7 @@ pros::Motor TEST (TEST_PORT, pros::E_MOTOR_GEARSET_06, true);
 pros::Motor TEST2 (TEST_PORT2, pros::E_MOTOR_GEARSET_06, false);
 
 //intake
-pros::Motor Mintake (Mintake_PORT, pros::E_MOTOR_GEARSET_06, false);
+pros::Motor Mintake (Mintake_PORT, pros::E_MOTOR_GEARSET_06, true);
 pros::Motor FTintake (FTintake_PORT, pros::E_MOTOR_GEARSET_06, false);
 pros::Motor FMintake (FMintake_PORT, pros::E_MOTOR_GEARSET_06, false);
 pros::Motor_Group intake({FMintake, Mintake, FTintake});

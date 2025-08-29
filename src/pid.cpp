@@ -18,15 +18,21 @@ double trueTarget = 0;
 
 bool mogoValues = false;
 bool longValues = false;
-bool stallProtection = false;
-bool stalled = false;
-int stallTime = 0;
+bool topstallProtection = false;
+bool midstallProtection = false;
+bool topstalled = false;
+bool midstalled = false;
+int topstallTime = 0;
+int midstallTime = 0;
 int direc;
 int direc2;
-int hookpos;
-int prevhookpos;
+int Mintakepos;
+int prevMintakepos;
+int FTintakepos;
+int prevFTintakepos;
 float view;
-int stallC = 0;
+int topstallC = 0;
+int midstallC = 0;
 
 double vKpl;
 double vKil;
@@ -136,32 +142,58 @@ void stall(){
     // direc = HOOKS.get_voltage()/1000.0;
 
     if(stallProtection){
-        prevhookpos = hookpos;
-        hookpos = HOOKS.get_position();
+        prevMintakepos = Mintakepos;
+        prevFTintakepos = FTintakepos;
+        Mintakepos = Mintake.get_position();
+        FTintakepos = FTintake.get_position();
 
-        if((hookpos == prevhookpos)){
-            stallC += 10;
+        if((FTintakepos == prevFTintakepos)){
+            topstallC += 10;
         } else {
-            stallC = 0;
+            topstallC = 0;
+        }
+        if((Mintakepos == prevMintakepos)){
+            midstallC += 10;
+        } else {
+            midstallC = 0;
         }
 
-        if(stallC>400){
-            stalled = true;
+        if(topstallC>400){
+            topstalled = true;
+        }
+        if(midstallC>400){
+            midstalled = true;
         }
 
-        if (stalled){
-           HOOKS.move(127);
+        if (topstalled){
+           FTintake.move(127);
            // INTAKE.move(-direc2);
-            stallTime += 10;
-            if(stallTime >= 300){
-                stalled = false;
-                stallTime = 0;
+            topstallTime += 10;
+            if(topstallTime >= 300){
+                topstalled = false;
+                topstallTime = 0;
             }
             view = 1;
         } else {
-            HOOKS.move(-127);
+            FTintake.move(-127);
             //INTAKE.move(direc2);
-            stallTime = 0;
+            topstallTime = 0;
+            view = 0;
+        }
+
+        if (midstalled){
+           Mintake.move(127);
+           // INTAKE.move(-direc2);
+            midstallTime += 10;
+            if(midstallTime >= 300){
+                midstalled = false;
+                midstallTime = 0;
+            }
+            view = 1;
+        } else {
+            Mintake.move(-127);
+            //INTAKE.move(direc2);
+            midstallTime = 0;
             view = 0;
         }
 
