@@ -5,13 +5,26 @@
 #include "auton.h"
 #include "odometry.h"
 
-PID::PID(float error, float kp, float kd, float starti):
-error(error),
-kp(kp),
-ki(ki),
-kd(kd),
-starti(starti)
+PID::PID(float error, float kp, float ki, float kd, float starti) :
+  error(error),
+  kp(kp),
+  ki(ki),
+  kd(kd),
+  starti(starti)
 {};
+
+PID::PID(float error, float kp, float ki, float kd, float starti, 
+float settle_error, float settle_time, float timeout) :
+  error(error),
+  kp(kp),
+  ki(ki),
+  kd(kd),
+  starti(starti),
+  settle_error(settle_error),
+  settle_time(settle_time),
+  timeout(timeout)
+{};
+
 
 PID::PID(float error, float kp, float ki, float kd, float starti, 
 float settle_error, float settle_time, float timeout, float update_period) :
