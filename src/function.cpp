@@ -468,9 +468,9 @@ double chushizhi = imu.get_rotation();
       break;
     }
   }
-pros::lcd::initialize();                 // initialize the LCD (do once in main)
-pros::lcd::set_background_color(0, 0, 255); // set background color to blue (RGB)
-pros::screen::fill_rect(0, 0, 400, 400);    // draw filled rectangle
+  pros::lcd::initialize();                 // initialize the LCD (do once in main)
+  pros::lcd::set_background_color(0, 0, 255); // set background color to blue (RGB)
+  pros::screen::fill_rect(0, 0, 400, 400);    // draw filled rectangle
 
          // draw filled rectangle
   LF.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
@@ -492,7 +492,9 @@ pros::screen::fill_rect(0, 0, 400, 400);    // draw filled rectangle
 //直走转角度
 //straigh then turn
 //application: RunpidStraightNto(how fast(0-100), how far(-1500~1500),)
-void RunpidStraightNTo(double speed_limit, int aim,double err_1,double speed_limit2, int dec_point, int change_steps,int start_point,int outtime, double newgyro, int p_point)
+void RunpidStraightNTo(double speed_limit, int aim, double err_1,
+                       double speed_limit2, int dec_point, int change_steps,
+                       int start_point, int outtime, double newgyro, int p_point) 
 {
  // Inertial1.resetRotation();
   double Kp = 0.22;  // 0.39
@@ -542,7 +544,7 @@ void RunpidStraightNTo(double speed_limit, int aim,double err_1,double speed_lim
                        case 36:Kp = 0.17;Ki = 0;Kd =0.23;break; //RunpidStraightNTo(60,1000,20,6,60,0,0,1800,0,36);
                         case 37:Kp = 0.130;Ki = 0;Kd =0.28;break; //RunpidStraightNTo(60,800,10,10,120,0,0,1800,0,37);
                         case 38:Kp = 0.132;Ki = 0;Kd =0.01;break; //RunpidStraightNTo(80,1800,10,65,1000,0,0,1000,0,38);
-             
+                          case 39:Kp = 0.4;Ki = 0.2;Kd =0.3;break;//RunpidStraightNTo(20,200,6,5,20,0,0,1800,0,4);
     default:Kp = 0.1;Ki = 0;Kd =0;
  }
   double value_now = 0;
@@ -642,6 +644,9 @@ void RunpidStraightNTo(double speed_limit, int aim,double err_1,double speed_lim
         if (fabs(err_now) < err_1|| T4.elapsed() >= outtime){
       // T1.clear();
     BaseMotorStop(0);
+
+  con.print(1, 0, "Err: %.2f OutL: %.2f", err_now, outputL);
+  con.print(2, 0, "OutR: %.2f Gyro: %.2f", outputR, returnangle);
       break;
         }
     

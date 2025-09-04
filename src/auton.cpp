@@ -37,11 +37,11 @@ void autonomous() {
 
 
   if (atn == 0) {
- 
+    RunpidStraightNTo(1000,2000,10,50,1300,0,0,5000,0,48);
   } 
     
   else if (atn == 1) {
-      TurnVolpidNTo(100,-60,1,500,26);
+      
   }
 
   else if (atn == 2) { 

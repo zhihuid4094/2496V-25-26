@@ -79,7 +79,7 @@ void disabled() {}
 
  
 
-int atn = 8;
+int atn = 0;
 int ballColor = 2;
 int color = 0;
 int pressed = 0;
@@ -295,14 +295,14 @@ TEST.move(127);
     }
 
     if(con.get_digital(E_CONTROLLER_DIGITAL_Y)){
-      scraperToggle  = !scraperToggle;
-      if(scraperToggle == true){
-        scraper.set_value(false);
+      // scraperToggle  = !scraperToggle;
+      // if(scraperToggle == true){
+      //   scraper.set_value(false);
+      // }
+      // else{
+      //   scraper.set_value(true);
       }
-      else{
-        scraper.set_value(true);
-      }
-    }
+    
     // if(con.get_digital(E_CONTROLLER_DIGITAL_Y)){
       // hoodToggle = !hoodToggle;
       // if(hoodToggle == true){
@@ -627,10 +627,8 @@ TEST.move(127);
 
 //hello
     //pid tester
-    if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_UP)) {
-      driveTurn2(-135);
-      driveArcRF(35, 3300, 2000);
-
+    if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_Y)) {
+      RunpidStraightNTo(100,1500,100,50,1300,1,1100,1500,175,37);
     }
       //driveStraightR(2000);
       // driveStraight2(1000);
@@ -740,16 +738,15 @@ TEST.move(127);
       con.print(0, 0, "AUTON: %s           ", autstr);
       //con.print(0, 0, "imu: %f         ", imu.get_heading());
     } else if (time % 100 == 0 && time % 150 != 0){
-      //con.print(1, 0, "error: %f           ",float(chasstempC));
-      con.print(1, 0, "prox: %f           ",float( OpticalC.get_proximity()));
-    } else if (time % 150 == 0){
-      con.print(2, 0, "C:%i int:%i ", int(chasstempC), int(intaketempc)); 
-      // pros::lcd::print(1, "errorp:%f ", float(error));
+
+    } 
+    else if (time % 150 == 0){
+      // con.print(2, 0, "C:%i int:%i ", int(chasstempC), int(intaketempc)); 
     } 
 
 	  	time += 1;
 		  delay(1);
 	  }
-  }
+}
   
     
