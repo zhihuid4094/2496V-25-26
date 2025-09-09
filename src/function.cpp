@@ -487,6 +487,8 @@ double chushizhi = imu.get_rotation();
   RB.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
   LB.move_velocity(0);
   RB.move_velocity(0);
+
+  con.print(1, 0, "Err: %.2f ", err_now);
 }
 
 //直走转角度
@@ -544,7 +546,7 @@ void RunpidStraightNTo(double speed_limit, int aim, double err_1,
                        case 36:Kp = 0.17;Ki = 0;Kd =0.23;break; //RunpidStraightNTo(60,1000,20,6,60,0,0,1800,0,36);
                         case 37:Kp = 0.130;Ki = 0;Kd =0.28;break; //RunpidStraightNTo(60,800,10,10,120,0,0,1800,0,37);
                         case 38:Kp = 0.132;Ki = 0;Kd =0.01;break; //RunpidStraightNTo(80,1800,10,65,1000,0,0,1000,0,38);
-                          case 39:Kp = 0.4;Ki = 0.2;Kd =0.3;break;//RunpidStraightNTo(20,200,6,5,20,0,0,1800,0,4);
+                          case 39:Kp = 0.3;Ki = 0.2;Kd =0.005;break;//RunpidStraightNTo(20,200,6,5,20,0,0,1800,0,4);
     default:Kp = 0.1;Ki = 0;Kd =0;
  }
   double value_now = 0;
@@ -632,12 +634,12 @@ void RunpidStraightNTo(double speed_limit, int aim, double err_1,
     // outputL = outputR - Kt * ET - Ktv * ETV - K_gyro * (angle_err);
     if (outputL == 0)
       outputR = 0;
-    LF.move_velocity(outputL);   // Left Front
-    RF.move_velocity(outputR);   // Right Front
-    LM.move_velocity(outputL);   // Left Middle
-    RM.move_velocity(outputR);   // Right Middle
-    LB.move_velocity(outputL);   // Left Back
-    RB.move_velocity(outputR);   // Right Back
+    LF.move(outputL);   // Left Front
+    RF.move(outputR);   // Right Front
+    LM.move(outputL);   // Left Middle
+    RM.move(outputR);   // Right Middle
+    LB.move(outputL);   // Left Back
+    RB.move(outputR);   // Right Back
       // LeftMotor4.spin(vex::directionType::fwd, outputL, vex::velocityUnits::pct);
     // RightMotor4.spin(vex::directionType::fwd, outputR, vex::velocityUnits::pct);
     pros::delay(sampletime);

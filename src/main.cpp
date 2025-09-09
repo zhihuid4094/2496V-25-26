@@ -246,37 +246,38 @@ TEST.move(127);
     // if(liftAngle > 30000){
     //   liftAngle -= 36000;
     // }
-    if(con.get_digital(E_CONTROLLER_DIGITAL_L1)){
-      FMintake.move(127);
-      Mintake.move(-127);
-      FTintake.move(127);//i might've grouped it wrong ;-;
-      FMintake.tare_position();
-      FTintake.tare_position();
-      Mintake.tare_position();
+    // if(con.get_digital(E_CONTROLLER_DIGITAL_L1)){
+    //   FMintake.move(127);
+    //   Mintake.move(-127);
+    //   FTintake.move(127);//i might've grouped it wrong ;-;
+    //   FMintake.tare_position();
+    //   FTintake.tare_position();
+    //   Mintake.tare_position();
 
 
+    //   // if(liftAngle < 15500){
+    //   // LadyBrown.move(-127);
+    //   // macroControl = false;
+    //   // } else {
+    //   //   macroControl = true;
+    //   //   macro = 1;
+    //   // }
 
-      // if(liftAngle < 15500){
-      // LadyBrown.move(-127);
-      // macroControl = false;
-      // } else {
-      //   macroControl = true;
-      //   macro = 1;
-      // }
+    //     // LadyBrown.move(127);
+    //     // macroControl = false;
 
-        // LadyBrown.move(127);
-        // macroControl = false;
-
-    } else if(con.get_digital(E_CONTROLLER_DIGITAL_L2)){
-      FMintake.move(-127);
-      Mintake.move(127);
-      FTintake.move(-127);
-      FMintake.tare_position();
-      FTintake.tare_position();
-      Mintake.tare_position();
-      // LadyBrown.move(-127);
-      // macroControl = false;
-    }
+    // } else if(con.get_digital(E_CONTROLLER_DIGITAL_L2)){
+    //   scraper.set_value(true);
+    //   blocker.set_value(false);
+    //   FMintake.move(-127);
+    //   Mintake.move(127);
+    //   FTintake.move(-127);
+    //   FMintake.tare_position();
+    //   FTintake.tare_position();
+    //   Mintake.tare_position();
+    //   // LadyBrown.move(-127);
+    //   // macroControl = false;
+    // }
 
     if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_B)){
       hoodToggle = !hoodToggle;
@@ -286,23 +287,24 @@ TEST.move(127);
       else{//store mode
         hood.set_value(true);
       }
+    }
       // macro ++;
       // macroControl = true;
       // //hookControl = true;
       // if(macro == 2 || macro == 3){
       //   hookControl = true;
       // }
-    }
-
-    if(con.get_digital(E_CONTROLLER_DIGITAL_Y)){
-      // scraperToggle  = !scraperToggle;
-      // if(scraperToggle == true){
-      //   scraper.set_value(false);
-      // }
-      // else{
-      //   scraper.set_value(true);
-      }
     
+
+    if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_Y)){
+      scraperToggle  = !scraperToggle;
+      if(scraperToggle == true){
+        scraper.set_value(false);
+      }
+      else{
+        scraper.set_value(true);
+      }
+    }
     // if(con.get_digital(E_CONTROLLER_DIGITAL_Y)){
       // hoodToggle = !hoodToggle;
       // if(hoodToggle == true){
@@ -311,9 +313,9 @@ TEST.move(127);
       // else{//store mode
       //   hood.set_value(true);
       // }
+    //derrae
     
-    
-    if(con.get_digital(E_CONTROLLER_DIGITAL_RIGHT)){
+    if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_RIGHT)){
       blockerToggle = !blockerToggle;
       if(blockerToggle == true){
         blocker.set_value(false);
@@ -322,10 +324,15 @@ TEST.move(127);
         blocker.set_value(true);
       }
     }
+    if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_X)){
+      //TurnVolpidNTo(100, 120, 1, 2000,34);//34 for 120
+      RunpidStraightNTo(600,1000,20,100,400,0,0,4000,0,1);
+    }
 
-    if (con.get_digital(E_CONTROLLER_DIGITAL_R1)) {//score mode
-      hood.set_value(false);
+    if (con.get_digital(E_CONTROLLER_DIGITAL_R1)) {//store mode
       blocker.set_value(false);
+      hood.set_value(false);
+      scraper.set_value(false);
 			FMintake.move(127);
       Mintake.move(-127);
       FTintake.move(127);
@@ -333,9 +340,20 @@ TEST.move(127);
       Mintake.tare_position();
       FMintake.tare_position();
 		} 
+    else if(con.get_digital(E_CONTROLLER_DIGITAL_R2)){
+      hood.set_value(true);
+      scraper.set_value(false);
+      FMintake.move(-127);
+      Mintake.move(-127);
+      FTintake.move(-127);//i might've grouped it wrong ;-;
+      FMintake.tare_position();
+      FTintake.tare_position();
+      Mintake.tare_position();
+    }
     else if (con.get_digital(E_CONTROLLER_DIGITAL_L1)) {//score mode
-	    hood.set_value(true);
+	    hood.set_value(true); //hood is blocker blocker is hood
       blocker.set_value(true);
+      scraper.set_value(false);
 			FMintake.move(127);
       Mintake.move(-127);
       FTintake.move(127);
@@ -344,15 +362,16 @@ TEST.move(127);
       Mintake.tare_position();
 		} 
     else if (con.get_digital(E_CONTROLLER_DIGITAL_L2)) {//score mode
-      hood.set_value(false);
-      blocker.set_value(false);
+      hood.set_value(true);
+      scraper.set_value(true);
 			FMintake.move(127);
       Mintake.move(-127);
       FTintake.move(-127);
       FTintake.tare_position();
       Mintake.tare_position();
       FMintake.tare_position();
-		} 
+		
+    }
     else if (con.get_digital(E_CONTROLLER_DIGITAL_UP)) {//score mode
 			FMintake.move(127);
       Mintake.move(-127);
@@ -627,9 +646,9 @@ TEST.move(127);
 
 //hello
     //pid tester
-    if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_Y)) {
-      RunpidStraightNTo(100,1500,100,50,1300,1,1100,1500,175,37);
-    }
+    // if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_Y)) {
+    //   RunpidStraightNTo(100,1500,100,50,1300,1,1100,1500,175,37);
+    // }
       //driveStraightR(2000);
       // driveStraight2(1000);
       // driveTurn2(180);
@@ -736,7 +755,7 @@ TEST.move(127);
     double intaketempc = ((FMintake.get_temperature() + Mintake.get_temperature() + FTintake.get_temperature())/3);
     if (time % 50 == 0 && time % 100 != 0 && time % 150 != 0){
       con.print(0, 0, "AUTON: %s           ", autstr);
-      //con.print(0, 0, "imu: %f         ", imu.get_heading());
+      con.print(0, 0, "imu: %f         ", imu.get_heading());
     } else if (time % 100 == 0 && time % 150 != 0){
 
     } 
@@ -747,6 +766,6 @@ TEST.move(127);
 	  	time += 1;
 		  delay(1);
 	  }
-}
+  }
   
     
