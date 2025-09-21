@@ -546,8 +546,9 @@ void RunpidStraightNTo(double speed_limit, int aim, double err_1,
                        case 36:Kp = 0.17;Ki = 0;Kd =0.23;break; //RunpidStraightNTo(60,1000,20,6,60,0,0,1800,0,36);
                         case 37:Kp = 0.130;Ki = 0;Kd =0.28;break; //RunpidStraightNTo(60,800,10,10,120,0,0,1800,0,37);
                         case 38:Kp = 0.132;Ki = 0;Kd =0.01;break; //RunpidStraightNTo(80,1800,10,65,1000,0,0,1000,0,38);
-                          case 39:Kp = 0.3;Ki = 0.2;Kd =0.005;break;//RunpidStraightNTo(20,200,6,5,20,0,0,1800,0,4);
+                          case 39:Kp = 0.31;Ki = 0.0002;Kd =0.35;break;//RunpidStraightNTo(600,1000,20,100,400,0,0,4000,0,39);
     default:Kp = 0.1;Ki = 0;Kd =0;
+    //case 39 0.345, 0.01, 0.05
  }
   double value_now = 0;
   double EI = 0, ED = 0;
@@ -1553,4 +1554,30 @@ switch (p_point)
     default:drive_kp = 0.15;drive_ki = 0;drive_kd =0.12;heading_kp = 0.01;heading_ki = 0.01;heading_kd = 0.01;
 
 }
+
+// void kalmanTask(void* param) {
+//     KalmanFilter2D kf(0.01); // 10ms loop
+//     while (true) {
+//         // 1. Predict
+//         kf.predict();
+
+//         // 2. Read odometry
+//         double x_pos = (readLeft() + readRight()) / 2.0;
+//         double x_vel = (readLeft() - readRight()) / 2.0;
+//         double y_pos = readBack();
+//         double y_vel = 0; // optional
+
+//         Vector4d measurement;
+//         measurement << x_pos, x_vel, y_pos, y_vel;
+
+//         // 3. Update Kalman filter (only for state tracking)
+//         kf.update(measurement);
+
+//         // 4. Optional: print or log filtered position
+//         Vector2d filtered_pos = kf.getPosition();
+//         pros::lcd::print(0, "Filtered XY: %.2f, %.2f", filtered_pos(0), filtered_pos(1));
+
+//         pros::delay(10); // 10ms loop
+//     }
+// }
  }

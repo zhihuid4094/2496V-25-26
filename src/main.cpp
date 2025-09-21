@@ -51,8 +51,11 @@ void initialize() {
   OpticalC.set_led_pwm(100);
   pros::lcd::initialize();
   pros::lcd::set_text(1, "Hello PROS User!");
+  //imu.tare_position();
   ODOMY.reset_position();
   ODOMX.reset_position();
+  //pros::Task kalman(kalmanTask, nullptr, "Kalman Filter Task");
+
 
   // pros::lcd::register_btn1_cb(on_center_button);
   // optical.set_led_pwm(100);
@@ -279,7 +282,7 @@ TEST.move(127);
     //   // macroControl = false;
     // }
 
-    if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_B)){
+    if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_Y)){
       hoodToggle = !hoodToggle;
       if(hoodToggle == true){
         hood.set_value(false);
@@ -296,7 +299,7 @@ TEST.move(127);
       // }
     
 
-    if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_Y)){
+    if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_B)){
       scraperToggle  = !scraperToggle;
       if(scraperToggle == true){
         scraper.set_value(false);
@@ -326,28 +329,27 @@ TEST.move(127);
     }
     if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_X)){
       //TurnVolpidNTo(100, 120, 1, 2000,34);//34 for 120
-      RunpidStraightNTo(600,1000,20,100,400,0,0,4000,0,1);
+      RunpidStraightNTo(600,1000,20,100,400,0,0,4000,0,39);
     }
 
     if (con.get_digital(E_CONTROLLER_DIGITAL_R1)) {//store mode
-      blocker.set_value(false);
-      hood.set_value(false);
-      scraper.set_value(false);
+      // blocker.set_value(false);
+      // hood.set_value(false);
 			FMintake.move(127);
-      Mintake.move(-127);
-      FTintake.move(127);
-      FTintake.tare_position();
-      Mintake.tare_position();
+      // Mintake.move(-127);
+      // FTintake.move(127);
+      // FTintake.tare_position();
+      // Mintake.tare_position();
       FMintake.tare_position();
 		} 
     else if(con.get_digital(E_CONTROLLER_DIGITAL_R2)){
-      hood.set_value(true);
-      scraper.set_value(false);
-      FMintake.move(-127);
+      // hood.set_value(true);
+      // scraper.set_value(false);
+      // FMintake.move(-127);
       Mintake.move(-127);
-      FTintake.move(-127);//i might've grouped it wrong ;-;
-      FMintake.tare_position();
-      FTintake.tare_position();
+      // FTintake.move(-127);//i might've grouped it wrong ;-;
+      // FMintake.tare_position();
+      // FTintake.tare_position();
       Mintake.tare_position();
     }
     else if (con.get_digital(E_CONTROLLER_DIGITAL_L1)) {//score mode
