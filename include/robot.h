@@ -29,9 +29,10 @@ extern pros::Motor TEST;
 extern pros::Motor TEST2;
 
 //lift
-extern pros::Motor Mintake;
 
 //hooks
+extern pros::Motor Fintake;
+extern pros::Motor Mintake;
 extern pros::Motor FTintake;
 extern pros::Motor FMintake;
 
@@ -56,6 +57,9 @@ extern pros::ADIDigitalOut blocker;
 extern pros::ADIDigitalOut hang;
 extern pros::ADIDigitalOut colorSorter;
 extern pros::ADIDigitalOut scraper;
+extern pros::ADIDigitalOut linkage;
+extern pros::ADIDigitalOut descore;
+
 //gps
 // extern pros::Gps gps1;
 // extern pros::c::gps_status_s_t gpsData;

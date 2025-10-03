@@ -91,6 +91,9 @@ float errorp;
 bool mogoToggle = false;
 bool scraperToggle = false;
 bool blockerToggle = false;
+bool colorSorterToggle = false;
+bool linkageToggle = false;
+bool descoreToggle = false;
 
 
  
@@ -199,7 +202,6 @@ void opcontrol() {
   // bool doinkerToggle = false;
   // bool doinkerClampToggle = false;
   // bool liftToggle = false;
-  bool hoodToggle = false;
   bool blockerToggle = false;
   double maxRPM = 0;
   double motorTotal = 0;
@@ -281,16 +283,6 @@ TEST.move(127);
     //   // LadyBrown.move(-127);
     //   // macroControl = false;
     // }
-
-    if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_Y)){
-      hoodToggle = !hoodToggle;
-      if(hoodToggle == true){
-        hood.set_value(false);
-      }
-      else{//store mode
-        hood.set_value(true);
-      }
-    }
       // macro ++;
       // macroControl = true;
       // //hookControl = true;
@@ -308,6 +300,15 @@ TEST.move(127);
         scraper.set_value(true);
       }
     }
+    if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_DOWN)){
+      descoreToggle  = !descoreToggle;
+      if(descoreToggle == true){
+        descore.set_value(false);
+      }
+      else{
+        descore.set_value(true);
+      }
+    }
     // if(con.get_digital(E_CONTROLLER_DIGITAL_Y)){
       // hoodToggle = !hoodToggle;
       // if(hoodToggle == true){
@@ -317,83 +318,73 @@ TEST.move(127);
       //   hood.set_value(true);
       // }
     //derrae
-    
-    if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_RIGHT)){
-      blockerToggle = !blockerToggle;
-      if(blockerToggle == true){
-        blocker.set_value(false);
+     if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_L1)){
+      linkageToggle = !linkageToggle;
+      if(linkageToggle == true){
+        linkage.set_value(false);
       }
       else{
-        blocker.set_value(true);
+        linkage.set_value(true);
       }
     }
+    if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_RIGHT)){
+      colorSorterToggle = !colorSorterToggle;
+      if(colorSorterToggle == true){
+        colorSorter.set_value(false);
+      }
+      else{
+        colorSorter.set_value(true);
+      }
+    }
+    //(a)b is descore, y is string blocker, right is color sort (b)is linkage
     if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_X)){
-      //TurnVolpidNTo(100, 120, 1, 2000,34);//34 for 120
-      RunpidStraightNTo(600,1000,20,100,400,0,0,4000,0,39);
+      RunpidStraightNTo(100,1000,20,100,400,0,0,4000,0,39);
+      delay(50);
+      TurnVolpidNTo(100, 120, 1, 2000,34);//34 for 120
+      //RunpidStraightNTo(double speed_limit, int aim, double err_1, double speed_limit2, int dec_point, int change_steps,int start_point, int outtime, double newgyro, int p_point) 
+      
+       
+
+      
     }
 
     if (con.get_digital(E_CONTROLLER_DIGITAL_R1)) {//store mode
-      // blocker.set_value(false);
-      // hood.set_value(false);
-			FMintake.move(127);
-      // Mintake.move(-127);
-      // FTintake.move(127);
-      // FTintake.tare_position();
-      // Mintake.tare_position();
-      FMintake.tare_position();
+      blocker.set_value(false);
+			Fintake.move(127);
+      Mintake.move(127);
+      Fintake.tare_position();
+      Mintake.tare_position();
 		} 
     else if(con.get_digital(E_CONTROLLER_DIGITAL_R2)){
       // hood.set_value(true);
       // scraper.set_value(false);
       // FMintake.move(-127);
-      Mintake.move(-127);
+      blocker.set_value(true);
+      Mintake.move(127);
+      Fintake.move(127);
       // FTintake.move(-127);//i might've grouped it wrong ;-;
       // FMintake.tare_position();
       // FTintake.tare_position();
       Mintake.tare_position();
+      Fintake.tare_position();
     }
-    else if (con.get_digital(E_CONTROLLER_DIGITAL_L1)) {//score mode
-	    hood.set_value(true); //hood is blocker blocker is hood
-      blocker.set_value(true);
-      scraper.set_value(false);
-			FMintake.move(127);
-      Mintake.move(-127);
-      FTintake.move(127);
-      FMintake.tare_position();
-      FTintake.tare_position();
-      Mintake.tare_position();
-		} 
     else if (con.get_digital(E_CONTROLLER_DIGITAL_L2)) {//score mode
-      hood.set_value(true);
-      scraper.set_value(true);
-			FMintake.move(127);
+	    Fintake.move(-127);
       Mintake.move(-127);
-      FTintake.move(-127);
-      FTintake.tare_position();
+      Fintake.tare_position();
       Mintake.tare_position();
-      FMintake.tare_position();
-		
     }
-    else if (con.get_digital(E_CONTROLLER_DIGITAL_UP)) {//score mode
-			FMintake.move(127);
-      Mintake.move(-127);
-      FTintake.move(127);
-      FTintake.tare_position();
-      Mintake.tare_position();
-      FMintake.tare_position();
-		} 
-    else if (con.get_digital(E_CONTROLLER_DIGITAL_DOWN)) {//score mode
-			FMintake.move(127);
-      Mintake.move(-127);
-      FTintake.move(127);
-      FMintake.tare_position();
-      FTintake.tare_position();
-      Mintake.tare_position();
-		} 
+    // else if (con.get_digital(E_CONTROLLER_DIGITAL_DOWN)) {//score mode
+		// 	FMintake.move(127);
+    //   Mintake.move(-127);
+    //   FTintake.move(127);
+    //   FMintake.tare_position();
+    //   FTintake.tare_position();
+    //   Mintake.tare_position();
+		// } 
     else {
-      FMintake.move(0);
+      Fintake.move(0);
       Mintake.move(0);
-      FTintake.move(0);
     }
     
     
