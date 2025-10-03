@@ -39,9 +39,50 @@ void autonomous() {
   if (atn == 0) {
     RunpidStraightNTo(1000,2000,10,50,1300,0,0,5000,0,48);
   } 
-    
+    //blue right
   else if (atn == 1) {
-      
+
+      Fintake.move(127);
+      Mintake.move(127);
+      blocker.set_value(true)
+      RunpidStraightNTo(100,600,20,100,400,0,0,4000,30,39);//the 600 is distance in mm and 30 is angle
+      delay(100);
+      TurnVolpidNTo(100, 45, 1, 2000,34);
+      delay(50);
+      RunpidStraightNTo(100,850,20,100,400,0,0,4000,75,39);
+      delay(50);
+      Fintake.move(0);
+      Mintake.move(0);
+      RunpidStraightNTo(100,-850,20,100,400,0,0,4000,0,39);
+      delay(50);
+      TurnVolpidNTo(100, -20, 1, 2000,34);
+      delay(50);
+      RunpidStraightNTo(100,200,20,100,400,0,0,4000,0,39);
+       for(int i = 0; i <= 500; i+=10){
+          Fintake.move(-127);
+          Mintake.move(-127);
+          delay(10);
+        }
+      RunpidStraightNTo(100,-2000,20,100,400,0,0,4000,0,39);
+      delay(50);
+      Fintake.move(127);
+      Mintake.move(127);
+      scraper.set_value(true);
+      TurnVolpidNTo(100, 179, 1, 2000,34);
+      delay(50);
+      RunpidStraightNTo(100,200,20,100,400,0,0,4000,0,39);
+      delay(50);
+      RunpidStraightNTo(100,-200,20,100,400,0,0,4000,0,39);
+      delay(50);
+      RunpidStraightNTo(100,200,20,100,400,0,0,4000,0,39);
+      delay(50);
+      RunpidStraightNTo(100,-200,20,100,400,0,0,4000,0,39);
+      delay(50);
+      scraper.set_value(false);
+      TurnVolpidNTo(100, 0, 1, 2000,34);
+      linkage.set_value(true);
+      RunpidStraightNTo(100,200,20,100,400,0,0,4000,0,39);
+      delay(50);
   }
 
   else if (atn == 2) { 
