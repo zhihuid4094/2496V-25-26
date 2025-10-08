@@ -59,19 +59,19 @@ pros::Motor FMintake (FMintake_PORT, pros::E_MOTOR_GEARSET_06, false);
 
 //pneumatics
     //Hood
-    pros::ADIDigitalOut blocker ('A', false);
+    pros::ADIDigitalOut blocker ('B', false);
     
-    pros::ADIDigitalOut linkage ('E', false);
+    pros::ADIDigitalOut linkage ('F', false);
 
     //blocker
-    pros::ADIDigitalOut descore ('B', false);
+    pros::ADIDigitalOut descore ('D', false);
 
     //auton selector
-    pros::ADIDigitalIn selec ('F');
+    pros::ADIDigitalIn selec ('E');
 
     pros::ADIDigitalOut colorSorter('C', false);
 
-    pros::ADIDigitalOut scraper ('D', false);
+    pros::ADIDigitalOut scraper ('H', false);
 
 
 

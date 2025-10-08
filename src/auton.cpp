@@ -39,54 +39,78 @@ void autonomous() {
   if (atn == 0) {
     RunpidStraightNTo(1000,2000,10,50,1300,0,0,5000,0,48);
   } 
-    //blue right
+ 
   else if (atn == 1) {
-
+    //blue right
+      // blocker.set_value(true);
+      // Fintake.move(127);
+      // Mintake.move(127);
+      // RunpidStraightNTo(100,500,10,100,400,0,0,4000,-40,39);//the 600 is distance in mm and 30 is angle
+      // RunpidStraightNTo(30,400,5,100,400,0,0,1000,0,39);
+      // linkage.set_value(true);
+      // scraper.set_value(true);
+      // Fintake.move(0);
+      // Mintake.move(0);
+      // TurnVolpidNTo(100, 85, 1, 800,34);
+      // blocker.set_value(false);
+      // RunpidStraightNTo(50,300,20,100,400,0,0,4000,0,39);
+      // Fintake.move(127);
+      // Mintake.move(127);
+      // delay(1400);
+      // RunpidStraightNTo(100,-1240,20,100,400,0,0,4000,0,39);
+      // linkage.set_value(false);
+      // delay(50);
+      // TurnVolpidNTo(100,130, 1, 1000,34);
+      // delay(50);
+      // blocker.set_value(true);
+      // RunpidStraightNTo(100,750,20,100,400,0,0,1000,0,39);
+      // delay(1200);
+      // RunpidStraightNTo(100,-300,20,100,400,0,0,1000,0,39);
+      // scraper.set_value(false);
+      // TurnVolpidNTo(100, 180, 1, 800,34);
+      // delay(50);
+      // RunpidStraightNTo(100,600,20,100,400,0,0,1000,0,39);
+      // blocker.set_value(false);
+  //blue elims
+      blocker.set_value(true);
       Fintake.move(127);
       Mintake.move(127);
-      blocker.set_value(true)
-      RunpidStraightNTo(100,600,20,100,400,0,0,4000,30,39);//the 600 is distance in mm and 30 is angle
-      delay(100);
-      TurnVolpidNTo(100, 45, 1, 2000,34);
-      delay(50);
-      RunpidStraightNTo(100,850,20,100,400,0,0,4000,75,39);
-      delay(50);
-      Fintake.move(0);
-      Mintake.move(0);
-      RunpidStraightNTo(100,-850,20,100,400,0,0,4000,0,39);
-      delay(50);
-      TurnVolpidNTo(100, -20, 1, 2000,34);
-      delay(50);
-      RunpidStraightNTo(100,200,20,100,400,0,0,4000,0,39);
-       for(int i = 0; i <= 500; i+=10){
-          Fintake.move(-127);
-          Mintake.move(-127);
-          delay(10);
-        }
-      RunpidStraightNTo(100,-2000,20,100,400,0,0,4000,0,39);
-      delay(50);
-      Fintake.move(127);
-      Mintake.move(127);
+      RunpidTo(80,1600,10,30,1000,0,0,4000,-50,450,0,2);//1000, -40
       scraper.set_value(true);
-      TurnVolpidNTo(100, 179, 1, 2000,34);
-      delay(50);
-      RunpidStraightNTo(100,200,20,100,400,0,0,4000,0,39);
-      delay(50);
-      RunpidStraightNTo(100,-200,20,100,400,0,0,4000,0,39);
-      delay(50);
-      RunpidStraightNTo(100,200,20,100,400,0,0,4000,0,39);
-      delay(50);
-      RunpidStraightNTo(100,-200,20,100,400,0,0,4000,0,39);
-      delay(50);
-      scraper.set_value(false);
-      TurnVolpidNTo(100, 0, 1, 2000,34);
-      linkage.set_value(true);
-      RunpidStraightNTo(100,200,20,100,400,0,0,4000,0,39);
-      delay(50);
   }
 
   else if (atn == 2) { 
-
+    //Blue left
+      blocker.set_value(true);
+      Fintake.move(127);
+      Mintake.move(127);
+      RunpidStraightNTo(100,500,10,100,400,0,0,4000,40,39);//the 600 is distance in mm and 30 is angle
+      RunpidStraightNTo(30,400,5,100,400,0,0,1000,0,39);
+      linkage.set_value(true);
+      Fintake.move(0);
+      Mintake.move(0);
+      TurnVolpidNTo(100, -85, 1, 800,34);
+      blocker.set_value(false);
+      RunpidStraightNTo(50,500,20,100,400,0,0,4000,0,39);
+      Fintake.move(-127);
+      Mintake.move(-127);
+      delay(1400);
+      RunpidStraightNTo(100,-1440,20,100,400,0,0,4000,0,39);
+      Fintake.move(127);
+      Mintake.move(127);
+      linkage.set_value(false);
+      delay(50);
+      TurnVolpidNTo(100,-130, 1, 1000,34);
+      delay(50);
+      blocker.set_value(true);
+      RunpidStraightNTo(100,750,20,100,400,0,0,1000,0,39);
+      delay(1200);
+      RunpidStraightNTo(100,-300,20,100,400,0,0,1000,0,39);
+      scraper.set_value(false);
+      TurnVolpidNTo(100, -180, 1, 800,34);
+      delay(50);
+      RunpidStraightNTo(100,600,20,100,400,0,0,1000,0,39);
+      blocker.set_value(false);
 
   }
     else if (atn == 3) { 

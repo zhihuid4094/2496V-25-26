@@ -82,7 +82,7 @@ void disabled() {}
 
  
 
-int atn = 0;
+int atn = 2;
 int ballColor = 2;
 int color = 0;
 int pressed = 0;
@@ -90,7 +90,7 @@ string autstr;
 float errorp;
 bool mogoToggle = false;
 bool scraperToggle = false;
-bool blockerToggle = false;
+bool blockerToggle = true;
 bool colorSorterToggle = false;
 bool linkageToggle = false;
 bool descoreToggle = false;
@@ -745,15 +745,16 @@ TEST.move(127);
 
       //printing stuff
 		double chasstempC = ((RF.get_temperature() + RB.get_temperature() + LF.get_temperature() + LB.get_temperature())/4);
-    double intaketempc = ((FMintake.get_temperature() + Mintake.get_temperature() + FTintake.get_temperature())/3);
+    double intaketempc = ((Fintake.get_temperature() + Mintake.get_temperature())/3);
     if (time % 50 == 0 && time % 100 != 0 && time % 150 != 0){
       con.print(0, 0, "AUTON: %s           ", autstr);
-      con.print(0, 0, "imu: %f         ", imu.get_heading());
+      
     } else if (time % 100 == 0 && time % 150 != 0){
-
+        con.print(1, 0, "imu: %f         ", imu.get_heading());
+        
     } 
     else if (time % 150 == 0){
-      // con.print(2, 0, "C:%i int:%i ", int(chasstempC), int(intaketempc)); 
+      con.print(2, 0, "C:%i int:%i ", int(chasstempC), int(intaketempc)); 
     } 
 
 	  	time += 1;
