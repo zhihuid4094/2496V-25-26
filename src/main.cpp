@@ -338,9 +338,7 @@ TEST.move(127);
     }
     //(a)b is descore, y is string blocker, right is color sort (b)is linkage
     if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_X)){
-      RunpidStraightNTo(100,1000,20,100,400,0,0,4000,0,39);
-      delay(50);
-      TurnVolpidNTo(100, 120, 1, 2000,34);//34 for 120
+      TurnVolpidNTo(100, 180, 1, 2000,33);//34 for 120
       //RunpidStraightNTo(double speed_limit, int aim, double err_1, double speed_limit2, int dec_point, int change_steps,int start_point, int outtime, double newgyro, int p_point) 
       
        

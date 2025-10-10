@@ -410,7 +410,7 @@ void TurnVolpidNTo(int max_speed, double aim, double howerr, int outtime,int p_p
     case 30:Kp = 2.8;Ki = 0.005;Kd =21;break; //TurnVolpidNTo(100,80,0.3,700,30);(80)
     case 31:Kp = 3;Ki = 0.005;Kd =21;break; //TurnVolpidNTo(100,60,0.3,700,31);(60)
     case 32:Kp = 3.2;Ki = 0.005;Kd =21;break; //TurnVolpidNTo(100,40,0.3,700,32);(40)
-    case 33:Kp = 3.6;Ki = 0.005;Kd =21;break; //TurnVolpidNTo(100,20,0.3,700,33);(20)
+    case 33:Kp = 2.2;Ki = 0;Kd =21;break; //TurnVolpidNTo(100,20,0.3,700,33);(20)
     case 34:Kp = 2.5;Ki = 0;Kd =21;break; //TurnVolpidNTo(100,20,0.3,700,33);(20)
 
     default:Kp = 2.47;Ki = 0.005;Kd =21;

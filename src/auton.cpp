@@ -84,18 +84,19 @@ void autonomous() {
       blocker.set_value(true);
       Fintake.move(127);
       Mintake.move(127);
-      RunpidStraightNTo(100,500,10,100,400,0,0,4000,40,39);//the 600 is distance in mm and 30 is angle
-      RunpidStraightNTo(30,400,5,100,400,0,0,1000,0,39);
-      linkage.set_value(true);
+      RunpidStraightNTo(100,600,10,100,400,0,0,4000,40,39);//the 600 is distance in mm and 30 is angle
+      RunpidStraightNTo(30,450,5,100,400,0,0,1000,0,39);
       Fintake.move(0);
       Mintake.move(0);
       TurnVolpidNTo(100, -85, 1, 800,34);
       blocker.set_value(false);
-      RunpidStraightNTo(50,500,20,100,400,0,0,4000,0,39);
+      delay(10);
+      RunpidStraightNTo(50,550,20,100,400,0,0,4000,0,39);
       Fintake.move(-127);
       Mintake.move(-127);
       delay(1400);
-      RunpidStraightNTo(100,-1440,20,100,400,0,0,4000,0,39);
+      RunpidStraightNTo(100,-1525,20,100,400,0,0,4000,0,39);
+      scraper.set_value(true);
       Fintake.move(127);
       Mintake.move(127);
       linkage.set_value(false);
@@ -103,18 +104,37 @@ void autonomous() {
       TurnVolpidNTo(100,-130, 1, 1000,34);
       delay(50);
       blocker.set_value(true);
-      RunpidStraightNTo(100,750,20,100,400,0,0,1000,0,39);
+      RunpidStraightNTo(100,700,20,100,400,0,0,1000,0,39);
       delay(1200);
       RunpidStraightNTo(100,-300,20,100,400,0,0,1000,0,39);
       scraper.set_value(false);
-      TurnVolpidNTo(100, -180, 1, 800,34);
+      TurnVolpidNTo(100, -180, 1, 800,33);
       delay(50);
       RunpidStraightNTo(100,600,20,100,400,0,0,1000,0,39);
       blocker.set_value(false);
+      colorSorter.set_value(true);
 
   }
     else if (atn == 3) { 
-      
+      RunpidStraightNTo(100,1000,20,100,400,0,0,1200,0,39);
+      delay(20);
+      TurnVolpidNTo(100,90, 1, 1000,34);
+      blocker.set_value(true);
+      Fintake.move(127);
+      Mintake.move(127);
+      scraper.set_value(true);
+      RunpidStraightNTo(100,700,20,100,400,0,0,500,0,39);
+      delay(800);
+      RunpidStraightNTo(100,-600,20,100,400,0,0,500,0,39);
+      delay(50);
+      TurnVolpidNTo(100, 180, 1, 800,34);
+      delay(50);
+      scraper.set_value(false);
+      RunpidStraightNTo(100,500,20,100,400,0,0,500,0,39);
+      blocker.set_value(false);
+      RunpidStraightNTo(100,-200,20,100,400,0,0,500,0,39);
+      TurnVolpidNTo(100, -30, 1, 800,33);
+      RunpidStraightNTo(100,800,20,100,400,0,0,500,30,39);
   } 
   else if(atn == 4) {
 
