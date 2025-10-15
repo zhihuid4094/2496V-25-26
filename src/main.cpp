@@ -82,7 +82,7 @@ void disabled() {}
 
  
 
-int atn = 2;
+int atn = 0;
 int ballColor = 2;
 int color = 0;
 int pressed = 0;
@@ -90,7 +90,7 @@ string autstr;
 float errorp;
 bool mogoToggle = false;
 bool scraperToggle = false;
-bool blockerToggle = true;
+bool blockerToggle = false;
 bool colorSorterToggle = false;
 bool linkageToggle = false;
 bool descoreToggle = false;
@@ -202,7 +202,6 @@ void opcontrol() {
   // bool doinkerToggle = false;
   // bool doinkerClampToggle = false;
   // bool liftToggle = false;
-  bool blockerToggle = false;
   double maxRPM = 0;
   double motorTotal = 0;
   double avgRPM = 0;
@@ -338,7 +337,7 @@ TEST.move(127);
     }
     //(a)b is descore, y is string blocker, right is color sort (b)is linkage
     if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_X)){
-      TurnVolpidNTo(100, 180, 1, 2000,33);//34 for 120
+      TurnVolpidNTo(100, 180, 1, 2000,30);//34 for 120
       //RunpidStraightNTo(double speed_limit, int aim, double err_1, double speed_limit2, int dec_point, int change_steps,int start_point, int outtime, double newgyro, int p_point) 
       
        

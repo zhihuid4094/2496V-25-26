@@ -395,7 +395,7 @@ void TurnVolpidNTo(int max_speed, double aim, double howerr, int outtime,int p_p
     case 16:Kp = 1.48;Ki = 0;Kd =7.5;break; //TurnVolpidNTo(70,75,1,1500,16);(75)
     case 17:Kp = 1.9;Ki = 0;Kd =7;break; //TurnVolpidNTo(70,75,1,1500,17);(75)
     case 18:Kp = 2.3;Ki = 0;Kd =7;break;//TurnVolpidNTo(70,35,1,1500,18);(35)
-    case 19:Kp = 4.05;Ki = 0;Kd =8;break;//TurnVolpidNTo(70,15,1,1500,12);
+    case 19:Kp = 3.2;Ki = 0;Kd =21.5;break;//TurnVolpidNTo(70,15,1,1500,12);
     case 20:Kp =5.5;Ki = 0;Kd =8;break;//TurnVolpidNTo(70,8,1,1500,20);
     ///////////////////////342 4.125 6M////////////////////////////
     case 21:Kp = 1.58;Ki = 0;Kd =8;break; //TurnVolpidNTo(70,90,1,1500,21);(90-115)
@@ -407,7 +407,7 @@ void TurnVolpidNTo(int max_speed, double aim, double howerr, int outtime,int p_p
     case 27:Kp = 1.42;Ki = 0;Kd =11;break; //TurnVolpidNTo(70,75,1,1500,25);(75)
     case 28:Kp = 2.5;Ki = 0.005;Kd =21;break; //TurnVolpidNTo(100,120,0.3,700,28);(120)
     case 29:Kp = 2.5;Ki = 0.005;Kd =21;break; //TurnVolpidNTo(100,100,0.3,700,29);(100)
-    case 30:Kp = 2.8;Ki = 0.005;Kd =21;break; //TurnVolpidNTo(100,80,0.3,700,30);(80)
+    case 30:Kp = 2.8;Ki = 0.005;Kd =22;break; //TurnVolpidNTo(100,80,0.3,700,30);(80)
     case 31:Kp = 3;Ki = 0.005;Kd =21;break; //TurnVolpidNTo(100,60,0.3,700,31);(60)
     case 32:Kp = 3.2;Ki = 0.005;Kd =21;break; //TurnVolpidNTo(100,40,0.3,700,32);(40)
     case 33:Kp = 2.2;Ki = 0;Kd =21;break; //TurnVolpidNTo(100,20,0.3,700,33);(20)
