@@ -44,18 +44,21 @@ void autonomous() {
       Fintake.move(127);
       Mintake.move(127);
       scraper.set_value(true);
+      //run into loader
       RunpidStraightNTo(50,1200,20,100,1000,0,0,1000,0,39);
       delay(600);
-      RunpidStraightNTo(50,200,20,100,1000,0,0,1000,0,39);
+      RunpidStraightNTo(50,200,20,100,1000,0,0,1000,0,39); //second time
       delay(20);
       RunpidStraightNTo(100,-600,20,100,400,0,0,500,0,39);
       delay(50);
       scraper.set_value(false);
+      //turn to goal and score (aadvik commit test)
       TurnVolpidNTo(100, 175, 1, 800,31);
       delay(100);
       RunpidStraightNTo(100,500,20,100,400,0,0,500,0,39);
       blocker.set_value(true);
       delay(1200);
+      //done scoring, back out 
       RunpidStraightNTo(100,-600,20,100,400,0,0,500,0,39);
       delay(20);
       TurnVolpidNTo(100, -60, 1, 800,31);
