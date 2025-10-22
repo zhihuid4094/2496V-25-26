@@ -337,14 +337,10 @@ TEST.move(127);
     }
     //(a)b is descore, y is string blocker, right is color sort (b)is linkage
     if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_X)){
-      TurnVolpidNTo(100, 180, 1, 2000,30);//34 for 120
-      //RunpidStraightNTo(double speed_limit, int aim, double err_1, double speed_limit2, int dec_point, int change_steps,int start_point, int outtime, double newgyro, int p_point) 
-      
-       
-
-      
+      TurnVolpidNTo(100, 180, 1, 2000,30);
     }
-
+//TurnVolpidNTo(100, 180, 1, 2000,30);//34 for 120
+//RunpidStraightNTo(100,1000,20,60,400,0,0,2000,0,39);
     if (con.get_digital(E_CONTROLLER_DIGITAL_R1)) {//store mode
       blocker.set_value(false);
 			Fintake.move(127);
@@ -367,6 +363,12 @@ TEST.move(127);
     }
     else if (con.get_digital(E_CONTROLLER_DIGITAL_L2)) {//score mode
 	    Fintake.move(-127);
+      Mintake.move(-127);
+      Fintake.tare_position();
+      Mintake.tare_position();
+    }
+    else if (con.get_digital(E_CONTROLLER_DIGITAL_UP)) {//score mode
+	    Fintake.move(-63);
       Mintake.move(-127);
       Fintake.tare_position();
       Mintake.tare_position();
@@ -742,7 +744,7 @@ TEST.move(127);
 
       //printing stuff
 		double chasstempC = ((RF.get_temperature() + RB.get_temperature() + LF.get_temperature() + LB.get_temperature())/4);
-    double intaketempc = ((Fintake.get_temperature() + Mintake.get_temperature())/3);
+    double intaketempc = ((Fintake.get_temperature() + Mintake.get_temperature())/2);
     if (time % 50 == 0 && time % 100 != 0 && time % 150 != 0){
       con.print(0, 0, "AUTON: %s           ", autstr);
       
