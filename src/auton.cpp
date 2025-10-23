@@ -38,6 +38,8 @@ void autonomous() {
 
   if (atn == 0) {
     //skills auton
+    //TurnVolpidN_Global(int max_speed, double angle, double how_much_error_you_tolerate, int break out time);
+    //TurnVolpidNTo(int max_speed, double angle, double how_much_error_you_tolerate, int break out time,int which pid case);
       RunpidStraightNTo(100,990,20,100,400,0,0,1200,0,39);
       delay(100);
 

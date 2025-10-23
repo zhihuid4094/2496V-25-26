@@ -360,7 +360,100 @@ double calculateAngleError(double targetAngle , double currentAngle) {
 
   return angleDiff;
 }
+//global turns
+void TurnVolpidN_Global(int max_speed, double aim, double howerr, int outtime) {
+  // PID constants
+  double Kp = 0.775;
+  double Ki = 0.06;
+  double Kd = 3.0;
 
+  double err_now = 0;
+  double err_last = 0;
+  double value_now = 0;
+  double EI = 0, ED = 0;
+  double output;
+  int sampletime = 10;
+
+
+  T1.reset();
+  T4.reset();
+
+  double returnangle = imu.get_rotation();
+  err_now = aim - returnangle;
+
+  // Adjust PID constants for smaller error ranges
+  if (fabs(err_now) <= 1000) {
+    Kp = 0.7;
+    Ki = 0.1;
+    Kd = 1;
+  }
+
+  // Store the starting (global) rotation angle
+  double initial_angle = imu.get_rotation();
+
+  // Draw red rectangle (turning in progress)
+  pros::lcd::initialize();
+  pros::lcd::set_background_color(255, 0, 0);
+  pros::screen::fill_rect(0, 0, 400, 400);
+
+  while (true) {
+    // Get current inertial angle (global heading)
+    double returnangle = imu.get_rotation();
+
+    // Compute global heading error
+    value_now = returnangle - initial_angle;
+    err_now = aim - value_now;
+
+    // PID calculations
+    EI += err_now;
+    if (fabs(err_now) > 15) EI = 0;  // prevent integral windup
+
+    ED = err_now - err_last;
+    output = Kp * err_now + Ki * EI + Kd * ED;
+
+    // Limit output speed
+    if (fabs(output) > max_speed)
+      output = (output > 0 ? 1 : -1) * max_speed;
+
+    // Apply motor voltages (turning in place)
+    TurnVol(output);
+
+    err_last = err_now;
+    pros::delay(sampletime);
+
+    // Reset timer if still moving
+    if (fabs(err_now) > howerr)
+      T1.reset();
+
+    // Exit if stable or timed out
+    if (T1.elapsed() > 25 || T4.elapsed() >= outtime) {
+      BaseMotorStop(1);
+      break;
+    }
+  }
+
+  // Draw blue rectangle (turn finished)
+  pros::lcd::initialize();
+  pros::lcd::set_background_color(0, 0, 255);
+  pros::screen::fill_rect(0, 0, 400, 400);
+
+  // Brake and stop all drive motors
+  LF.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+  LM.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+  LB.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+  RF.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+  RM.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+  RB.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
+
+  LF.move(0);
+  LM.move(0);
+  LB.move(0);
+  RF.move(0);
+  RM.move(0);
+  RB.move(0);
+
+  con.print(1, 0, "Final Err: %.2f ", err_now);
+}
 //turn pid til angle
 //转角度
 //application: TurnVolpidNto(how fast(0-100),how far(0-2000), how much error accepted(usually 1),timeout(100-1000 milliseconds),pid case (reference bottom))
