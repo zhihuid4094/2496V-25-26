@@ -40,6 +40,8 @@ void autonomous() {
     //skills auton
       RunpidStraightNTo(100,990,20,100,400,0,0,1200,0,39);
       delay(100);
+
+
       TurnVolpidNTo(100,91, 1, 1000,30);
       Fintake.move(127);
       Mintake.move(127);
@@ -49,48 +51,57 @@ void autonomous() {
       RunpidStraightNTo(50,1200,20,100,1000,0,0,1000,0,39);
       delay(600);
       RunpidStraightNTo(50,100,20,100,1000,0,0,1000,0,39);
-      delay(50);
+      delay(90);
       RunpidStraightNTo(100,-600,20,100,400,0,0,500,0,39);
-      delay(50);
+      delay(90);
       scraper.set_value(false);
-      TurnVolpidNTo(100, 178, 1, 800,31);
-      delay(100);
-      RunpidStraightNTo(100,580,20,100,400,0,0,500,0,39);
+      //turn to the goal
+      TurnVolpidNTo(100, 169.7, 1, 800,31);
+      delay(200);
+      RunpidStraightNTo(100,590,20,100,400,0,0,500,0,39);
       //run into goal
       blocker.set_value(true);
       delay(1400);
-      RunpidStraightNTo(100,-600,20,100,400,0,0,500,0,39);
-      delay(50);
-      TurnVolpidNTo(100, -60, 1, 800,31);
-      delay(50);
-      RunpidStraightNTo(100,970,20,100,400,0,0,1000,39,39);
-      delay(50);
-      RunpidStraightNTo(100,2200,20,100,400,0,0,3000,0,39);
-      delay(50);
+      //drive out
+      RunpidStraightNTo(100,-650,20,100,400,0,0,500,0,39);
+      delay(90);
+      TurnVolpidNTo(100, -58, 1, 800,31);
+      delay(150);
+      //big straight 
+      RunpidStraightNTo(100,1200,20,100,400,0,0,1000,40,39);
+      delay(400);
+      RunpidStraightNTo(100,2300,20,60,400,0,0,3000,0,39);
+      delay(150);
       TurnVolpidNTo(100, 60, 1, 800,31);
-      delay(200);
+      delay(300);
       //turn into loader
-      //RunpidStraightNTo(100,400,20,100,400,0,0,1000,-115,39);
-      
-      RunpidStraightNTo(100,600,20,100,400,0,0,1000,0,39);
-      TurnVolpidNTo(100, -63, 1, 800,31);
-      //second loader
+      //drive to the second loader
+      RunpidStraightNTo(100,550,20,100,400,0,0,1000,0,39);
+      delay(90);
+      TurnVolpidNTo(100, -60, 1, 800,31);
+      delay(90);
+      // //second loader
       scraper.set_value(true);
       blocker.set_value(false);
       delay(200);
-      RunpidStraightNTo(60,800,20,60,400,0,0,2000,0,39);
+
+      // //runs into second loader
+      RunpidStraightNTo(60,1200,20,60,400,0,0,2000,0,39);
       delay(1200);
       RunpidStraightNTo(100,-400,20,100,400,0,0,1000,0,39);
-      //aadvik here 
       delay(50);
       scraper.set_value(false);
-      TurnVolpidNTo(100, 178, 1, 800,31);
+      // //turn to the goal
+      TurnVolpidNTo(100, -178, 1, 800,31);
       delay(100);
-      RunpidStraightNTo(100,500,20,100,400,0,0,500,0,39);
+      RunpidStraightNTo(100,600,20,100,400,0,0,500,0,39);
+      blocker.set_value(true);
       delay(1200);
       RunpidStraightNTo(100,-200,20,100,400,0,0,500,0,39);
-      TurnVolpidNTo(100, 90, 1, 800,31);
-      RunpidStraightNTo(100,2000,20,100,400,0,0,500,0,39);
+      TurnVolpidNTo(100, 88, 1, 800,31);
+      delay(70);
+      // //100 ready to drive
+      RunpidStraightNTo(100,5000,20,70,400,0,0,5000,0,39);
 
 
   } 
