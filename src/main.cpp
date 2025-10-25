@@ -368,8 +368,8 @@ TEST.move(127);
       Mintake.tare_position();
     }
     else if (con.get_digital(E_CONTROLLER_DIGITAL_UP)) {//score mode
-	    Fintake.move(63);
-      Mintake.move(127);
+	    Fintake.move(-63);
+      Mintake.move(-127);
       Fintake.tare_position();
       Mintake.tare_position();
     }
