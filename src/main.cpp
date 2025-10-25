@@ -82,7 +82,7 @@ void disabled() {}
 
  
 
-int atn = 4;
+int atn = 5;
 int ballColor = 2;
 int color = 0;
 int pressed = 0;
