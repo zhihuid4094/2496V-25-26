@@ -82,7 +82,7 @@ void disabled() {}
 
  
 
-int atn = 0;
+int atn = 4;
 int ballColor = 2;
 int color = 0;
 int pressed = 0;
@@ -129,27 +129,27 @@ void competition_initialize() {
       //resetEncoders();
       
       if (atn == 0) {
-        autstr = "NONE";
+        autstr = "SKILLS";
         con.print(0, 0, "Aut 0: %s", autstr);
       }
       else if (atn == 1) {
-        autstr = " RED LEFT RING";
+        autstr = "RED LEFT MID GOAL SAFE";
         con.print(0, 0, "Aut 1: %s", autstr);
       }
       else if (atn == 2) {
-        autstr = "RED RIGHT GOAL";
+        autstr = "BLUE RIGHT BOT GOAL SAFE";
         con.print(0, 0, "Aut 2: %s", autstr);
       }
       else if (atn == 3) {
-       autstr = "BLUE LEFT MOGO";
+       autstr = "SOLO AWP - MID END";
         con.print(0, 0, "Aut 3: %s", autstr);
       }
       else if (atn == 4) {
-       autstr = "BLUE RIGHT RING";
+       autstr = "SOLO AWP  - HIGH END";
         con.print(0, 0, "Aut 4: %s", autstr);
       }
       else if (atn == 5) {
-       autstr = "BLUE RIGHT RING RUSH";
+       autstr = "ELIMS BLUE RIGHT PUSH";
         con.print(0, 0, "Aut 5: %s", autstr);
       }
       else if (atn == 6) {
@@ -337,6 +337,7 @@ TEST.move(127);
     }
     //(a)b is descore, y is string blocker, right is color sort (b)is linkage
     if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_X)){
+
     }
 //TurnVolpidNTo(100, 180, 1, 2000,30);//34 for 120
 //RunpidStraightNTo(100,1000,20,60,400,0,0,2000,0,39);
@@ -367,8 +368,8 @@ TEST.move(127);
       Mintake.tare_position();
     }
     else if (con.get_digital(E_CONTROLLER_DIGITAL_UP)) {//score mode
-	    Fintake.move(-63);
-      Mintake.move(-127);
+	    Fintake.move(63);
+      Mintake.move(127);
       Fintake.tare_position();
       Mintake.tare_position();
     }
