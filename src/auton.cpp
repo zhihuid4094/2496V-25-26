@@ -159,10 +159,10 @@ void autonomous() {
       Mintake.move(127);
       delay(1200);
       blocker.set_value(false);
-      RunpidStraightNTo(100,-1470,20,100,400,0,0,4000,0,39);
+      RunpidStraightNTo(100,-1380,20,100,400,0,0,4000,0,39);
       linkage.set_value(false);
       delay(200);
-      TurnVolpidNTo(100,130, 1, 1000,34);
+      TurnVolpidNTo(100,131, 1, 1000,34);
       delay(50);
       RunpidStraightNTo(100,750,20,30,400,0,0,2000,0,39);
       delay(1200);
@@ -318,11 +318,12 @@ void autonomous() {
   else if (atn == 5){
   //blue right elims with push
       RunpidStraightNTo(100,500,10,100,400,0,0,4000,-20,39);
-      RunpidStraightNTo(100,1200,10,100,400,0,0,4000,-50,39);
+      RunpidStraightNTo(100,1000,10,100,400,0,0,4000,-70,39);
       scraper.set_value(true);
+      TurnVolpidNTo(100, 30, 1, 800,34);
+      scraper.set_value(false);
       RunpidStraightNTo(100,-200,10,100,400,0,0,4000,0,39);
       scraper.set_value(false);
-      TurnVolpidNTo(100, 30, 1, 800,34);
       RunpidStraightNTo(100,-400,10,100,400,0,0,4000,0,39);//tune this value for the connection between the angle facing towards middle goal
       TurnVolpidNTo(100, -90, 1, 800,34);
       blocker.set_value(true);
@@ -367,10 +368,76 @@ void autonomous() {
   } 
   
   else if (atn == 7){
-
+    //7 goal long
+       Fintake.move(127);
+      Mintake.move(127);
+      RunpidStraightNTo(100,500,10,100,400,0,0,4000,-40,39);//the 600 is distance in mm and 30 is angle
+      RunpidStraightNTo(30,380,5,100,400,0,0,1000,0,39);
+      TurnVolpidNTo(100,90, 1, 1000,34);
+      RunpidStraightNTo(100,770,20,100,400,0,0,4000,0,39);
+      linkage.set_value(false);
+      delay(200);
+      TurnVolpidNTo(100,50, 1, 1000,34);
+      delay(50);
+      RunpidStraightNTo(100,750,20,30,400,0,0,2000,0,39);
+      delay(1200);
+      RunpidStraightNTo(100,-300,20,100,400,0,0,1000,0,39);
+      scraper.set_value(false);
+      TurnVolpidNTo(100, 174, 1, 1000,19);
+      delay(50);
+      RunpidStraightNTo(100,700,20,100,400,0,0,1000,0,39);
+      blocker.set_value(true);
+      delay(200);
+      colorSorter.set_value(true);
+      delay(1200);
+      RunpidStraightNTo(100,-400,20,100,400,0,0,1000,0,39);
+      descore.set_value(true);
+      delay(200);
+      TurnVolpidNTo(100, -40, 1, 1000,19);
+      RunpidStraightNTo(100,200,20,100,400,0,0,1000,0,39);
+      RunpidStraightNTo(100,800,20,100,400,0,0,1000,40,39);
+      RunpidStraightNTo(100,400,20,100,400,0,0,1000,0,39);
   } 
   
   else if (atn == 8){
-
+    //elims(run for not )
+     Fintake.move(127);
+      Mintake.move(127);
+      RunpidStraightNTo(100,500,10,100,400,0,0,4000,-40,39);//the 600 is distance in mm and 30 is angle
+      RunpidStraightNTo(30,380,5,100,400,0,0,1000,0,39);
+      linkage.set_value(true);
+      scraper.set_value(true);
+      Fintake.move(0);
+      Mintake.move(0);
+      TurnVolpidNTo(100, 80, 1, 800,34);
+      blocker.set_value(true);
+      RunpidStraightNTo(50,280,20,100,400,0,0,4000,0,39);
+      Fintake.move(127);
+      Mintake.move(127);
+      delay(1200);
+      blocker.set_value(false);
+      RunpidStraightNTo(100,-1470,20,100,400,0,0,4000,0,39);
+      linkage.set_value(false);
+      delay(200);
+      TurnVolpidNTo(100,130, 1, 1000,34);
+      delay(50);
+      RunpidStraightNTo(100,750,20,30,400,0,0,2000,0,39);
+      delay(1200);
+      RunpidStraightNTo(100,-300,20,100,400,0,0,1000,0,39);
+      scraper.set_value(false);
+      TurnVolpidNTo(100, 174, 1, 1000,19);
+      delay(50);
+      RunpidStraightNTo(100,700,20,100,400,0,0,1000,0,39);
+      blocker.set_value(true);
+      delay(200);
+      colorSorter.set_value(true);
+      delay(1200);
+      RunpidStraightNTo(100,-400,20,100,400,0,0,1000,0,39);
+      descore.set_value(true);
+      delay(200);
+      TurnVolpidNTo(100, -40, 1, 1000,19);
+      RunpidStraightNTo(100,200,20,100,400,0,0,1000,0,39);
+      RunpidStraightNTo(100,800,20,100,400,0,0,1000,40,39);
+      RunpidStraightNTo(100,400,20,100,400,0,0,1000,0,39);
   }
 }
