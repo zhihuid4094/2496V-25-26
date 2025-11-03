@@ -362,16 +362,15 @@ double calculateAngleError(double targetAngle , double currentAngle) {
 }
 //global turns
 //turn pid til angle
+
 //转角度
 //application: TurnVolpidNto(how fast(0-100),how far(0-2000), how much error accepted(usually 1),timeout(100-1000 milliseconds),pid case (reference bottom))
 void TurnVolpidNTo(int max_speed, double aim, double howerr, int outtime,int p_point) {
-  
-  double returnangle = imu.get_rotation();
  
   //PID values
-  double Kp = 2.2;
+  double Kp = 3.8;
   double Ki = 0.006;
-  double Kd = 15;
+  double Kd = 0.7;
 
   //pid value cases
   switch (p_point) 
@@ -407,15 +406,15 @@ void TurnVolpidNTo(int max_speed, double aim, double howerr, int outtime,int p_p
     case 27:Kp = 1.42;Ki = 0;Kd =11;break; //TurnVolpidNTo(70,75,1,1500,25);(75)
     case 28:Kp = 2.5;Ki = 0.005;Kd =21;break; //TurnVolpidNTo(100,120,0.3,700,28);(120)
     case 29:Kp = 2.5;Ki = 0.005;Kd =21;break; //TurnVolpidNTo(100,100,0.3,700,29);(100)
-    case 30:Kp = 2.8;Ki = 0.005;Kd =22;break; //TurnVolpidNTo(100,80,0.3,700,30);(80)
-    case 31:Kp = 3;Ki = 0.005;Kd =21;break; //TurnVolpidNTo(100,60,0.3,700,31);(60)
-    case 32:Kp = 3.2;Ki = 0.005;Kd =21;break; //TurnVolpidNTo(100,40,0.3,700,32);(40)
+    case 30:Kp = 2.5;Ki = 0.005;Kd =22;break; //TurnVolpidNTo(100,80,0.3,700,30);(80)
+    case 31:Kp = 3.8;Ki = 0.005;Kd =0.7;break; //TurnVolpidNTo(100,60,0.3,700,31);(60)
+    case 32:Kp = 3.4;Ki = 0.005;Kd =0.8;break; //TurnVolpidNTo(100,40,0.3,700,32);(40)
     case 33:Kp = 2.2;Ki = 0;Kd =21;break; //TurnVolpidNTo(100,20,0.3,700,33);(20)
     case 34:Kp = 2.5;Ki = 0;Kd =21;break; //TurnVolpidNTo(100,20,0.3,700,33);(20)
 
     default:Kp = 2.47;Ki = 0.005;Kd =21;
   }
-
+//90 degrees is 30
 //other values
   double err_now = 0;
   double err_last = 0;
@@ -426,11 +425,6 @@ void TurnVolpidNTo(int max_speed, double aim, double howerr, int outtime,int p_p
 
   T1.reset();
   T4.reset();
-  value_now = returnangle;
-  err_now = calculateAngleError(aim , value_now);
-
-
-double chushizhi = imu.get_rotation();
 
   //画个长方形
   //draw rectangle
@@ -438,36 +432,31 @@ double chushizhi = imu.get_rotation();
    pros::lcd::set_background_color(255, 0, 0); // set background color
   pros::screen::fill_rect(0, 0, 400, 400);     // draw filled rectangle
   
+  
   while (1) {
+    double value_now = imu.get_rotation();
+    err_now = calculateAngleError(aim, value_now);
 
-    //计算PID输出
-    //calculating pid output
-    double returnangle = imu.get_rotation();
-    value_now = returnangle-chushizhi;
-    err_now = aim - value_now;
-    EI = EI + err_now;
-
+    EI += err_now;
     if (fabs(err_now) > 10) EI = 0;
-      ED = err_now - err_last;
-      output = Kp * err_now + Ki * EI + Kd * ED;
+    ED = err_now - err_last;
 
-    if (fabs(output) > max_speed)  output = sgn(output) * max_speed;
-      //电机输出
-      //voltage output
-      TurnVol(output);
-      err_last = err_now;
-      pros::delay(sampletime);
+    output = Kp * err_now + Ki * EI + Kd * ED;
+    if (fabs(output) > max_speed)
+      output = sgn(output) * max_speed;
 
-    //判断停止条件
-    //stopping criteria
-    if (fabs(err_now) > howerr)  T1.reset();
+    TurnVol(output);
+    err_last = err_now;
 
-    if (T1.elapsed() >25 || T4.elapsed() >= outtime) 
-    {
+    pros::delay(sampletime);
+
+    if (fabs(err_now) > howerr) T1.reset();
+    if (T1.elapsed() > 25 || T4.elapsed() >= outtime) {
       BaseMotorStop(1);
       break;
     }
   }
+
   pros::lcd::initialize();                 // initialize the LCD (do once in main)
   pros::lcd::set_background_color(0, 0, 255); // set background color to blue (RGB)
   pros::screen::fill_rect(0, 0, 400, 400);    // draw filled rectangle
@@ -550,10 +539,10 @@ void RunpidStraightNTo(double speed_limit, int aim, double err_1,
     default:Kp = 0.1;Ki = 0;Kd =0;
     //case 39 0.345, 0.01, 0.05
  }
-  double value_now = 0;
+  double value_now = imu.get_rotation();
   double EI = 0, ED = 0;
   int sampletime = 10;
-  double err_now = err_1+1;
+  double err_now = err_1 + 1;
   double err_last = 0;
   double max_v = speed_limit;
   double Kt = 0;
@@ -569,6 +558,7 @@ void RunpidStraightNTo(double speed_limit, int aim, double err_1,
   double K_gyro = 0.7;
   double angle_err = 0;
   double acc = 0.2;
+
   LF.tare_position();
   RF.tare_position();
   T1.reset();
@@ -576,32 +566,28 @@ void RunpidStraightNTo(double speed_limit, int aim, double err_1,
   T3.reset();
   T4.reset();
   TACC.reset();
-   // double chushizhi = Inertial1.rotation(degrees);
-  while (1) {
-    //  printf(".2f\n", LeftMotor1.velocity(pct));
-    // double returnangle = Inertial1.rotation(degrees);
-  double returnangle = return_angle;
 
-   max_v = acc * TACC.elapsed();
-    if (TACC.elapsed() > 500)
-      max_v = speed_limit;
-    if (max_v >= speed_limit) {
-      max_v = speed_limit;
-    }
+  while (1) {
+    double returnangle = return_angle;
+
+    max_v = acc * TACC.elapsed();
+    if (TACC.elapsed() > 500) max_v = speed_limit;
+    if (max_v >= speed_limit) max_v = speed_limit;
+
     if (dec_point != -1) {
       if (fabs(LF.get_position()) > dec_point) {
-        max_v =speed_limit - (fabs(LF.get_position()) - dec_point) /10.0;
-        if (max_v < speed_limit2) { max_v = speed_limit2;
-        }
+        max_v = speed_limit - (fabs(LF.get_position()) - dec_point) / 10.0;
+        if (max_v < speed_limit2) max_v = speed_limit2;
       }
     }
-    if (change_steps != -1) {
-      if (fabs(LF.get_position())>=start_point ) {
-        steps = change_steps;
-        change_steps = -1;
-      }
+
+    if (change_steps != -1 && fabs(LF.get_position()) >= start_point) {
+      steps = change_steps;
+      change_steps = -1;
     }
-    value_now = LF.get_position();;
+
+    value_now = LF.get_position();
+
     if (T2.elapsed() > 100) {
       T2.reset();
       value_last_R = value_now_R;
@@ -612,49 +598,45 @@ void RunpidStraightNTo(double speed_limit, int aim, double err_1,
       ET = value_now_R - value_now_L;
       sum_dec += Ktv * ETV;
     }
+
     if (T3.elapsed() > sampletime) {
       T3.reset();
-      EI = EI + err_now;
+      EI += err_now;
       err_last = err_now;
       err_now = aim - value_now;
       ED = err_now - err_last;
     }
-    if (fabs(err_now) > 100)
-      EI = 0;
-    outputL = Kp * err_now + Ki * EI + Kd * ED;
-    // outputR = Kp * err_now + Ki * EI + Kd * ED;
-    if (fabs(outputL) > max_v)
-      outputL = sgn(outputL) * max_v;
-      // if (fabs(outputR) > max_v)
-      // outputR = sgn(outputR) * max_v;
-    angle_err = newgyro - returnangle;
-    if (fabs(angle_err) < 1)  { angle_err = 0;}
-    // if(angle_err>0)
-    outputR = outputL - Kt * ET - Ktv * ETV - K_gyro * (angle_err);
-    // else if(angle_err<0)
-    // outputL = outputR - Kt * ET - Ktv * ETV - K_gyro * (angle_err);
-    if (outputL == 0)
-      outputR = 0;
-    LF.move(outputL);   // Left Front
-    RF.move(outputR);   // Right Front
-    LM.move(outputL);   // Left Middle
-    RM.move(outputR);   // Right Middle
-    LB.move(outputL);   // Left Back
-    RB.move(outputR);   // Right Back
-      // LeftMotor4.spin(vex::directionType::fwd, outputL, vex::velocityUnits::pct);
-    // RightMotor4.spin(vex::directionType::fwd, outputR, vex::velocityUnits::pct);
-    pros::delay(sampletime);
-        if (fabs(err_now) < err_1|| T4.elapsed() >= outtime){
-      // T1.clear();
-    BaseMotorStop(0);
 
-  con.print(1, 0, "Err: %.2f OutL: %.2f", err_now, outputL);
-  con.print(2, 0, "OutR: %.2f Gyro: %.2f", outputR, returnangle);
+    if (fabs(err_now) > 100) EI = 0;
+
+    outputL = Kp * err_now + Ki * EI + Kd * ED;
+    if (fabs(outputL) > max_v) outputL = sgn(outputL) * max_v;
+
+  angle_err = newgyro - returnangle;
+  if (angle_err > 180) angle_err -= 360;
+  if (angle_err < -180) angle_err += 360;
+
+  outputR = outputL - Kt * ET - Ktv * ETV - K_gyro * angle_err;
+    outputR = outputL - Kt * ET - Ktv * ETV - K_gyro * angle_err;
+    if (outputL == 0) outputR = 0;
+
+    LF.move(outputL);
+    RF.move(outputR);
+    LM.move(outputL);
+    RM.move(outputR);
+    LB.move(outputL);
+    RB.move(outputR);
+
+    pros::delay(sampletime);
+
+    if (fabs(err_now) < err_1 || T4.elapsed() >= outtime) {
+      BaseMotorStop(0);
+      con.print(1, 0, "Err: %.2f OutL: %.2f", err_now, outputL);
+      con.print(2, 0, "OutR: %.2f Gyro: %.2f", outputR, returnangle);
       break;
-        }
-    
+    }
   }
- BaseMotorStop(1);
+  BaseMotorStop(1);
 }
 ////////////////////////////////////////////Time Based Code EWWW////////////////
 //直走到指定角度

@@ -82,7 +82,7 @@ void disabled() {}
 
  
 
-int atn = 1;
+int atn = 0;
 int ballColor = 2;
 int color = 0;
 int pressed = 0;
@@ -337,7 +337,9 @@ TEST.move(127);
     }
     //(a)b is descore, y is string blocker, right is color sort (b)is linkage
     if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_X)){
-
+      TurnVolpidNTo(100, -90, 1, 800,30);
+      RunpidStraightNTo(100,1000,20,60,400,0,0,2000,0,39);
+      TurnVolpidNTo(100, 90, 1, 800,30);
     }
 //TurnVolpidNTo(100, 180, 1, 2000,30);//34 for 120
 //RunpidStraightNTo(100,1000,20,60,400,0,0,2000,0,39);
