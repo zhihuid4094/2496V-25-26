@@ -259,6 +259,8 @@ extern void drive_to_white_line(int speed=50,int outtime=5000);
 extern void RunpidStraightN(double speed_limit=70, int aim=100,double err_1=5,double speed_limit2=40, int dec_point=-1, int change_steps=-1,int start_point=0,int outtime=18000,double newgyro=0,int p_point=-1);
 //速度，距离，误差值，第二速度，减速点，运行多线程序号，运行线程距离，保护时间，修正方向,pid参数选择
 extern void RunpidStraightNTo(double speed_limit=70, int aim=100,double err_1=5,double speed_limit2=40, int dec_point=-1, int change_steps=-1,int start_point=0,int outtime=18000,double newgyro=0,int p_point=-1);
+
+extern void RunpidStraightNToHC(double speed_limit=70, int aim=100,double err_1=5,double speed_limit2=40, int dec_point=-1, int change_steps=-1,int start_point=0,int outtime=18000,double newgyro=0,int p_point=-1);
 //速度，距离，误差值，第二速度，减速点，运行多线程序号，运行线程距离，保护时间，修正方向（方位）,pid参数选择
 extern void TurnpidN(int max_speed=100,double aim=0,double howerr=0.7,double goals=0,int outtime=12000); 
 //速度，角度，误差，保护时间

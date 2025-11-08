@@ -17,7 +17,7 @@
 #define RF_PORT 18
 #define RM_PORT 19
 #define RB_PORT 17
-#define IMU_PORT 7
+#define IMU_PORT 10
 #define HOOKS_PORT 
 #define Fintake_PORT 15
 #define Mintake_PORT 14

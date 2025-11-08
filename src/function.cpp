@@ -616,7 +616,6 @@ void RunpidStraightNTo(double speed_limit, int aim, double err_1,
   if (angle_err > 180) angle_err -= 360;
   if (angle_err < -180) angle_err += 360;
 
-  outputR = outputL - Kt * ET - Ktv * ETV - K_gyro * angle_err;
     outputR = outputL - Kt * ET - Ktv * ETV - K_gyro * angle_err;
     if (outputL == 0) outputR = 0;
 
@@ -1098,6 +1097,7 @@ if(fabs(LF.get_position())>turn_point&&turn_side==1){
     if(turn_right==1){
       if (((fabs(err_now) < err_1)&&fabs(angle_err) < 3)|| T4.elapsed() >= outtime){
       // T1.clear();
+
      BaseMotorStop(0);
       break;
   }
@@ -1106,6 +1106,174 @@ if(fabs(LF.get_position())>turn_point&&turn_side==1){
   }
  BaseMotorStop(1);
 }
+
+void RunpidStraightNToHC(double speed_limit, int aim, double err_1,
+                       double speed_limit2, int dec_point, int change_steps,
+                       int start_point, int outtime, double newgyro, int p_point) 
+{
+ // Inertial1.resetRotation();
+  double Kp = 0.22;  // 0.39
+  double Ki = 0; // 0.001
+  double Kd = 0.245; // 0.173
+ switch (p_point) 
+{
+    case 0: break;
+    ////////////////////////////////400 3.25 6M////////////////////////////////////////
+    case 1:Kp = 0.15;Ki = 0;Kd =0.17;break; //RunpidStraightNTo(100,2970,20,10,400,0,0,1800,0,1);(3050)
+   case 2:Kp = 0.16;Ki = 0;Kd =0.1;break;//RunpidStraightNTo(45,800,10,15,150,0,0,1800,0,2);
+    case 3:Kp = 0.148;Ki = 0;Kd =0.11;break; //RunpidStraightNTo(65,1200,12,45,1000,0,0,1800,0,3);
+    case 4:Kp = 0.09;Ki = 0;Kd =0.15;break;//RunpidStraightNTo(20,200,6,5,20,0,0,1800,0,4);
+    case 5:Kp = 0.19;Ki = 0;Kd =0.3;break; //RunpidStraightNTo(30,500,10,10,100,0,0,1800,0,5);
+    case 6:Kp = 0.18;Ki = 0;Kd =0.23;break; //RunpidStraightNTo(95,2970,20,10,100,0,0,1800,0,6);
+    case 7:Kp = 0.14;Ki = 0;Kd =0.048;break; //RunpidStraightNTo(80,1800,10,65,1000,0,0,1000,0,7);
+    case 8:Kp = 0.121;Ki = 0;Kd =0.17;break; //RunpidStraightNTo(60,800,10,10,120,0,0,1800,0,8);
+     case 9:Kp = 0.16;Ki = 0;Kd =0.1;break;//RunpidStraightNTo(60,900,10,15,150,0,0,1800,0,9);
+     case 10:Kp = 0.16;Ki = 0;Kd =0.23;break; //RunpidStraightNTo(60,1000,20,6,60,0,0,1800,0,10);
+      case 11:Kp = 0.15;Ki = 0;Kd =0.15;break;//RunpidStraightNTo(30,300,10,0,0,0,0,1800,0,11);
+      case 12:Kp = 0.11;Ki = 0;Kd =0.12;break; //RunpidStraightNTo(60,800,10,10,120,0,0,1800,0,12);
+      //////////////////////////////////257 4.125 4M/////////////////////////////////////////
+       case 13:Kp = 0.16;Ki = 0;Kd =0.17;break;//RunpidStraightNTo(45,800,10,15,150,0,0,1800,0,13);
+       case 14:Kp = 0.141;Ki = 0;Kd =0.07;break; //RunpidStraightNTo(79,1600,15,78,1100,0,0,1500,0,14);
+        case 15:Kp = 0.1198;Ki = 0;Kd =0.02;break; //RunpidStraightNTo(95,2970,20,10,100,0,0,1800,0,15);
+        case 16:Kp = 0.11;Ki = 0;Kd =0.17;break; //RunpidStraightNTo(50,800,10,10,120,0,0,1800,0,16);
+         case 17:Kp = 0.18;Ki = 0;Kd =0.3;break; //RunpidStraightNTo(30,500,10,10,100,0,0,1800,0,17);
+          case 18:Kp = 0.15;Ki = 0;Kd =0.05;break; //RunpidStraightNTo(75,1250,12,25,200,0,0,1800,0,18);
+          case 19:Kp = 0.23;Ki = 0;Kd =0.28;break; //RunpidStraightNTo(95,2600,20,10,100,0,0,1800,0,19);
+          case 20:Kp = 0.13;Ki = 0;Kd =0.15;break; //RunpidStraightNTo(100,3000,20,56,2000,0,0,5000,0,20);
+          case 21:Kp = 0.1355;Ki = 0;Kd =0.01;break; //RunpidStraightNTo(100,2770,20,70,1970,0,0,4000,0,21);
+          case 22:Kp = 0.1357;Ki = 0;Kd =0.03;break; // RunpidStraightNTo(79,1700,15,78,1100,0,0,1500,0,22);
+          case 23:Kp = 0.13;Ki = 0;Kd =0.065;break; // RunpidStraightNTo(79,1700,15,78,1100,0,0,1500,0,23);
+          case 24:Kp = 0.111;Ki = 0;Kd =0.1;break; //RunpidStraightNTo(100,2770,20,70,1970,0,0,4000,0,24);
+           case 25:Kp = 0.13;Ki = 0;Kd =0.06;break; //RunpidStraightNTo(100,2770,20,70,1970,0,0,4000,0,25);
+            case 26:Kp = 0.09;Ki = 0;Kd =0.02;break; //RunpidStraightNTo(100,2770,20,70,1970,0,0,4000,0,26);
+            case 27:Kp = 0.141;Ki = 0;Kd =0.03;break; // RunpidStraightNTo(79,1700,15,78,1100,0,0,1500,0,27);
+             case 28:Kp = 0.109;Ki = 0;Kd =0.001;break; //RunpidStraightNTo(100,2770,20,70,1970,0,0,4000,0,28);
+                case 29:Kp = 0.13;Ki = 0;Kd =0.04;break; //RunpidStraightNTo(80,1800,10,65,1000,0,0,1000,0,29);
+                    case 30:Kp = 0.121;Ki = 0;Kd =0.03;break; //RunpidStraightNTo(79,1600,15,78,1100,0,0,1500,0,30);
+                     case 31:Kp = 0.137;Ki = 0;Kd =0.15;break; //RunpidStraightNTo(100,3000,20,56,2000,0,0,5000,0,20);
+                    ///////////////////////////////////////////342 4.125 6M//////////////////////////////////////////////////
+                     case 32:Kp = 0.113;Ki = 0;Kd =0;break; //RunpidStraightNTo(100,2530,5,20,1800,-1,0,18000,21,32);
+                      case 33:Kp = 0.09;Ki = 0;Kd =0.001;break; //RunpidStraightNTo(60,800,10,10,120,0,0,1800,0,33);
+                      case 34:Kp = 0.113;Ki = 0;Kd =0.001;break; //RunpidStraightNTo(80,1800,10,65,1000,0,0,1000,0,34);
+                       case 35:Kp = 0.11;Ki = 0;Kd =0.09;break;//RunpidStraightNTo(45,800,10,15,150,0,0,1800,0,2);
+                       case 36:Kp = 0.17;Ki = 0;Kd =0.23;break; //RunpidStraightNTo(60,1000,20,6,60,0,0,1800,0,36);
+                        case 37:Kp = 0.130;Ki = 0;Kd =0.28;break; //RunpidStraightNTo(60,800,10,10,120,0,0,1800,0,37);
+                        case 38:Kp = 0.132;Ki = 0;Kd =0.01;break; //RunpidStraightNTo(80,1800,10,65,1000,0,0,1000,0,38);
+                          case 39:Kp = 0.4;Ki = 0.2;Kd =0.3;break;//RunpidStraightNTo(20,200,6,5,20,0,0,1800,0,4);
+                          case 40:Kp = 0.3;Ki = 0.2;Kd =0.005;break;//RunpidStraightNTo(20,200,6,5,20,0,0,1800,0,4);
+    default:Kp = 0.1;Ki = 0;Kd =0;
+ }
+  double value_now = 0;
+  double EI = 0, ED = 0;
+  int sampletime = 10;
+  double err_now = err_1+1;
+  double err_last = 0;
+  double max_v = speed_limit;
+  double Kt = 0;
+  double Ktv = 0;
+  double value_now_L = 0;
+  double value_last_L = 0;
+  double value_now_R = 0;
+  double value_last_R = 0;
+  double outputL, outputR;
+  double ET = 0;
+  double ETV = 0;
+  double sum_dec = 0;
+  double K_gyro = 0.7;
+  double angle_err = 0;
+  double acc = 0.2;
+  LF.tare_position();
+  RF.tare_position();
+  T1.reset();
+  T2.reset();
+  T3.reset();
+  T4.reset();
+  TACC.reset();
+   // double chushizhi = Inertial1.rotation(degrees);
+  while (1) {
+    //  printf(".2f\n", LeftMotor1.velocity(pct));
+    // double returnangle = Inertial1.rotation(degrees);
+  double returnangle = return_angle;
+
+   max_v = acc * TACC.elapsed();
+    if (TACC.elapsed() > 500)
+      max_v = speed_limit;
+    if (max_v >= speed_limit) {
+      max_v = speed_limit;
+    }
+    if (dec_point != -1) {
+      if (fabs(LF.get_position()) > dec_point) {
+        max_v =speed_limit - (fabs(LF.get_position()) - dec_point) /10.0;
+        if (max_v < speed_limit2) { max_v = speed_limit2;
+        }
+      }
+    }
+    if (change_steps != -1) {
+      if (fabs(LF.get_position())>=start_point ) {
+        steps = change_steps;
+        change_steps = -1;
+      }
+    }
+    value_now = LF.get_position();;
+    if (T2.elapsed() > 100) {
+      T2.reset();
+      value_last_R = value_now_R;
+      value_last_L = value_now_L;
+      value_now_R = RF.get_position();
+      value_now_L = LF.get_position();
+      ETV = (value_now_R - value_last_R) - (value_now_L - value_last_L);
+      ET = value_now_R - value_now_L;
+      sum_dec += Ktv * ETV;
+    }
+    if (T3.elapsed() > sampletime) {
+      T3.reset();
+      EI = EI + err_now;
+      err_last = err_now;
+      err_now = aim - value_now;
+      ED = err_now - err_last;
+    }
+    if (fabs(err_now) > 100)
+      EI = 0;
+    outputL = Kp * err_now + Ki * EI + Kd * ED;
+    // outputR = Kp * err_now + Ki * EI + Kd * ED;
+    if (fabs(outputL) > max_v)
+      outputL = sgn(outputL) * max_v;
+      // if (fabs(outputR) > max_v)
+      // outputR = sgn(outputR) * max_v;
+    angle_err = newgyro - returnangle;
+    if (fabs(angle_err) < 1)  { angle_err = 0;}
+    // if(angle_err>0)
+    outputR = outputL - Kt * ET - Ktv * ETV - K_gyro * (angle_err);
+    // else if(angle_err<0)
+    // outputL = outputR - Kt * ET - Ktv * ETV - K_gyro * (angle_err);
+    if (outputL == 0)
+      outputR = 0;
+    LF.move_velocity(outputL);   // Left Front
+    RF.move_velocity(outputR);   // Right Front
+    LM.move_velocity(outputL);   // Left Middle
+    RM.move_velocity(outputR);   // Right Middle
+    LB.move_velocity(outputL);   // Left Back
+    RB.move_velocity(outputR);   // Right Back
+    LF.move(outputL);   // Left Front
+    RF.move(outputR);   // Right Front
+    LM.move(outputL);   // Left Middle
+    RM.move(outputR);   // Right Middle
+    LB.move(outputL);   // Left Back
+    RB.move(outputR);   // Right Back
+      // LeftMotor4.spin(vex::directionType::fwd, outputL, vex::velocityUnits::pct);
+    // RightMotor4.spin(vex::directionType::fwd, outputR, vex::velocityUnits::pct);
+    pros::delay(sampletime);
+        if (fabs(err_now) < err_1|| T4.elapsed() >= outtime){
+  
+    BaseMotorStop(0);
+      break;
+        }
+        con.print(1, 0, "Err: %.2f OutL: %.2f", err_now, outputL);
+  con.print(2, 0, "OutR: %.2f Gyro: %.2f", outputR, returnangle);
+      }
+      BaseMotorStop(1);
+    }
+
 
 void drive_to_white_line(int speed,int outtime)
 {

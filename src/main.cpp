@@ -337,9 +337,7 @@ TEST.move(127);
     }
     //(a)b is descore, y is string blocker, right is color sort (b)is linkage
     if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_X)){
-      TurnVolpidNTo(100, -90, 1, 800,30);
-      RunpidStraightNTo(100,1000,20,60,400,0,0,2000,0,39);
-      TurnVolpidNTo(100, 90, 1, 800,30);
+      RunpidStraightNToHC(100,-2800,20,100,400,0,0,4000,0,40);
     }
 //TurnVolpidNTo(100, 180, 1, 2000,30);//34 for 120
 //RunpidStraightNTo(100,1000,20,60,400,0,0,2000,0,39);
@@ -429,8 +427,8 @@ TEST.move(127);
 
 
     //int turn = int(RX); // Normal Rates
-		//int turn = int(abs(RX) * RX / 127); //X Squared Rates
-    int turn = int(pow(RX, 3) / pow(127, 2)); //X Cubed Rates
+		int turn = int(abs(RX) * RX / 127); //X Squared Rates
+    // int turn = int(pow(RX, 3) / pow(127, 2)); //X Cubed Rates
 
 		int left = power + turn;
 		int right = power - turn;
