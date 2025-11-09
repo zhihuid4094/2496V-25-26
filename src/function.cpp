@@ -1160,7 +1160,7 @@ void RunpidStraightNToHC(double speed_limit, int aim, double err_1,
                         case 37:Kp = 0.130;Ki = 0;Kd =0.28;break; //RunpidStraightNTo(60,800,10,10,120,0,0,1800,0,37);
                         case 38:Kp = 0.132;Ki = 0;Kd =0.01;break; //RunpidStraightNTo(80,1800,10,65,1000,0,0,1000,0,38);
                           case 39:Kp = 0.4;Ki = 0.2;Kd =0.3;break;//RunpidStraightNTo(20,200,6,5,20,0,0,1800,0,4);
-                          case 40:Kp = 0.3;Ki = 0.2;Kd =0.005;break;//RunpidStraightNTo(20,200,6,5,20,0,0,1800,0,4);
+                          case 40:Kp = 0.28;Ki = 0.2;Kd =0.07;break;//RunpidStraightNTo(20,200,6,5,20,0,0,1800,0,4);
     default:Kp = 0.1;Ki = 0;Kd =0;
  }
   double value_now = 0;
