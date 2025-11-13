@@ -1160,7 +1160,7 @@ void RunpidStraightNToHC(double speed_limit, int aim, double err_1,
                         case 37:Kp = 0.130;Ki = 0;Kd =0.28;break; //RunpidStraightNTo(60,800,10,10,120,0,0,1800,0,37);
                         case 38:Kp = 0.132;Ki = 0;Kd =0.01;break; //RunpidStraightNTo(80,1800,10,65,1000,0,0,1000,0,38);
                           case 39:Kp = 0.4;Ki = 0.2;Kd =0.3;break;//RunpidStraightNTo(20,200,6,5,20,0,0,1800,0,4);
-                          case 40:Kp = 0.28;Ki = 0.2;Kd =0.07;break;//RunpidStraightNTo(20,200,6,5,20,0,0,1800,0,4);
+                          case 40:Kp = 0.185;Ki = 0.2;Kd =0.5;break;//RunpidStraightNTo(20,200,6,5,20,0,0,1800,0,4);
     default:Kp = 0.1;Ki = 0;Kd =0;
  }
   double value_now = 0;
@@ -1179,7 +1179,7 @@ void RunpidStraightNToHC(double speed_limit, int aim, double err_1,
   double ET = 0;
   double ETV = 0;
   double sum_dec = 0;
-  double K_gyro = 0.7;
+  double K_gyro = 0.7;//original 0.7
   double angle_err = 0;
   double acc = 0.2;
   LF.tare_position();
@@ -1235,25 +1235,20 @@ void RunpidStraightNToHC(double speed_limit, int aim, double err_1,
     if (fabs(err_now) > 100)
       EI = 0;
     outputL = Kp * err_now + Ki * EI + Kd * ED;
-    // outputR = Kp * err_now + Ki * EI + Kd * ED;
+    outputR = Kp * err_now + Ki * EI + Kd * ED;
     if (fabs(outputL) > max_v)
       outputL = sgn(outputL) * max_v;
-      // if (fabs(outputR) > max_v)
-      // outputR = sgn(outputR) * max_v;
+      if (fabs(outputR) > max_v)
+      outputR = sgn(outputR) * max_v;
     angle_err = newgyro - returnangle;
     if (fabs(angle_err) < 1)  { angle_err = 0;}
-    // if(angle_err>0)
-    outputR = outputL - Kt * ET - Ktv * ETV - K_gyro * (angle_err);
-    // else if(angle_err<0)
-    // outputL = outputR - Kt * ET - Ktv * ETV - K_gyro * (angle_err);
+    if(angle_err>0)
+    {outputR = outputL - Kt * ET - Ktv * ETV - K_gyro * (angle_err);}
+    else if(angle_err<0){
+    outputL = outputR - Kt * ET - Ktv * ETV - K_gyro * (angle_err);
+    }
     if (outputL == 0)
       outputR = 0;
-    LF.move_velocity(outputL);   // Left Front
-    RF.move_velocity(outputR);   // Right Front
-    LM.move_velocity(outputL);   // Left Middle
-    RM.move_velocity(outputR);   // Right Middle
-    LB.move_velocity(outputL);   // Left Back
-    RB.move_velocity(outputR);   // Right Back
     LF.move(outputL);   // Left Front
     RF.move(outputR);   // Right Front
     LM.move(outputL);   // Left Middle
@@ -1269,7 +1264,7 @@ void RunpidStraightNToHC(double speed_limit, int aim, double err_1,
       break;
         }
         con.print(1, 0, "Err: %.2f OutL: %.2f", err_now, outputL);
-  con.print(2, 0, "OutR: %.2f Gyro: %.2f", outputR, returnangle);
+        con.print(2, 0, "OutR: %.2f Gyro: %.2f", outputR, returnangle);
       }
       BaseMotorStop(1);
     }

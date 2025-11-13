@@ -80,7 +80,7 @@ void disabled() {}
  * starts.
  */
 
- 
+
 
 int atn = 0;
 int ballColor = 2;
@@ -337,7 +337,11 @@ TEST.move(127);
     }
     //(a)b is descore, y is string blocker, right is color sort (b)is linkage
     if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_X)){
-      RunpidStraightNToHC(100,1000,10,100,400,0,0,4000,0,40);
+      RunpidStraightNToHC(100,-400,10,100,400,0,0,4000,0,39);
+      delay(90);
+      TurnVolpidNTo(100, 90, 1, 800,30); 
+      delay(90);
+      RunpidStraightNToHC(100,-3220,10,100,400,0,0,4000,0,40);
     }
 //TurnVolpidNTo(100, 180, 1, 2000,30);//34 for 120
 //RunpidStraightNTo(100,1000,20,60,400,0,0,2000,0,39);
