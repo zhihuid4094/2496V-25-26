@@ -46,15 +46,15 @@ void autonomous() {
       // TurnVolpidNTo(100,90, 1, 1000,30);
       // RunpidStraightNTo(100,200,20,100,400,0,0,1200,0,39);
 
-      RunpidStraightNTo(100,850,10,100,400,0,0,1200,0,39);
-      delay(20);
-      TurnVolpidNTo(100,88, 1, 1000,30);
+      RunpidStraightNTo(100,990,10,100,400,0,0,1500,0,39);
+      delay(200);
+      TurnVolpidNTo(100,90, 1, 1000,30);
       Fintake.move(127);
       Mintake.move(127);
       //run into 1st loader and scraper
      scraper.set_value(true);
       delay(200);
-      RunpidStraightNTo(100,700,20,100,400,0,0,800,0,39);
+      RunpidStraightNTo(60,550,20,100,400,0,0,800,0,39);
       delay(600);
       RunpidStraightNTo(100,100,20,100,400,0,0,1200,0,39);
       delay(200);
@@ -64,7 +64,7 @@ void autonomous() {
       TurnVolpidNTo(100, -84, 1, 800,30); 
       //turn to the 1st goal
       delay(200);
-      RunpidStraightNTo(100,670,20,100,400,0,0,800,0,39);
+      RunpidStraightNTo(100,600,20,100,400,0,0,800,0,39);
       RunpidStraightNTo(100,-10,20,100,400,0,0,800,0,39);
       blocker.set_value(true);
       //score 1st goal
@@ -78,7 +78,7 @@ void autonomous() {
       Fintake.move(-127);
       Mintake.move(-127);
       //1st long horizontal
-      RunpidStraightNTo(100,3330,20,90,400,0,0,4000,0,39);
+      RunpidStraightNTo(70,3265,30,100,400,0,0,4000,0,39);
       colorSorter.set_value(false);
       Fintake.move(127);
       Mintake.move(127);
@@ -86,7 +86,7 @@ void autonomous() {
       TurnVolpidNTo(100, 90, 1, 800,30);
       //scrape 2nd loader
       scraper.set_value(true);
-      RunpidStraightNTo(80,700,20,100,400,0,0,800,0,39);
+      RunpidStraightNTo(60,730,20,100,400,0,0,800,0,39);
       delay(600);
       RunpidStraightNTo(100,100,20,100,400,0,0,1200,0,39);
       delay(200);
@@ -95,7 +95,7 @@ void autonomous() {
       delay(200);
       TurnVolpidNTo(100, -94, 1, 800,30);
       delay(200);
-      RunpidStraightNTo(100,600,20,100,400,0,0,800,0,39);
+      RunpidStraightNTo(100,558,20,100,400,0,0,800,0,39);
       //score 2nd goal
       blocker.set_value(true);
       delay(1600);
@@ -111,9 +111,9 @@ void autonomous() {
       delay(200);
       TurnVolpidNTo(100, -30, 1, 800,30);
       delay(200);
-      RunpidStraightNTo(70,430,20,70,400,0,0,2000,0,39);
+      RunpidStraightNTo(70,465,20,70,400,0,0,2000,0,39);
       delay(200);
-      TurnVolpidNTo(100, -91, 1, 800,30);
+      TurnVolpidNTo(100, -92, 1, 800,30);
       blocker.set_value(false);
       //3rd loader
       scraper.set_value(true);
@@ -128,23 +128,23 @@ void autonomous() {
       TurnVolpidNTo(100, 0, 1, 800,30);
       delay(200);
       //3rd long horizontal
-      RunpidStraightNTo(70,3327,70,400,0,0,4000,0,39);
+      RunpidStraightNTo(50,3365,50,100,400,0,0,4000,0,39);
       colorSorter.set_value(false);
       Fintake.move(127);
       Mintake.move(127);
-      delay(90);
-      TurnVolpidNTo(100, 90, 1, 800,30);
-      RunpidStraightNTo(100,510,20,100,400,0,0,1200,0,39);
+      delay(150);
+      TurnVolpidNTo(100, 88, 1, 800,30);
+      RunpidStraightNTo(100,540,20,100,400,0,0,1200,0,39);
       //score 3rd goal (opp side)
       blocker.set_value(true);
       delay(1200);
       RunpidStraightNTo(100,-400,20,100,400,0,0,1200,0,39);
       delay(200);
-      TurnVolpidNTo(100, -86, 1, 800,30);
+      TurnVolpidNTo(100, -93, 1, 800,30);
       blocker.set_value(false);
       //scrape 4th goal
        scraper.set_value(true);
-      RunpidStraightNTo(100,700,20,100,400,0,0,800,0,39);
+      RunpidStraightNTo(60,700,20,100,400,0,0,800,0,39);
       delay(600);
       RunpidStraightNTo(100,100,20,100,400,0,0,1200,0,39);
       delay(200);
@@ -254,13 +254,12 @@ void autonomous() {
   } 
  
   else if (atn == 1) {
-    //red left
-      Fintake.move(127);
+     Fintake.move(127);
       Mintake.move(127);
       //derrick was here
       RunpidStraightNTo(100,550,10,100,400,0,0,4000,-40,39);//the 600 is distance in mm and 30 is angle
       RunpidStraightNTo(30,430,5,75,400,0,0,1000,0,39);
-      RunpidStraightNTo(30,-120,5,50,400,0,0,1000,0,39);
+      RunpidStraightNTo(30,-140,5,50,400,0,0,1000,0,39);
       linkage.set_value(true);
       Fintake.move(0);
       Mintake.move(0);
@@ -276,60 +275,55 @@ void autonomous() {
       blocker.set_value(false);
       delay(200);
       scraper.set_value(false);
-      RunpidStraightNTo(100,-1485,20,100,400,0,0,4000,0,39);
-      linkage.set_value(false);
+      RunpidStraightNTo(100,-1415,20,100,400,0,0,4000,0,39);
       delay(100);
       TurnVolpidNTo(100,177, 1, 1000,34);
+      linkage.set_value(false);
       //scraper 
       scraper.set_value(true);
       delay(200);
-      RunpidStraightNTo(100,430,20,30,400,0,0,2000,0,39);
-      RunpidStraightNTo(100,-20,20,30,400,0,0,2000,0,39);
-      delay(800);
+      RunpidStraightNTo(50,500,20,30,400,0,0,1000,0,39);
+      delay(600);
+      RunpidStraightNTo(100,100,20,100,400,0,0,1200,0,39);
+      delay(200);
       RunpidStraightNTo(100,-300,20,100,400,0,0,1000,0,39);
       scraper.set_value(false);
-      TurnVolpidNTo(100, -1, 1, 1000,19);
+      TurnVolpidNTo(100, -2, 1, 1000,19);
       RunpidStraightNTo(100,605,20,100,400,0,0,1000,0,39); //value that drives into goal
       blocker.set_value(true);
-  //blue elims
-      // blocker.set_value(true);
-      // Fintake.move(127);
-      // Mintake.move(127);
-      // RunpidTo(80,1600,10,30,1000,0,0,4000,-50,450,0,2);//1000, -40
-      // scraper.set_value(true);
   }
 
   else if (atn == 2) { 
-    //Blue right safe
+    //Blue right elims
       Fintake.move(127);
       Mintake.move(127);
       RunpidStraightNTo(30,280,10,30,400,0,0,1000,0,39);
-      RunpidStraightNTo(100,450,10,100,400,0,0,1000,49,39);
+      RunpidStraightNTo(100,450,10,100,400,0,0,1000,46,39); //49 original
       RunpidStraightNTo(100,1000,10,100,400,0,0,4000,0,39);
-      RunpidStraightNTo(30,250,10,30,400,0,0,1000,0,39);
-      RunpidStraightNTo(100,-700,10,100,400,0,0,4000,0,39);
+      RunpidStraightNTo(30,260,10,30,400,0,0,1000,0,39);
+      RunpidStraightNTo(100,-750,10,100,400,0,0,4000,0,39);
       TurnVolpidNTo(100, -45, 1, 800,34);
       delay(100);
-      Fintake.move(-127);
-      Mintake.move(-127);
+      Fintake.move(-90);
+      Mintake.move(-90);
       RunpidStraightNTo(100,730,10,100,400,0,0,1000,0,39);
       scraper.set_value(true);
-      delay(280);
+      delay(800);
       scraper.set_value(false);
       Fintake.move(127);
       Mintake.move(127);
-      RunpidStraightNTo(100,-1760,10,100,400,0,0,2000,0,39);
+      RunpidStraightNTo(100,-1726,10,100,400,0,0,2000,0,39);
       linkage.set_value(false);
       delay(100);
       TurnVolpidNTo(100,-179, 1, 1000,34);
       scraper.set_value(true);
       delay(100);
-      RunpidStraightNTo(100,450,20,30,400,0,0,2000,0,39);
+      RunpidStraightNTo(100,670,20,30,400,0,0,2000,0,39);
       delay(500);
       RunpidStraightNTo(100,-300,20,100,400,0,0,1000,0,39);
       scraper.set_value(false);
-      TurnVolpidNTo(100, -1, 1, 1000,19);
-      RunpidStraightNTo(100,645,20,100,400,0,0,1000,0,39);
+      TurnVolpidNTo(100, -4, 1, 1000,19);
+      RunpidStraightNTo(100,640,20,100,400,0,0,1000,0,39);
       blocker.set_value(true);
       Fintake.move(127);
       Mintake.move(127);
@@ -413,13 +407,13 @@ void autonomous() {
       TurnVolpidNTo(100, -64, 1, 800,34);
       Fintake.move(127);
       Mintake.move(127);
-      RunpidStraightNTo(70,1350,10,30,400,0,0,2000,0,39);
-      TurnVolpidNTo(100, 46, 1, 800,34);
+      RunpidStraightNTo(70,1380,10,30,400,0,0,2000,0,39);
+      TurnVolpidNTo(100, 49, 1, 800,34);
       Fintake.move(0);
       Mintake.move(0);
       linkage.set_value(true);
       scraper.set_value(true);
-      RunpidStraightNTo(100,450,10,100,400,0,0,500,0,39);
+      RunpidStraightNTo(100,350,10,100,400,0,0,500,0,39);
       Fintake.move(-127);
       Mintake.move(-127);
       delay(100);
@@ -427,9 +421,9 @@ void autonomous() {
       Mintake.move(127);
       blocker.set_value(true);
       //derrick was hereeeeeee
-      delay(200);
+      delay(300);
       blocker.set_value(false);
-      delay(600);
+      delay(500);
       scraper.set_value(false);
       linkage.set_value(false);
       RunpidStraightNTo(100,-1470,10,100,400,0,0,2000,0,39);
