@@ -1311,50 +1311,50 @@ void drive_to_white_line(int speed,int outtime)
   steps=0;
 }
 
-// void UpdateXY() {
-//     // 本地坐标系变量
-//     double local_Y_position = 0.0;
-//     double local_X_position = 0.0;
-//     double local_length;
-//     double local_gyro;
+void UpdateXY() {
+    // 本地坐标系变量
+    double local_Y_position = 0.0;
+    double local_X_position = 0.0;
+    double local_length;
+    double local_gyro;
     
-//     // 计算本地坐标系坐标变化
-//     double Straightmove = 2 * M_PI * WheelRadius * (Encoder1.position(vex::rotationUnits::deg) / 360);
-//     double Sidemove = 2 * M_PI * WheelRadius * (Encoder2.position(vex::rotationUnits::deg) / 360);
+    // 计算本地坐标系坐标变化
+    double Straightmove = 2 * M_PI * WheelRadius * (ODOMY.get_position() / 360);
+    double Sidemove = 2 * M_PI * WheelRadius * (ODOMX.get_position() / 360);
     
-//     // 获取并更新陀螺仪角度
-//     double Gyro_rad = Inertial1.rotation(degrees) / (180 / M_PI);
-//     double Gyroerror_rad = Gyro_rad - Gyrobefore_rad;
-//     Gyrobefore_rad = Gyro_rad; // 更新之前的角度
+    // 获取并更新陀螺仪角度
+    double Gyro_rad = imu.get_rotation() / (180 / M_PI);
+    double Gyroerror_rad = Gyro_rad - Gyrobefore_rad;
+    Gyrobefore_rad = Gyro_rad; // 更新之前的角度
     
-//     // 使用圆弧拟合计算本地坐标
-//     if (fabs(Gyroerror_rad) < 1e-2) { // 如果 Gyroerror_rad 接近于0，使用近似处理
-//       local_Y_position = Straightmove;
-//       local_X_position = Sidemove;
-//   } else {
-//       double factor = 2 / Gyroerror_rad;
-//       local_Y_position = (factor * (Straightmove + Wheel_Y_distance * Gyroerror_rad)) * sin(Gyroerror_rad / 2);
-//       local_X_position = (factor * (Sidemove + Wheel_X_distance * Gyroerror_rad)) * sin(Gyroerror_rad / 2);
-//     }
+    // 使用圆弧拟合计算本地坐标
+    if (fabs(Gyroerror_rad) < 1e-2) { // 如果 Gyroerror_rad 接近于0，使用近似处理
+      local_Y_position = Straightmove;
+      local_X_position = Sidemove;
+  } else {
+      double factor = 2 / Gyroerror_rad;
+      local_Y_position = (factor * (Straightmove + Wheel_Y_distance * Gyroerror_rad)) * sin(Gyroerror_rad / 2);
+      local_X_position = (factor * (Sidemove + Wheel_X_distance * Gyroerror_rad)) * sin(Gyroerror_rad / 2);
+    }
     
-//     // 如果本地坐标变化量为零，则不进行后续计算
-//     if (local_X_position == 0 && local_Y_position == 0) {
-//       return; // 直接返回，不更新位置
-//     }
+    // 如果本地坐标变化量为零，则不进行后续计算
+    if (local_X_position == 0 && local_Y_position == 0) {
+      return; // 直接返回，不更新位置
+    }
     
-//     // 计算本地坐标系的角度和长度
-//     local_gyro = atan2(local_Y_position, local_X_position);
-//     local_length = sqrt(local_Y_position * local_Y_position + local_X_position * local_X_position);
+    // 计算本地坐标系的角度和长度
+    local_gyro = atan2(local_Y_position, local_X_position);
+    local_length = sqrt(local_Y_position * local_Y_position + local_X_position * local_X_position);
     
-//     // 更新全局坐标
-//     double global_gyro = local_gyro - Gyrobefore_rad - (Gyroerror_rad / 2);
-//     X_position += local_length * cos(global_gyro);
-//     Y_position += local_length * sin(global_gyro);
+    // 更新全局坐标
+    double global_gyro = local_gyro - Gyrobefore_rad - (Gyroerror_rad / 2);
+    X_position += local_length * cos(global_gyro);
+    Y_position += local_length * sin(global_gyro);
     
-//     // 重置编码器位置
-//     Encoder1.resetPosition();
-//     Encoder2.resetPosition();
-// }
+    // 重置编码器位置
+    ODOMX.reset_position();
+    ODOMY.reset_position();
+}
 
 //角度规范化
 float reduce_0_to_360(float angle) {
@@ -1391,193 +1391,205 @@ double wrapAngle(double angle) {
   return angle;
 }
 
-// void RunXY_Straight(double speed_limit, double targetX, double targetY,double err_1, double outtime,int p_point) {
+void RunXY_Straight(double speed_limit, double targetX, double targetY,double err_1, double outtime,int p_point) {
 
-//     // 计算目标方向
-//     double err_Y = targetY - Y_position;
-//     double err_X = targetX - X_position;
-//     double start_X = X_position;
-//     double start_Y = Y_position;
-//     double target_angle_rad = wrapAngle(atan2(err_X, err_Y));
-//     double target_angle = target_angle_rad * (180 / M_PI);
+    // 计算目标方向
+    double err_Y = targetY - Y_position;
+    double err_X = targetX - X_position;
+    double start_X = X_position;
+    double start_Y = Y_position;
+    double target_angle_rad = wrapAngle(atan2(err_X, err_Y));
+    double target_angle = target_angle_rad * (180 / M_PI);
    
 
-//     // 计算直线行驶的距离
-//     double covered_distance;
+    // 计算直线行驶的距离
+    double covered_distance;
 
-//     // PID 控制器参数
-//     double Kp = 2.5;
-//     double Ki = 0.001;
-//     double Kd = 3;
-//     double Kp2 = 4;
-//     double Ki2 = 0.003;
-//     double Kd2 = 5;
-//     double err_now = 0;
-//     double err_last = err_now;
-//     const double sampletime = 10.0;
-//     double outputL, outputR;
-//     double K_gyro = 0.7;
-//     double angle_err = 0.0;
-//     switch (p_point) 
-// {
-//     case 0: break;
-//     ////////////////////////////////400 3.25 6M////////////////////////////////////////
-//     case 1:Kp = 0.15;Ki = 0;Kd =0.12;K_gyro = 0.01;break; //RunpidStraightNTo(100,2970,20,10,400,0,0,1800,0,1);(3050)
-//     case 2:Kp = 2;Ki = 0.001;Kd =0.4;K_gyro = 0.3;break;
-//     default:Kp = 2.5;Ki = 0.001;Kd =3;K_gyro = 0.7;
-//  }
+    // PID 控制器参数
+    double Kp = 2.5;
+    double Ki = 0.001;
+    double Kd = 3;
+    double Kp2 = 4;
+    double Ki2 = 0.003;
+    double Kd2 = 5;
+    double err_now = 0;
+    double err_last = err_now;
+    const double sampletime = 10.0;
+    double outputL, outputR;
+    double K_gyro = 0.7;
+    double angle_err = 0.0;
+    switch (p_point) 
+{
+    case 0: break;
+    ////////////////////////////////400 3.25 6M////////////////////////////////////////
+    case 1:Kp = 0.15;Ki = 0;Kd =0.12;K_gyro = 0.01;break; //RunpidStraightNTo(100,2970,20,10,400,0,0,1800,0,1);(3050)
+    case 2:Kp = 2;Ki = 0.001;Kd =0.4;K_gyro = 0.3;break;
+    default:Kp = 2.5;Ki = 0.001;Kd =3;K_gyro = 0.7;
+ }
 
-//     //  估算直线行驶的距离
-//     double err_distance = sqrt(pow(err_X, 2) + pow(err_Y, 2));
+    //  估算直线行驶的距离
+    double err_distance = sqrt(pow(err_X, 2) + pow(err_Y, 2));
 
-//     //计算误差角度
-//     angle_err = calculateAngleError(target_angle,return_angle);
+    //计算误差角度
+    angle_err = calculateAngleError(target_angle,return_angle);
    
-//     // 计时器清零
-//     T4.clear();
+    // 计时器清零
+    T4.reset();
 
-//     while (true) {
+    while (true) {
 
-//       // 更新行走距离
-//       covered_distance = sqrt(pow(X_position - start_X, 2) + pow(Y_position - start_Y, 2));
+      // 更新行走距离
+      covered_distance = sqrt(pow(X_position - start_X, 2) + pow(Y_position - start_Y, 2));
 
-//       // 更新误差
+      // 更新误差
       
-//       err_now = sqrt(pow(err_X, 2) + pow(err_Y, 2));
-//         // 陀螺仪误差校正
-//       err_Y = targetY - Y_position;
-//       err_X = targetX - X_position;
+      err_now = sqrt(pow(err_X, 2) + pow(err_Y, 2));
+        // 陀螺仪误差校正
+      err_Y = targetY - Y_position;
+      err_X = targetX - X_position;
 
-//       // 再次计算误差角度
-//       target_angle_rad = atan2(err_X, err_Y);
-//       target_angle = target_angle_rad * (180 / M_PI);
-//       angle_err = calculateAngleError(target_angle,return_angle);
+      // 再次计算误差角度
+      target_angle_rad = atan2(err_X, err_Y);
+      target_angle = target_angle_rad * (180 / M_PI);
+      angle_err = calculateAngleError(target_angle,return_angle);
 
-//       // 积分和微分项
-//       double EI = 0.0, ED = 0.0;
+      // 积分和微分项
+      double EI = 0.0, ED = 0.0;
       
-//       // 微积分计算
-//       EI = EI + err_now;
-//       ED = err_now - err_last;
+      // 微积分计算
+      EI = EI + err_now;
+      ED = err_now - err_last;
 
-//       err_last = err_now;
+      err_last = err_now;
       
-//       // 陀螺仪误差校正
-//       if (fabs(angle_err) < 1) angle_err = 0;
+      // 陀螺仪误差校正
+      if (fabs(angle_err) < 1) angle_err = 0;
 
-//       // 第二套PID参数
-//       if(err_now < err_distance*0.4){
-//         Kp = Kp2;
-//         Ki = Ki2;
-//         Kd = Kd2;
-//       }
+      // 第二套PID参数
+      if(err_now < err_distance*0.4){
+        Kp = Kp2;
+        Ki = Ki2;
+        Kd = Kd2;
+      }
 
-//       // // PID计算
-//       outputL = Kp * err_now + Ki * EI + Kd * ED;
-//       outputR = Kp * err_now + Ki * EI + Kd * ED;
+      // // PID计算
+      outputL = Kp * err_now + Ki * EI + Kd * ED;
+      outputR = Kp * err_now + Ki * EI + Kd * ED;
 
-//       //判断要前进还是后退
+      //判断要前进还是后退
     
 
-//       // 限制输出值
-//       if (outputL > fabs(speed_limit)) outputL = speed_limit;
-//       if (outputR > fabs(speed_limit)) outputR = speed_limit;
+      // 限制输出值
+      if (outputL > fabs(speed_limit)) outputL = speed_limit;
+      if (outputR > fabs(speed_limit)) outputR = speed_limit;
 
-//       // 方向矫正
+      // 方向矫正
     
-//       outputR = outputR - K_gyro * angle_err;
-//       outputL = outputL + K_gyro * angle_err;
+      outputR = outputR - K_gyro * angle_err;
+      outputL = outputL + K_gyro * angle_err;
       
       
-//       // 调试输出
-//       printf("%.2f\n", angle_err);
+      // 调试输出
+      printf("%.2f\n", angle_err);
 
-//       // 控制电机
-//       LeftMotor1.spin(vex::directionType::fwd, outputL*0.128, voltageUnits::volt);
-//       RightMotor1.spin(vex::directionType::fwd, outputR*0.128, voltageUnits::volt);
-//       LeftMotor2.spin(vex::directionType::fwd, outputL*0.128, voltageUnits::volt);
-//       RightMotor2.spin(vex::directionType::fwd, outputR*0.128, voltageUnits::volt);
-//       LeftMotor3.spin(vex::directionType::fwd, outputL*0.128, voltageUnits::volt);
-//       RightMotor3.spin(vex::directionType::fwd, outputR*0.128, voltageUnits::volt);
-//       // LeftVol(outputL);
-//       // RightVol(outputR);
-//       // 停止条件(误差小于阈值/超过保护时间/行走距离过长)
-//       if (fabs(err_now) < err_1 || T4.time() > outtime || covered_distance > 1.2*err_distance) {
-//           LeftMotor1.stop(vex::brakeType::coast);
-//           RightMotor1.stop(vex::brakeType::coast);
-//           LeftMotor2.stop(vex::brakeType::coast);
-//           RightMotor2.stop(vex::brakeType::coast);
-//           LeftMotor3.stop(vex::brakeType::coast);
-//           RightMotor3.stop(vex::brakeType::coast);
-//           break;
-//       }
+      // 控制电机
+       LF.move(outputL);   // Left Front
+    RF.move(outputR);   // Right Front
+    LM.move(outputL);   // Left Middle
+    RM.move(outputR);   // Right Middle
+    LB.move(outputL);   // Left Back
+    RB.move(outputR);   // Right Back
+      // LeftVol(outputL);
+      // RightVol(outputR);
+      // 停止条件(误差小于阈值/超过保护时间/行走距离过长)
+      if (fabs(err_now) < err_1 || T4.elapsed() > outtime || covered_distance > 1.2*err_distance) {
+         LF.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+        LF.move_velocity(0);
 
-//       // 延迟
-//       sleep(sampletime);
-//     }
+        LM.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+        LM.move_velocity(0);
+
+        LB.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+        LB.move_velocity(0);
+
+        // Stop right motors with coast
+        RF.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+        RF.move_velocity(0);
+
+        RM.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+        RM.move_velocity(0);
+
+        RB.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+        RB.move_velocity(0);
+          break;
+      }
+
+      // 延迟
+      delay(sampletime);
+    }
     
-//     // 刹车
-//     BaseMotorStop(1);
-// }
+    // 刹车
+    BaseMotorStop(1);
+}
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 // 编码器转弯面向坐标
-// void FaceToXY(double speed_limit, double targetX, double targetY,double err_1, double outtime) {
+void FaceToXY(double speed_limit, double targetX, double targetY,double err_1, double outtime) {
 
-//     // 计算目标方向
-//     double err_Y = targetY - Y_position;
-//     double err_X = targetX - X_position;
-//     double target_angle_rad = wrapAngle(atan2(err_X, err_Y));
-//     double target_angle = target_angle_rad * (180 / M_PI);
+    // 计算目标方向
+    double err_Y = targetY - Y_position;
+    double err_X = targetX - X_position;
+    double target_angle_rad = wrapAngle(atan2(err_X, err_Y));
+    double target_angle = target_angle_rad * (180 / M_PI);
 
-//     double angle_err = 0.0;
+    double angle_err = 0.0;
 
-//     //计算误差角度
-//     angle_err = calculateAngleError(target_angle,return_angle);
+    //计算误差角度
+    angle_err = calculateAngleError(target_angle,return_angle);
 
-//     // 使用 PID 控制器旋转到目标角度
-//     if(fabs(angle_err)>1){
-//     TurnVolpidNTo(speed_limit, target_angle,err_1, outtime);
-//     }
-// }
+    // 使用 PID 控制器旋转到目标角度
+    if(fabs(angle_err)>1){
+    TurnVolpidNTo(speed_limit, target_angle,err_1, outtime);
+    }
+}
 
-// //是否到达
-// bool is_line_settled(float desired_X, float desired_Y, float desired_angle_deg, float current_X, float current_Y){
-//   return( (desired_Y-Y_position) * cos(to_rad(desired_angle_deg)) <= -(desired_X-X_position) * sin(to_rad(desired_angle_deg)) );
-// }
+//是否到达
+bool is_line_settled(float desired_X, float desired_Y, float desired_angle_deg, float current_X, float current_Y){
+  return( (desired_Y-Y_position) * cos(to_rad(desired_angle_deg)) <= -(desired_X-X_position) * sin(to_rad(desired_angle_deg)) );
+}
 
-// //获取绝对朝向
-// float get_absolute_heading(){
-//  return (reduce_0_to_360(Inertial1.rotation()));
-// }
+//获取绝对朝向
+float get_absolute_heading(){
+ return (reduce_0_to_360(imu.get_rotation()));
+}
 
-// //限制最小速度
-// float clamp_min_voltage(float drive_output, float drive_min_voltage){
-//   if(drive_output < 0 && drive_output > -drive_min_voltage){
-//       return -drive_min_voltage;
-//   }
-//   if(drive_output > 0 && drive_output < drive_min_voltage){
-//     return drive_min_voltage;
-//   }
-//   return drive_output;
-// }
+//限制最小速度
+float clamp_min_voltage(float drive_output, float drive_min_voltage){
+  if(drive_output < 0 && drive_output > -drive_min_voltage){
+      return -drive_min_voltage;
+  }
+  if(drive_output > 0 && drive_output < drive_min_voltage){
+    return drive_min_voltage;
+  }
+  return drive_output;
+}
 
-// //左侧电机缩放比例
-// float left_voltage_scaling(float drive_output, float heading_output){
-//   float ratio = std::max(std::fabs(drive_output+heading_output), std::fabs(drive_output-heading_output))/12.8;
-//   if (ratio > 1) {
-//     return (drive_output+heading_output)/ratio;
-//   }
-//   return drive_output+heading_output;
-// }
+//左侧电机缩放比例
+float left_voltage_scaling(float drive_output, float heading_output){
+  float ratio = std::max(std::fabs(drive_output+heading_output), std::fabs(drive_output-heading_output))/12.8;
+  if (ratio > 1) {
+    return (drive_output+heading_output)/ratio;
+  }
+  return drive_output+heading_output;
+}
 
-// //右侧电机缩放比例
-// float right_voltage_scaling(float drive_output, float heading_output){
-//   float ratio = std::max(std::fabs(drive_output+heading_output), std::fabs(drive_output-heading_output))/12.8;
-//   if (ratio > 1) {
-//     return (drive_output-heading_output)/ratio;
-//   }
-//   return drive_output-heading_output;
-// }
+//右侧电机缩放比例
+float right_voltage_scaling(float drive_output, float heading_output){
+  float ratio = std::max(std::fabs(drive_output+heading_output), std::fabs(drive_output-heading_output))/12.8;
+  if (ratio > 1) {
+    return (drive_output-heading_output)/ratio;
+  }
+  return drive_output-heading_output;
+}
 
 
 
@@ -1725,4 +1737,5 @@ switch (p_point)
 //         pros::delay(10); // 10ms loop
 //     }
 // }
- }
+
+}
