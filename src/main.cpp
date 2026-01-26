@@ -94,6 +94,9 @@ bool blockerToggle = false;
 bool colorSorterToggle = false;
 bool linkageToggle = false;
 bool descoreToggle = false;
+bool parkToggle = false;
+bool ptoToggle = false;
+bool liftToggle = false;
 
 
  
@@ -318,21 +321,21 @@ TEST.move(127);
       // }
     //derrae
      if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_L1)){
-      linkageToggle = !linkageToggle;
-      if(linkageToggle == true){
-        linkage.set_value(false);
+      liftToggle = !liftToggle;
+      if(liftToggle == true){
+        lift.set_value(false);
       }
       else{
-        linkage.set_value(true);
+        lift.set_value(true);
       }
     }
     if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_RIGHT)){
-      colorSorterToggle = !colorSorterToggle;
-      if(colorSorterToggle == true){
-        colorSorter.set_value(false);
+      parkToggle = !parkToggle;
+      if(parkToggle == true){
+        park.set_value(false);
       }
       else{
-        colorSorter.set_value(true);
+        park.set_value(true);
       }
     }
     //(a)b is descore, y is string blocker, right is color sort (b)is linkage
@@ -345,37 +348,29 @@ TEST.move(127);
     }
 //TurnVolpidNTo(100, 180, 1, 2000,30);//34 for 120
 //RunpidStraightNTo(100,1000,20,60,400,0,0,2000,0,39);
-    if (con.get_digital(E_CONTROLLER_DIGITAL_R1)) {//store mode
-      blocker.set_value(false);
-			Fintake.move(127);
-      Mintake.move(127);
-      Fintake.tare_position();
-      Mintake.tare_position();
+    if (con.get_digital(E_CONTROLLER_DIGITAL_R1)) {//score mode
+      pto.set_value(true);
+			Lintake.move(127);
+      Rintake.move(-127);
+      Lintake.tare_position();
+      Rintake.tare_position();
 		} 
-    else if(con.get_digital(E_CONTROLLER_DIGITAL_R2)){
-      // hood.set_value(true);
-      // scraper.set_value(false);
-      // FMintake.move(-127);
-      blocker.set_value(true);
-      Mintake.move(127);
-      Fintake.move(127);
-      // FTintake.move(-127);//i might've grouped it wrong ;-;
-      // FMintake.tare_position();
-      // FTintake.tare_position();
-      Mintake.tare_position();
-      Fintake.tare_position();
+    else if(con.get_digital(E_CONTROLLER_DIGITAL_R2)){//store mode
+      pto.set_value(false);
+      Lintake.move(127);
+      Rintake.move(-127);
+      Lintake.tare_position();
+      Rintake.tare_position();
     }
-    else if (con.get_digital(E_CONTROLLER_DIGITAL_L2)) {//score mode
-	    Fintake.move(-127);
-      Mintake.move(-127);
-      Fintake.tare_position();
-      Mintake.tare_position();
+    else if (con.get_digital(E_CONTROLLER_DIGITAL_L2)) {//outake mode
+      Lintake.move(-127);
+      Rintake.move(127);
+      Lintake.tare_position();
+      Rintake.tare_position();
     }
-    else if (con.get_digital(E_CONTROLLER_DIGITAL_UP)) {//score mode
-	    Fintake.move(-63);
-      Mintake.move(-127);
-      Fintake.tare_position();
-      Mintake.tare_position();
+    else if (con.get_digital(E_CONTROLLER_DIGITAL_UP)) {//middle goal mode
+      UpdateXY();
+
     }
     // else if (con.get_digital(E_CONTROLLER_DIGITAL_DOWN)) {//score mode
 		// 	FMintake.move(127);
@@ -386,8 +381,8 @@ TEST.move(127);
     //   Mintake.tare_position();
 		// } 
     else {
-      Fintake.move(0);
-      Mintake.move(0);
+      Lintake.move(0);
+      Rintake.move(0);
     }
     
     
@@ -748,12 +743,12 @@ TEST.move(127);
 
       //printing stuff
 		double chasstempC = ((RF.get_temperature() + RB.get_temperature() + LF.get_temperature() + LB.get_temperature())/4);
-    double intaketempc = ((Fintake.get_temperature() + Mintake.get_temperature())/2);
+    double intaketempc = ((Lintake.get_temperature() + Rintake.get_temperature())/2);
     if (time % 50 == 0 && time % 100 != 0 && time % 150 != 0){
       con.print(0, 0, "AUTON: %s           ", autstr);
       
     } else if (time % 100 == 0 && time % 150 != 0){
-        con.print(1, 0, "imu: %f         ", imu.get_heading());
+        con.print(1, 0, "x-position: %f         ", ODOMX.get_position());
         
     } 
     else if (time % 150 == 0){

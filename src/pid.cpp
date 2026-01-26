@@ -26,10 +26,10 @@ int topstallTime = 0;
 int midstallTime = 0;
 int direc;
 int direc2;
-int Mintakepos;
-int prevMintakepos;
-int FTintakepos;
-int prevFTintakepos;
+int Rintakepos;
+int prevRintakepos;
+int Lintakepos;
+int prevLintakepos;
 float view;
 int topstallC = 0;
 int midstallC = 0;
@@ -142,17 +142,17 @@ void stall(){
     // direc = HOOKS.get_voltage()/1000.0;
 
     if(stallProtection){
-        prevMintakepos = Mintakepos;
-        prevFTintakepos = FTintakepos;
-        Mintakepos = Mintake.get_position();
-        FTintakepos = FTintake.get_position();
+        prevLintakepos = Lintakepos;
+        prevRintakepos = Rintakepos;
+        Lintakepos = Lintake.get_position();
+        Rintakepos = Rintake.get_position();
 
-        if((FTintakepos == prevFTintakepos)){
+        if((Lintakepos == prevLintakepos)){
             topstallC += 10;
         } else {
             topstallC = 0;
         }
-        if((Mintakepos == prevMintakepos)){
+        if((Rintakepos == prevRintakepos)){
             midstallC += 10;
         } else {
             midstallC = 0;
@@ -166,7 +166,7 @@ void stall(){
         }
 
         if (topstalled){
-           FTintake.move(127);
+           Lintake.move(127);
            // INTAKE.move(-direc2);
             topstallTime += 10;
             if(topstallTime >= 300){
@@ -175,14 +175,14 @@ void stall(){
             }
             view = 1;
         } else {
-            FTintake.move(-127);
+            Lintake.move(-127);
             //INTAKE.move(direc2);
             topstallTime = 0;
             view = 0;
         }
 
         if (midstalled){
-           Mintake.move(127);
+           Rintake.move(127);
            // INTAKE.move(-direc2);
             midstallTime += 10;
             if(midstallTime >= 300){
@@ -191,7 +191,7 @@ void stall(){
             }
             view = 1;
         } else {
-            Mintake.move(-127);
+            Rintake.move(-127);
             //INTAKE.move(direc2);
             midstallTime = 0;
             view = 0;

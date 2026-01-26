@@ -11,20 +11,17 @@
 
 
 // 2496v
-#define LF_PORT 16
-#define LM_PORT 13
-#define LB_PORT 20
+#define LF_PORT 11
+#define LM_PORT 12
+#define LB_PORT 13
 #define RF_PORT 18
 #define RM_PORT 19
-#define RB_PORT 17
+#define RB_PORT 20
 #define IMU_PORT 10
-#define HOOKS_PORT 
-#define Fintake_PORT 15
-#define Mintake_PORT 14
-#define FTintake_PORT 1
-#define FMintake_PORT 4
-#define ODOMX_PORT 9
-#define ODOMY_PORT 19
+#define Lintake_PORT 15
+#define Rintake_PORT 10
+#define ODOMX_PORT 17
+#define ODOMY_PORT 1
 #define TEST_PORT 5
 #define TEST_PORT2 6
 #define LDB_PORT 3
@@ -51,27 +48,25 @@ pros::Motor TEST2 (TEST_PORT2, pros::E_MOTOR_GEARSET_06, false);
 
 //intake
 // pros::Motor Mintake (Mintake_PORT, pros::E_MOTOR_GEARSET_06, true);
-pros::Motor Fintake (Fintake_PORT, pros::E_MOTOR_GEARSET_06, false);
-pros::Motor Mintake (Mintake_PORT, pros::E_MOTOR_GEARSET_06, false);
-pros::Motor FTintake (FTintake_PORT, pros::E_MOTOR_GEARSET_06, false);
-pros::Motor FMintake (FMintake_PORT, pros::E_MOTOR_GEARSET_06, false);
+pros::Motor Rintake (Rintake_PORT, pros::E_MOTOR_GEARSET_06, false);
+pros::Motor Lintake (Lintake_PORT, pros::E_MOTOR_GEARSET_06, false);
 
 
 //pneumatics
     //Hood
-    pros::ADIDigitalOut blocker ('D', false);
+    pros::ADIDigitalOut lift ('D', false);
     
-    pros::ADIDigitalOut linkage ('F', false);
+    pros::ADIDigitalOut pto ('F', false);
 
-    //blocker
-    pros::ADIDigitalOut descore ('B', false);
+    //block
+    pros::ADIDigitalOut descore ('E', false);
 
     //auton selector
     pros::ADIDigitalIn selec ('E');
 
-    pros::ADIDigitalOut colorSorter('C', false);
+    pros::ADIDigitalOut park ('C', false);
 
-    pros::ADIDigitalOut scraper ('H', false);
+    pros::ADIDigitalOut scraper ('A', false);
 
 
 

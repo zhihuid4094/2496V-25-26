@@ -31,8 +31,8 @@ extern pros::Motor TEST2;
 //lift
 
 //hooks
-extern pros::Motor Fintake;
-extern pros::Motor Mintake;
+extern pros::Motor Lintake;
+extern pros::Motor Rintake;
 extern pros::Motor FTintake;
 extern pros::Motor FMintake;
 
@@ -59,6 +59,9 @@ extern pros::ADIDigitalOut colorSorter;
 extern pros::ADIDigitalOut scraper;
 extern pros::ADIDigitalOut linkage;
 extern pros::ADIDigitalOut descore;
+extern pros::ADIDigitalOut pto;
+extern pros::ADIDigitalOut lift;
+extern pros::ADIDigitalOut park;
 
 //gps
 // extern pros::Gps gps1;

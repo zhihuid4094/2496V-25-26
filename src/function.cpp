@@ -125,12 +125,10 @@ void AllMotorStop(int mode = 0) {
     RM.set_brake_mode(MOTOR_BRAKE_BRAKE);
     RB.move(0);
     RB.set_brake_mode(MOTOR_BRAKE_BRAKE);
-    Mintake.move(0);
-    Mintake.set_brake_mode(MOTOR_BRAKE_BRAKE);
-    FTintake.move(0);
-    FTintake.set_brake_mode(MOTOR_BRAKE_BRAKE);
-    FMintake.move(0);
-    FMintake.set_brake_mode(MOTOR_BRAKE_BRAKE);
+    Rintake.move(0);
+    Rintake.set_brake_mode(MOTOR_BRAKE_BRAKE);
+    Lintake.move(0);
+    Lintake.set_brake_mode(MOTOR_BRAKE_BRAKE);
   }
   else {
     LF.move(0);
@@ -145,12 +143,10 @@ void AllMotorStop(int mode = 0) {
     RM.set_brake_mode(MOTOR_BRAKE_COAST);
     RB.move(0);
     RB.set_brake_mode(MOTOR_BRAKE_COAST);
-    Mintake.move(0);
-    Mintake.set_brake_mode(MOTOR_BRAKE_COAST);
-    FTintake.move(0);
-    FTintake.set_brake_mode(MOTOR_BRAKE_COAST);
-    FMintake.move(0);
-    FMintake.set_brake_mode(MOTOR_BRAKE_COAST);
+    Rintake.move(0);
+    Rintake.set_brake_mode(MOTOR_BRAKE_COAST);
+    Lintake.move(0);
+    Lintake.set_brake_mode(MOTOR_BRAKE_COAST);
 
     // flywheel1.stop(brake);
     // clip.stop(coast);
@@ -240,38 +236,30 @@ void BaseMotorReset() {
 
 void IntakeStop(int mode = 0) {
   if (mode == 2) {
-    Mintake.move(0);
-    Mintake.set_brake_mode(MOTOR_BRAKE_HOLD);
-     FTintake.move(0);
-    FTintake.set_brake_mode(MOTOR_BRAKE_HOLD);
-    FMintake.move(0);
-    FMintake.set_brake_mode(MOTOR_BRAKE_HOLD);
+    Rintake.move(0);
+    Rintake.set_brake_mode(MOTOR_BRAKE_HOLD);
+    Lintake.move(0);
+    Lintake.set_brake_mode(MOTOR_BRAKE_HOLD);
   }
   else if (mode == 1) {
-    Mintake.move(0);
-    Mintake.set_brake_mode(MOTOR_BRAKE_BRAKE);
-     FTintake.move(0);
-    FTintake.set_brake_mode(MOTOR_BRAKE_BRAKE);
-    FMintake.move(0);
-    FMintake.set_brake_mode(MOTOR_BRAKE_BRAKE);
+    Rintake.move(0);
+    Rintake.set_brake_mode(MOTOR_BRAKE_BRAKE);
+    Lintake.move(0);
+    Lintake.set_brake_mode(MOTOR_BRAKE_BRAKE);
   }
   else {
-    Mintake.move(0);
-    Mintake.set_brake_mode(MOTOR_BRAKE_COAST);
-     FTintake.move(0);
-    FTintake.set_brake_mode(MOTOR_BRAKE_COAST);
-    FMintake.move(0);
-    FMintake.set_brake_mode(MOTOR_BRAKE_COAST);
+    Rintake.move(0);
+    Rintake.set_brake_mode(MOTOR_BRAKE_COAST);
+    Lintake.move(0);
+    Lintake.set_brake_mode(MOTOR_BRAKE_COAST);
   }
 }
 
 void IntakeReset() {
-  Mintake.tare_position();
-  Mintake.move(0);
-  FTintake.tare_position();
-  FTintake.move(0);
-  FMintake.tare_position();
-  FMintake.move(0);
+  Rintake.tare_position();
+  Rintake.move(0);
+  Lintake.tare_position();
+  Lintake.move(0);
 }
 
 void Left(int speedpct){
@@ -309,9 +297,8 @@ void RightVol(int vol_input) {
 void Roller(int vol_input) {
   int voltage = 128 * vol_input;
 
-  Mintake.move_voltage(voltage);
-  FTintake.move_voltage(voltage);
-  FMintake.move_voltage(voltage);
+  Rintake.move_voltage(voltage);
+  Lintake.move_voltage(voltage);
 }
 
 //straight by voltage
