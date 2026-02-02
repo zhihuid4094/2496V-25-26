@@ -398,9 +398,12 @@ void TurnVolpidNTo(int max_speed, double aim, double howerr, int outtime,int p_p
     case 32:Kp = 3.4;Ki = 0.005;Kd =0.8;break; //TurnVolpidNTo(100,40,0.3,700,32);(40)
     case 33:Kp = 2.2;Ki = 0;Kd =21;break; //TurnVolpidNTo(100,20,0.3,700,33);(20)
     case 34:Kp = 2.5;Ki = 0;Kd =21;break; //TurnVolpidNTo(100,20,0.3,700,33);(20)
-
+    case 35:Kp = 3.65; Ki = 0; Kd = 22;break;// down with no balls
+    case 36: Kp = 3.4; Ki = 0; Kd = 18; break;// up without balls and down with 7
+    case 37: Kp = 3.46; Ki = 0; Kd = 18; break;//up with 7
     default:Kp = 2.47;Ki = 0.005;Kd =21;
   }
+  //3.65 0 22
 //90 degrees is 30
 //other values
   double err_now = 0;
@@ -523,6 +526,7 @@ void RunpidStraightNTo(double speed_limit, int aim, double err_1,
                         case 37:Kp = 0.130;Ki = 0;Kd =0.28;break; //RunpidStraightNTo(60,800,10,10,120,0,0,1800,0,37);
                         case 38:Kp = 0.132;Ki = 0;Kd =0.01;break; //RunpidStraightNTo(80,1800,10,65,1000,0,0,1000,0,38);
                           case 39:Kp = 0.23;Ki = 0;Kd =0.21;break;//RunpidStraightNTo(600,1000,20,100,400,0,0,4000,0,39);
+                        case 40:Kp = 0.24;Ki = 0;Kd =0.21;break;
     default:Kp = 0.1;Ki = 0;Kd =0;
     //case 39 0.345, 0.01, 0.05
  }
@@ -542,7 +546,7 @@ void RunpidStraightNTo(double speed_limit, int aim, double err_1,
   double ET = 0;
   double ETV = 0;
   double sum_dec = 0;
-  double K_gyro = 0.7;
+  double K_gyro = 1.3;
   double angle_err = 0;
   double acc = 0.2;
 
@@ -929,7 +933,9 @@ void RunpidTo(double speed_limit, int aim,double err_1,double speed_limit2, int 
                       case 68:Kp = 0.16;Ki = 0;Kd =0.4;K_gyro = 0.8;break; //RunpidStraightNTo(60,1000,20,6,60,0,0,1800,0,36);
                       case 69:Kp = 0.16;Ki = 0;Kd =0.4;K_gyro = 0.5;break; //RunpidStraightNTo(60,1000,20,6,60,0,0,1800,0,36);
                       case 70:Kp = 0.16;Ki = 0;Kd =0.4;K_gyro = 1;Kd_gyro=0;break; //RunpidStraightNTo(60,1000,20,6,60,0,0,1800,0,36); 
-                                    case 71:Kp = 0.16;Ki = 0;Kd =0.4;K_gyro = 3.5;break; //RunpidStraightNTo(60,1000,20,6,60,0,0,1800,0,36); 
+                                    case 71:Kp = 0.16;Ki = 0;Kd =0.4;K_gyro = 3.5;break; //RunpidStraightNTo(60,1000,20,6,60,0,0,1800,0,36);
+
+                    
     default:Kp = 0.1;Ki = 0;Kd =0;K_gyro = 0.01;Kd_gyro=0;
  }
   double value_now = 0;
@@ -1101,7 +1107,7 @@ void RunpidStraightNToHC(double speed_limit, int aim, double err_1,
  // Inertial1.resetRotation();
   double Kp = 0.22;  // 0.39
   double Ki = 0; // 0.001
-  double Kd = 0.245; // 0.173
+  double Kd = 0.245; // 0.17
  switch (p_point) 
 {
     case 0: break;
@@ -1146,10 +1152,13 @@ void RunpidStraightNToHC(double speed_limit, int aim, double err_1,
                        case 36:Kp = 0.17;Ki = 0;Kd =0.23;break; //RunpidStraightNTo(60,1000,20,6,60,0,0,1800,0,36);
                         case 37:Kp = 0.130;Ki = 0;Kd =0.28;break; //RunpidStraightNTo(60,800,10,10,120,0,0,1800,0,37);
                         case 38:Kp = 0.132;Ki = 0;Kd =0.01;break; //RunpidStraightNTo(80,1800,10,65,1000,0,0,1000,0,38);
-                          case 39:Kp = 0.4;Ki = 0.2;Kd =0.3;break;//RunpidStraightNTo(20,200,6,5,20,0,0,1800,0,4);
+                          case 39:Kp = 0.3;Ki = 0.0;Kd =0.8;break;//RunpidStraightNTo(20,200,6,5,20,0,0,1800,0,4);
                           case 40:Kp = 0.185;Ki = 0.2;Kd =0.5;break;//RunpidStraightNTo(20,200,6,5,20,0,0,1800,0,4);
     default:Kp = 0.1;Ki = 0;Kd =0;
  }
+  double heading_err = 0;
+  double heading_err_last = 0;
+  double heading_out = 0;
   double value_now = 0;
   double EI = 0, ED = 0;
   int sampletime = 10;
@@ -1166,7 +1175,7 @@ void RunpidStraightNToHC(double speed_limit, int aim, double err_1,
   double ET = 0;
   double ETV = 0;
   double sum_dec = 0;
-  double K_gyro = 0.7;//original 0.7
+  double K_gyro = 1.1;//original 0.7
   double angle_err = 0;
   double acc = 0.2;
   LF.tare_position();
@@ -1179,8 +1188,8 @@ void RunpidStraightNToHC(double speed_limit, int aim, double err_1,
    // double chushizhi = Inertial1.rotation(degrees);
   while (1) {
     //  printf(".2f\n", LeftMotor1.velocity(pct));
-    // double returnangle = Inertial1.rotation(degrees);
-  double returnangle = return_angle;
+    double returnangle = imu.get_rotation();
+  // double returnangle = return_angle;
 
    max_v = acc * TACC.elapsed();
     if (TACC.elapsed() > 500)
@@ -1223,17 +1232,21 @@ void RunpidStraightNToHC(double speed_limit, int aim, double err_1,
       EI = 0;
     outputL = Kp * err_now + Ki * EI + Kd * ED;
     outputR = Kp * err_now + Ki * EI + Kd * ED;
-    if (fabs(outputL) > max_v)
+      if (fabs(outputL) > max_v)
       outputL = sgn(outputL) * max_v;
       if (fabs(outputR) > max_v)
       outputR = sgn(outputR) * max_v;
+
     angle_err = newgyro - returnangle;
-    if (fabs(angle_err) < 1)  { angle_err = 0;}
-    if(angle_err>0)
-    {outputR = outputL - Kt * ET - Ktv * ETV - K_gyro * (angle_err);}
-    else if(angle_err<0){
-    outputL = outputR - Kt * ET - Ktv * ETV - K_gyro * (angle_err);
+    if(angle_err<0){
+    outputR = outputR - Kt * ET - Ktv * ETV - K_gyro * (angle_err);
+    outputL = outputL - Kt * ET - Ktv * ETV + K_gyro * (angle_err);
     }
+    else if (angle_err>0){
+      outputR = outputR - Kt * ET - Ktv * ETV + K_gyro * (angle_err);
+    outputL = outputL - Kt * ET - Ktv * ETV - K_gyro * (angle_err);
+    }
+
     if (outputL == 0)
       outputR = 0;
     LF.move(outputL);   // Left Front
@@ -1250,7 +1263,7 @@ void RunpidStraightNToHC(double speed_limit, int aim, double err_1,
     BaseMotorStop(0);
       break;
         }
-        con.print(1, 0, "Err: %.2f OutL: %.2f", err_now, outputL);
+        con.print(1, 0, "err_now: %.2f aerr: %.2f", err_now, angle_err);
         con.print(2, 0, "OutR: %.2f Gyro: %.2f", outputR, returnangle);
       }
       BaseMotorStop(1);
@@ -1378,7 +1391,8 @@ double wrapAngle(double angle) {
   return angle;
 }
 
-void RunXY_Straight(double speed_limit, double targetX, double targetY,double err_1, double outtime,int p_point) {
+void RunXY_Straight(double speed_limit, double targetX, 
+  double targetY,double err_1, double outtime,int p_point) {
 
     // 计算目标方向
     double err_Y = targetY - Y_position;
@@ -1520,7 +1534,8 @@ void RunXY_Straight(double speed_limit, double targetX, double targetY,double er
 }
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 // 编码器转弯面向坐标
-void FaceToXY(double speed_limit, double targetX, double targetY,double err_1, double outtime) {
+void FaceToXY(double speed_limit, double targetX, 
+  double targetY,double err_1, double outtime) {
 
     // 计算目标方向
     double err_Y = targetY - Y_position;

@@ -82,7 +82,7 @@ void disabled() {}
 
 
 
-int atn = 2;
+int atn = 4;
 int ballColor = 2;
 int color = 0;
 int pressed = 0;
@@ -93,7 +93,7 @@ bool scraperToggle = false;
 bool blockerToggle = false;
 bool colorSorterToggle = false;
 bool linkageToggle = false;
-bool descoreToggle = false;
+
 bool parkToggle = false;
 bool ptoToggle = false;
 bool liftToggle = false;
@@ -132,23 +132,23 @@ void competition_initialize() {
       //resetEncoders();
       
       if (atn == 0) {
-        autstr = "SKILLS";
+        autstr = "7 ball SAWP";
         con.print(0, 0, "Aut 0: %s", autstr);
       }
       else if (atn == 1) {
-        autstr = "RED LEFT MID GOAL SAFE";
+        autstr = "3+4 left";
         con.print(0, 0, "Aut 1: %s", autstr);
       }
       else if (atn == 2) {
-        autstr = "BLUE RIGHT BOT GOAL SAFE";
+        autstr = "7 ball long";
         con.print(0, 0, "Aut 2: %s", autstr);
       }
       else if (atn == 3) {
-       autstr = "SOLO AWP - MID END";
+       autstr = "9 ball long";
         con.print(0, 0, "Aut 3: %s", autstr);
       }
       else if (atn == 4) {
-       autstr = "SOLO AWP  - HIGH END";
+       autstr = "14 ball SAWP";
         con.print(0, 0, "Aut 4: %s", autstr);
       }
       else if (atn == 5) {
@@ -199,8 +199,8 @@ void opcontrol() {
   bool NEWL2 = false;
   bool NEWR2 = false;
   bool NEWR1 = false;
-  bool arcToggle = false;
-  bool tankToggle = true;
+  bool arcToggle = true;
+  bool tankToggle = false;
   // bool intakeToggle = false;
   // bool doinkerToggle = false;
   // bool doinkerClampToggle = false;
@@ -214,6 +214,7 @@ void opcontrol() {
   int macro = 1;
   bool macroControl = false;
   bool hookControl = false;
+  bool descoreToggle = true;
 
 
 
@@ -327,6 +328,7 @@ TEST.move(127);
       }
       else{
         lift.set_value(true);
+
       }
     }
     if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_RIGHT)){
@@ -340,13 +342,9 @@ TEST.move(127);
     }
     //(a)b is descore, y is string blocker, right is color sort (b)is linkage
     if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_X)){
-      RunpidStraightNToHC(100,-400,10,100,400,0,0,4000,0,39);
-      delay(90);
-      TurnVolpidNTo(100, 90, 1, 800,30); 
-      delay(90);
-      RunpidStraightNToHC(100,-3220,10,100,400,0,0,4000,0,40);
+      RunpidStraightNToHC(100,800,20,60,400,0,0,2000,0,39);
     }
-//TurnVolpidNTo(100, 180, 1, 2000,30);//34 for 120
+//TurnVolpidNTo(100, 180, 1, 2000,30);/34 for 120
 //RunpidStraightNTo(100,1000,20,60,400,0,0,2000,0,39);
     if (con.get_digital(E_CONTROLLER_DIGITAL_R1)) {//score mode
       pto.set_value(true);
@@ -425,8 +423,8 @@ TEST.move(127);
 
 
 
-    //int turn = int(RX); // Normal Rates
-		int turn = int(abs(RX) * RX / 127); //X Squared Rates
+    int turn = int(RX); // Normal Rates
+		// int turn = int(abs(RX) * RX / 127); //X Squared Rates
     // int turn = int(pow(RX, 3) / pow(127, 2)); //X Cubed Rates
 
 		int left = power + turn;
@@ -748,7 +746,7 @@ TEST.move(127);
       con.print(0, 0, "AUTON: %s           ", autstr);
       
     } else if (time % 100 == 0 && time % 150 != 0){
-        con.print(1, 0, "x-position: %f         ", ODOMX.get_position());
+        con.print(1, 0, "imu: %f         ", imu.get_rotation());
         
     } 
     else if (time % 150 == 0){

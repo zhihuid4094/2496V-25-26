@@ -11,15 +11,15 @@
 
 
 // 2496v
-#define LF_PORT 11
-#define LM_PORT 12
-#define LB_PORT 13
+#define LF_PORT 12
+#define LM_PORT 13
+#define LB_PORT 11
 #define RF_PORT 18
 #define RM_PORT 19
 #define RB_PORT 20
-#define IMU_PORT 10
+#define IMU_PORT 6
 #define Lintake_PORT 15
-#define Rintake_PORT 10
+#define Rintake_PORT 7
 #define ODOMX_PORT 17
 #define ODOMY_PORT 1
 #define TEST_PORT 5
@@ -54,19 +54,19 @@ pros::Motor Lintake (Lintake_PORT, pros::E_MOTOR_GEARSET_06, false);
 
 //pneumatics
     //Hood
-    pros::ADIDigitalOut lift ('D', false);
+    pros::ADIDigitalOut lift ('B', false);
     
-    pros::ADIDigitalOut pto ('F', false);
+    pros::ADIDigitalOut pto ('D', false);
 
     //block
     pros::ADIDigitalOut descore ('E', false);
 
     //auton selector
-    pros::ADIDigitalIn selec ('E');
+    pros::ADIDigitalIn selec ('F');
 
-    pros::ADIDigitalOut park ('C', false);
+    pros::ADIDigitalOut park ('G', false);
 
-    pros::ADIDigitalOut scraper ('A', false);
+    pros::ADIDigitalOut scraper ('C', false);
 
 
 
