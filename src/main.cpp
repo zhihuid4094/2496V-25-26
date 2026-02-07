@@ -82,7 +82,7 @@ void disabled() {}
 
 
 
-int atn = 4;
+int atn = 5;
 int ballColor = 2;
 int color = 0;
 int pressed = 0;
@@ -199,8 +199,8 @@ void opcontrol() {
   bool NEWL2 = false;
   bool NEWR2 = false;
   bool NEWR1 = false;
-  bool arcToggle = true;
-  bool tankToggle = false;
+  bool arcToggle = false;
+  bool tankToggle = true;
   // bool intakeToggle = false;
   // bool doinkerToggle = false;
   // bool doinkerClampToggle = false;

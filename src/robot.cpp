@@ -18,9 +18,9 @@
 #define RM_PORT 19
 #define RB_PORT 20
 #define IMU_PORT 6
-#define Lintake_PORT 15
+#define Lintake_PORT 17
 #define Rintake_PORT 7
-#define ODOMX_PORT 17
+#define ODOMX_PORT 16
 #define ODOMY_PORT 1
 #define TEST_PORT 5
 #define TEST_PORT2 6
