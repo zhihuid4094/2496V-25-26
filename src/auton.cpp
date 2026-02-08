@@ -88,25 +88,25 @@ void autonomous() {
     Rintake.move(-127);
     RunpidStraightNTo(100,400,40,60,400,0,0,2000,0,39);
     RunpidStraightNTo(100,250,30,60,400,0,0,2000,-40,39);
-    RunpidStraightNTo(100,220,40,60,400,0,0,2000,0,39);
+    RunpidStraightNTo(100,210,40,60,400,0,0,2000,0,39);
     lift.set_value(true);
     TurnVolpidNTo(100, -133, 1, 500,36);
     RunpidStraightNTo(100,-470,40,60,400,0,0,2000,0,39);
     pto.set_value(false);
-    delay(1000);
+    delay(1200);
     pto.set_value(true);
     lift.set_value(false);
-    RunpidStraightNTo(100,1600,30,60,400,0,0,2000,0,39);
+    RunpidStraightNTo(100,1605,30,60,400,0,0,2000,0,39);//1600
     TurnVolpidNTo(100, 179, 1, 300,37);
     scraper.set_value(true);
     delay(100);
-    RunpidStraightNTo(60,500,20,60,400,0,0,1000,0,39);
+    RunpidStraightNTo(60,500,20,60,400,0,0,1000,0,39);//
     delay(100);
-    RunpidStraightNTo(100,200,100,60,400,0,0,800,0,39);
+    RunpidStraightNTo(100,150,100,60,400,0,0,800,0,39);//200
     delay(100);
     RunpidStraightNTo(100,-1100,40,60,400,0,0,2000,0,39);
     pto.set_value(false);
-    delay(800);
+    delay(1000);
     Lintake.move(0);
     Rintake.move(0);
     imu.set_rotation(0);
@@ -116,6 +116,11 @@ void autonomous() {
     RunpidStraightNTo(100,-340,40,60,400,0,0,500,0,39);//-250, -30
     TurnVolpidNTo(100, 0, 1, 500,36);
     RunpidStraightNTo(100,-1000,40,60,400,0,0,2000,0,39);
+
+    //  descore.set_value(true);
+    //  RunpidStraightNTo(100,800,40,60,400,0,0,500,0,39);
+    //  TurnVolpidNTo(100, 30, 1, 500,36);
+    // RunpidStraightNTo(100,-470,40,60,400,0,0,2000,0,39);
     //field 1 tbt///////////////////////////////////////////////////
     // park.set_value(true);
     // pto.set_value(true);
@@ -389,14 +394,47 @@ void autonomous() {
     pto.set_value(false);
     delay(1500);
     RunpidStraightNTo(100,400,100,30,400,0,0,1000,0,39);
+    TurnVolpidNTo(100, 50, 1, 300,37);
+    RunpidStraightNTo(100,400,100,30,400,0,0,1000,0,39);
   } 
   
   else if (atn == 7){
- 
+    RunpidStraightNTo(100,-200,100,30,400,0,0,2000,0,39);
+    scraper.set_value(true);
+    RunpidStraightNTo(100,1200,100,30,400,0,0,2000,0,39);
+    scraper.set_value(false);
+     Lintake.move(127);
+    Rintake.move(-127);
   } 
   
   else if (atn == 8){
-  
+    //4 ball rush
+     park.set_value(true);
+    pto.set_value(true);
+    Lintake.move(127);
+    Rintake.move(-127);
+    RunpidStraightNTo(100,400,40,60,400,0,0,2000,0,39);
+    RunpidStraightNTo(100,250,30,60,400,0,0,2000,-40,39);
+    RunpidStraightNTo(100,210,40,60,400,0,0,2000,0,39);
+    TurnVolpidNTo(100, -133, 1, 500,36);
+    delay(25);
+    RunpidStraightNTo(100,1050,30,60,400,0,0,2000,0,39);//1600
+    delay(50);
+    TurnVolpidNTo(100, 179, 1, 300,37);
+    delay(25);
+    RunpidStraightNTo(100,-1100,40,60,400,0,0,1500,0,39);
+    pto.set_value(false);
+    delay(1000);
+    Lintake.move(0);
+    Rintake.move(0);
+    imu.set_rotation(0);
+    descore.set_value(false);
+    RunpidStraightNTo(100,400,40,60,400,0,0,500,0,39);
+    TurnVolpidNTo(100, 60, 1, 500,36);
+    RunpidStraightNTo(100,-340,40,60,400,0,0,500,0,39);//-250, -30
+    TurnVolpidNTo(100, 0, 1, 500,36);
+    RunpidStraightNTo(100,-1000,40,60,400,0,0,2000,0,39);
+     TurnVolpidNTo(100, 10, 1, 500,36);
   }
       //derrick was here
 }
