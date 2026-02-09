@@ -96,7 +96,7 @@ void autonomous() {
     delay(1200);
     pto.set_value(true);
     lift.set_value(false);
-    RunpidStraightNTo(100,1605,30,60,400,0,0,2000,0,39);//1600
+    RunpidStraightNTo(100,1600,30,60,400,0,0,2000,0,39);//1600
     TurnVolpidNTo(100, 179, 1, 300,37);
     scraper.set_value(true);
     delay(100);
@@ -418,7 +418,7 @@ void autonomous() {
     RunpidStraightNTo(100,210,40,60,400,0,0,2000,0,39);
     TurnVolpidNTo(100, -133, 1, 500,36);
     delay(25);
-    RunpidStraightNTo(100,1050,30,60,400,0,0,2000,0,39);//1600
+    RunpidStraightNTo(100,96````0,30,60,400,0,0,2000,0,39);//1600
     delay(50);
     TurnVolpidNTo(100, 179, 1, 300,37);
     delay(25);
