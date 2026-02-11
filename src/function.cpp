@@ -399,8 +399,8 @@ void TurnVolpidNTo(int max_speed, double aim, double howerr, int outtime,int p_p
     case 33:Kp = 2.2;Ki = 0;Kd =21;break; //TurnVolpidNTo(100,20,0.3,700,33);(20)
     case 34:Kp = 2.5;Ki = 0;Kd =21;break; //TurnVolpidNTo(100,20,0.3,700,33);(20)
     case 35:Kp = 3.65; Ki = 0; Kd = 22;break;// down with no balls
-    case 36: Kp = 3.4; Ki = 0; Kd = 18; break;// up without balls and down with 7
-    case 37: Kp = 3.46; Ki = 0; Kd = 18; break;//up with 7
+    case 36: Kp = 3.2; Ki = 0; Kd = 19; break;// up without balls and down with 7
+    case 37: Kp = 2.788; Ki = 0; Kd = 23; break;//up with 7
     default:Kp = 2.47;Ki = 0.005;Kd =21;
   }
   //3.65 0 22

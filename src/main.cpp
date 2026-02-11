@@ -82,7 +82,7 @@ void disabled() {}
 
 
 
-int atn = 8;
+int atn = 2;
 int ballColor = 2;
 int color = 0;
 int pressed = 0;
@@ -132,7 +132,7 @@ void competition_initialize() {
       //resetEncoders();
       
       if (atn == 0) {
-        autstr = "7 ball SAWP";
+        autstr = "skills";
         con.print(0, 0, "Aut 0: %s", autstr);
       }
       else if (atn == 1) {
@@ -156,7 +156,7 @@ void competition_initialize() {
         con.print(0, 0, "Aut 5: %s", autstr);
       }
       else if (atn == 6) {
-       autstr = "RED RIGHT RING RUSH";
+       autstr = "7 ball SAWP";
         con.print(0, 0, "Aut 6: %s", autstr);
       } 
       else if (atn == 7) {
@@ -342,7 +342,8 @@ TEST.move(127);
     }
     //(a)b is descore, y is string blocker, right is color sort (b)is linkage
     if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_X)){
-      RunpidStraightNToHC(100,800,20,60,400,0,0,2000,0,39);
+      TurnVolpidNTo(100, 100, 1, 2000,30);
+      // RunpidStraightNToHC(100,800,20,60,400,0,0,2000,0,39);
     }
 //TurnVolpidNTo(100, 180, 1, 2000,30);/34 for 120
 //RunpidStraightNTo(100,1000,20,60,400,0,0,2000,0,39);
@@ -502,28 +503,28 @@ TEST.move(127);
       autstr = "SKILLS";
     }
     if (atn == 1) {
-      autstr = "RED LEFT RING";
+      autstr = "3+4 left";
     }
     else if (atn == 2) {
-      autstr = "RED RIGHT GOAL";
+      autstr = "3+4 right";
     }
     else if (atn == 3) {
-      autstr = "BLUE LEFT MOGO";
+      autstr = "9 ball right";
     }
     else if (atn == 4) {
-      autstr = "BLUE RIGHT RING";
+      autstr = "14 ball";
     }
     else if (atn == 5) {
-      autstr = "BLUE RIGHT RING RUSH";
+      autstr = "7 ball right";
     } 
     else if (atn == 6) {
-      autstr = "RED RIGHT RING RUSH";
+      autstr = "sawp";
     }
     else if (atn == 7) {
       autstr = "BLUE GOAL SAFE";
     }
     else if (atn == 8) {
-      autstr = "RED GOAL SAFE";
+      autstr = "4 ball rush";
     }
     else if (atn == 9) {
       atn = 0;
