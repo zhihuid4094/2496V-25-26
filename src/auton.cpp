@@ -35,7 +35,7 @@ void autonomous() {
 
 //111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
 
-  if (atn == 0) {//skills
+  if (atn == 0) {
     //skills
       park.set_value(true);
     pto.set_value(true);
@@ -47,7 +47,7 @@ void autonomous() {
   delay(25);
   scraper.set_value(true);
   delay(100);
-  RunpidStraightNTo(40,560,40,10,800,0,0,1000,0,39);
+  RunpidStraightNTo(40,580,40,10,800,0,0,1000,0,39);
   //1st scraper
   delay(900);
   RunpidStraightNTo(40,200,40,10,800,0,0,200,0,39);
@@ -63,7 +63,7 @@ void autonomous() {
   TurnVolpidNTo(100, -90, 1, 500,37);
   RunpidStraightNTo(100,2700,100,60,400,0,0,4000,0,39);
   TurnVolpidNTo(100, -25, 1, 500,37);
-  RunpidStraightNTo(100,-400,100,30,400,0,0,4000,0,39);
+  RunpidStraightNTo(100,-420,100,30,400,0,0,4000,0,39);
   TurnVolpidNTo(100, -90, 1, 500,37);
   Lintake.move(127);
     Rintake.move(-127);
@@ -71,7 +71,7 @@ void autonomous() {
   pto.set_value(false);
   //1st scoring
   delay(1900);
-  TurnVolpidNTo(100, -93, 1, 500,37);
+  TurnVolpidNTo(100, -92, 1, 500,37);
   scraper.set_value(true);
   delay(50);
   pto.set_value(true);
@@ -99,11 +99,12 @@ void autonomous() {
   RunpidStraightNTo(40,100,40,10,800,0,0,200,0,39);
   delay(100);
   scraper.set_value(false);
+  TurnVolpidNTo(100, -92, 1, 500,37);
   RunpidStraightNTo(100,-500,100,10,400,0,0,1700,0,39);
   TurnVolpidNTo(100, -180, 1, 500,37);
   Lintake.move(0);
   Rintake.move(0);
-  RunpidStraightNTo(40,580,40,10,400,0,0,1300,0,39);
+  RunpidStraightNTo(40,650,40,10,400,0,0,1300,0,39);
   RunpidStraightNTo(40,-100,40,10,400,0,0,500,0,39);
   TurnVolpidNTo(100, 90, 1, 500,37);
   RunpidStraightNTo(100,2800,100,60,400,0,0,4000,0,39);
@@ -130,7 +131,7 @@ void autonomous() {
   //4th scoring
   delay(1900);
   scraper.set_value(false);
-  RunpidStraightNTo(100,600,100,60,400,0,0,2000,0,39);
+  RunpidStraightNTo(100,550,100,60,400,0,0,2000,0,39);
   TurnVolpidNTo(100, -45, 1, 500,37);
   pto.set_value(true);
   RunpidStraightNTo(40,1600,40,30,400,0,0,2000,0,39);
@@ -150,7 +151,7 @@ void autonomous() {
   RunpidStraightNTo(100,800,100,60,400,0,0,1000,0,39);
   RunpidStraightNTo(100,-200,100,30,400,0,0,2000,0,39);
   scraper.set_value(true);
-  RunpidStraightNTo(100,1100,100,30,400,0,0,2000,0,39);
+  RunpidStraightNTo(100,1500,100,30,400,0,0,2000,0,39);
   scraper.set_value(false);
   Lintake.move(127);
   Rintake.move(-127);
@@ -185,24 +186,25 @@ void autonomous() {
     delay(1200);
     pto.set_value(true);
     lift.set_value(false);
-    RunpidStraightNTo(100,1510,30,60,400,0,0,2000,0,39);//1600
-    TurnVolpidNTo(100, 179, 1, 300,37);
+    RunpidStraightNTo(100,1600,30,30,400,0,0,4000,0,39);//1600
+    TurnVolpidNTo(100,179 , 1, 300,37);
     scraper.set_value(true);
     delay(100);
     RunpidStraightNTo(60,500,20,60,400,0,0,1000,0,39);//
     delay(100);
+
     RunpidStraightNTo(100,150,100,60,400,0,0,800,0,39);//200
     delay(100);
     RunpidStraightNTo(100,-1100,40,60,400,0,0,2000,0,39);
     pto.set_value(false);
-    delay(1300);
+    delay(1000);
     Lintake.move(0);
     Rintake.move(0);
     imu.set_rotation(0);
     descore.set_value(false);
     RunpidStraightNTo(100,400,40,60,400,0,0,500,0,39);
     TurnVolpidNTo(100, 60, 1, 500,36);
-    RunpidStraightNTo(100,-340,40,60,400,0,0,500,0,39);//-250, -30
+    RunpidStraightNTo(100,-380,40,60,400,0,0,500,0,39);//-250, -30
     TurnVolpidNTo(100, 0, 1, 500,36);
     RunpidStraightNTo(100,-1000,40,60,400,0,0,2000,0,39);
     TurnVolpidNTo(100, 15, 1, 500,36);
@@ -260,20 +262,18 @@ void autonomous() {
     RunpidStraightNTo(100,530,40,60,400,0,0,2000,0,39);
     Lintake.move(-127);
     Rintake.move(127);
-    delay(1000);
+    delay(800);
     pto.set_value(true);
     lift.set_value(false);
     Lintake.move(127);
     Rintake.move(-127);
-    RunpidStraightNTo(100,-1600,60,40,400,0,0,2000,0,39);
-    delay(100);
+    RunpidStraightNTo(100,-1820,70,40,400,0,0,2500,0,39);
+    delay(50);
     TurnVolpidNTo(100, -179, 1, 1000,37);
     scraper.set_value(true);
-    delay(100);
-    RunpidStraightNTo(40,500,40,10,400,0,0,1400,0,39);
     delay(50);
-    RunpidStraightNTo(100,200,100,10,400,0,0,800,0,39);
-    delay(50);
+    RunpidStraightNTo(40,500,40,10,400,0,0,700,0,39);
+    RunpidStraightNTo(100,200,100,10,400,0,0,300,0,39);
     TurnVolpidNTo(100, 180, 1, 1000,37);
     RunpidStraightNTo(100,-1100,40,10,400,0,0,2000,0,39);
     pto.set_value(false);
@@ -284,7 +284,7 @@ void autonomous() {
     descore.set_value(false);
     RunpidStraightNTo(100,400,40,60,400,0,0,500,0,39);
     TurnVolpidNTo(100, 60, 1, 500,36);
-    RunpidStraightNTo(100,-390,40,60,400,0,0,500,0,39);//-250, -30
+    RunpidStraightNTo(100,-370,40,60,400,0,0,500,0,39);//-250, -30
     TurnVolpidNTo(100, 0, 1, 500,36);
     RunpidStraightNTo(100,-1000,40,60,400,0,0,2000,0,39);
     TurnVolpidNTo(100, 15, 1, 500,36);
@@ -333,9 +333,9 @@ void autonomous() {
   pto.set_value(true);
   Lintake.move(127);
   Rintake.move(-127);
-  RunpidStraightNTo(100,940,100,10,400,0,0,2000,0,39);
+  RunpidStraightNTo(100,930,100,10,400,0,0,2000,0,39);
   delay(50);
-  TurnVolpidNTo(100, 90, 1, 500,36);
+  TurnVolpidNTo(100, 88, 1, 500,36);
   delay(25);
   scraper.set_value(true);
   delay(50);
@@ -343,15 +343,15 @@ void autonomous() {
   delay(300);
   RunpidStraightNTo(100,-1000,100,60,400,0,0,1200,0,39);
   pto.set_value(false);
-  RunpidStraightNTo(100,-300,100,60,400,0,0,400,0,39);
+  RunpidStraightNTo(100,-400,100,60,400,0,0,400,0,39);
   scraper.set_value(false);
-  delay(480);
-  TurnVolpidNTo(100, -165, 1, 700,30);
+  delay(500);
+  TurnVolpidNTo(100, -165, 1, 900,30);
   delay(50);
   pto.set_value(true);
-  RunpidStraightNTo(100,1950,80,50,400,0,0,3000,-13,39);//1945,-10
+  RunpidStraightNTo(100,1975,80,50,400,0,0,3000,-13,39);//1945,-10
    delay(25);
-    TurnVolpidNTo(100, 139, 1, 500,36);
+    TurnVolpidNTo(100, 136.5, 1, 500,36);
     delay(25);
     lift.set_value(true);
     RunpidStraightNTo(100,-450,100,60,400,0,0,2000,0,39);
@@ -361,19 +361,17 @@ void autonomous() {
     pto.set_value(true);
     lift.set_value(false);
     TurnVolpidNTo(100, 138, 1, 500,36);
-    RunpidStraightNTo(100,1570,100,60,400,0,0,2200,0,39);
+    RunpidStraightNTo(100,1460,100,60,400,0,0,2200,0,39);
     delay(50);
-    TurnVolpidNTo(100, 90, 1, 300,37);
+    TurnVolpidNTo(100, 88, 1, 300,37);
     RunpidStraightNTo(100,-800,100,30,400,0,0,1000,0,39);
     pto.set_value(false);
     delay(400);
     scraper.set_value(true);
     delay(50);
     pto.set_value(true);
-    TurnVolpidNTo(100, 87, 1, 300,37);
-    RunpidStraightNTo(100,1350,90,30,800,0,0,1000,0,39);
-    delay(350);
-    TurnVolpidNTo(100, 88, 1, 300,37);
+    RunpidStraightNTo(100,1100,90,30,200,0,0,1400,0,39);
+    delay(400);
     RunpidStraightNTo(100,-1100,100,30,400,0,0,2000,0,39);
     pto.set_value(false);
     delay(1500);
@@ -401,6 +399,8 @@ void autonomous() {
     // delay(1700);
     // imu.set_rotation(0);
     // descore.set_value(false);
+    // Lintake.move(0);
+    // Rintake.move(0);
     // RunpidStraightNTo(100,400,40,60,400,0,0,500,0,39);
     // TurnVolpidNTo(100, 60, 1, 500,36);
     // RunpidStraightNTo(100,-380,40,60,400,0,0,500,0,39);//-250, -30
@@ -436,7 +436,8 @@ void autonomous() {
     RunpidStraightNTo(100,-370,40,60,400,0,0,500,0,39);//-250, -30
     TurnVolpidNTo(100, 0, 1, 500,36);
     RunpidStraightNTo(100,-900,40,60,400,0,0,2000,0,39);
-    TurnVolpidNTo(100, 15, 1, 500,36);
+    delay(50);
+    TurnVolpidNTo(100, 30, 1, 500,36);
     
     
     
@@ -518,7 +519,7 @@ void autonomous() {
     // RunpidStraightNTo(100,210,40,60,400,0,0,2000,0,39);
     // TurnVolpidNTo(100, -133, 1, 500,36);
     // delay(25);
-    // RunpidStraightNTo(100,960,30,60,400,0,0,2000,0,39);//1600
+    // RunpidStraightNTo(100,1105,30,60,400,0,0,2000,0,39);//1600
     // delay(50);
     // TurnVolpidNTo(100, 179, 1, 300,37);
     // delay(25);
@@ -531,7 +532,7 @@ void autonomous() {
     // descore.set_value(false);
     // RunpidStraightNTo(100,400,40,60,400,0,0,500,0,39);
     // TurnVolpidNTo(100, 60, 1, 500,36);
-    // RunpidStraightNTo(100,-340,40,60,400,0,0,500,0,39);//-250, -30
+    // RunpidStraightNTo(100,-380,40,60,400,0,0,500,0,39);//-250, -30
     // TurnVolpidNTo(100, 0, 1, 500,36);
     // RunpidStraightNTo(100,-1000,40,60,400,0,0,2000,0,39);
     // scraper.set_value(true);
@@ -549,7 +550,7 @@ void autonomous() {
     RunpidStraightNTo(100,260,40,60,400,0,0,2000,0,39);
     TurnVolpidNTo(100, 132, 1, 500,36);
     delay(25);
-    RunpidStraightNTo(100,1200,30,60,400,0,0,2000,0,39);//1600
+    RunpidStraightNTo(100,1300,30,60,400,0,0,2000,0,39);//1600
     delay(50);
     TurnVolpidNTo(100, -179, 1, 300,37);
     delay(25);
@@ -566,7 +567,7 @@ void autonomous() {
     TurnVolpidNTo(100, 0, 1, 500,36);
     RunpidStraightNTo(100,-1000,40,60,400,0,0,2000,0,39);
     scraper.set_value(true);
-     TurnVolpidNTo(100, 15, 1, 500,36);
+     TurnVolpidNTo(100, 30, 1, 500,36);
 
 
 

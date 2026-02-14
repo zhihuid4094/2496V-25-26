@@ -82,7 +82,7 @@ void disabled() {}
 
 
 
-int atn = 2;
+int atn = 5;
 int ballColor = 2;
 int color = 0;
 int pressed = 0;
@@ -215,6 +215,7 @@ void opcontrol() {
   bool macroControl = false;
   bool hookControl = false;
   bool descoreToggle = true;
+  bool intakeSlow = true; //intake at 50% speed
 
 
 
@@ -368,7 +369,10 @@ TEST.move(127);
       Rintake.tare_position();
     }
     else if (con.get_digital(E_CONTROLLER_DIGITAL_UP)) {//middle goal mode
-      UpdateXY();
+      Lintake.move(60);
+      Rintake.move(-60);
+      Lintake.tare_position();
+      Rintake.tare_position();
 
     }
     // else if (con.get_digital(E_CONTROLLER_DIGITAL_DOWN)) {//score mode
