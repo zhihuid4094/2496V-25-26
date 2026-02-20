@@ -1598,146 +1598,374 @@ float right_voltage_scaling(float drive_output, float heading_output){
 //////////////////////////////////////////////////////////////////////////////
 
 
-// void drive_to_pose(double X_target, double Y_target, double angle_target, double lead, double setback, double drive_min_speed, double drive_max_speed, 
-// double heading_max_speed, double drive_settle_error, double drive_settle_time, double drive_timeout, double drive_starti, double heading_starti, int p_point){
+void drive_to_pose(double X_target, double Y_target, double angle_target,
+                   double lead, double setback,
+                   double drive_min_speed, double drive_max_speed,
+                   double heading_max_speed,
+                   double drive_settle_error,
+                   double drive_settle_time,
+                   double drive_timeout,
+                   double drive_starti,
+                   double heading_starti,
+                   int p_point)
+{
 
-// double drive_kp=0.1;
-// double drive_ki=0;
-// double drive_kd=0.1;
-// double heading_kp=0.1;
-// double heading_ki=0;
-// double heading_kd=0.1;
+    double drive_kp = 0.1;
+    double drive_ki = 0;
+    double drive_kd = 0.1;
 
-// //选择PID参数
-// switch (p_point) 
-// {
-//     case 0: break;
-//     case 1:drive_kp = 0.15;drive_ki = 0;drive_kd =0.12;heading_kp = 0.1;heading_ki = 0.01;heading_kd = 0.1;break; 
-//     case 2:drive_kp = 0.45;drive_ki = 0.001;drive_kd =1;heading_kp = 0.4;heading_ki = 0;heading_kd = 0.2;break; 
-//     case 3:drive_kp = 2.8;drive_ki = 0;drive_kd =1;heading_kp = 1.8;heading_ki = 0;heading_kd = 0.8;break;//drive_to_point(0, 30, 50, 100, 40, 1, 200, 1500,0, 0, 5, 0, 0);(50,约为两个个地垫)
-//     case 4:drive_kp = 2;drive_ki = 0.001;drive_kd =0;heading_kp = 1.5;heading_ki = 0.001;heading_kd = 0;break; 
-//     default:drive_kp = 0.15;drive_ki = 0;drive_kd =0.12;heading_kp = 0.01;heading_ki = 0.01;heading_kd = 0.01;
-//  }
+    double heading_kp = 0.1;
+    double heading_ki = 0;
+    double heading_kd = 0.1;
 
-//  //计算目标距离和PID
-//  double target_distance = hypot(X_target-X_position, Y_target-Y_position);
-//  PID drivePID(target_distance, drive_kp, drive_ki, drive_kd, drive_starti, drive_settle_error, drive_settle_time, drive_timeout);
-//  PID headingPID(to_deg(atan2(X_target-X_position, Y_target-Y_position))-get_absolute_heading(), heading_kp, heading_ki, heading_kd, heading_starti);
-//  bool line_settled = is_line_settled(X_target, Y_target, angle_target, X_position, Y_position);
-//  bool prev_line_settled = line_settled;
-//  bool crossed_center_line = false;
-//  bool center_line_side = is_line_settled(X_target, Y_target, angle_target+90, X_position, Y_position);
-//  bool prev_center_line_side = center_line_side;
+    // PID selection
+    switch (p_point)
+    {
+        case 1:
+            drive_kp = 0.15; drive_kd = 0.12;
+            heading_kp = 0.1; heading_ki = 0.01; heading_kd = 0.1;
+            break;
 
-//  //循环直到到达目标且调整到正确姿态
-//  while(!drivePID.is_settled()){
-//    line_settled = is_line_settled(X_target, Y_target, angle_target, X_position, Y_position);
-//    if(line_settled && !prev_line_settled){ break; }
-//     prev_line_settled = line_settled;
+        case 2:
+            drive_kp = 0.45; drive_ki = 0.001; drive_kd = 1;
+            heading_kp = 0.4; heading_kd = 0.2;
+            break;
 
-//    center_line_side = is_line_settled(X_target, Y_target, angle_target+90, X_position, Y_position);
-//    if(center_line_side != prev_center_line_side){
-//       crossed_center_line = true;
-//     }
+        case 3:
+            drive_kp = 2.8; drive_kd = 1;
+            heading_kp = 1.8; heading_kd = 0.8;
+            break;
 
-//    target_distance = hypot(X_target-X_position, Y_target-Y_position);
+        case 4:
+            drive_kp = 2; drive_ki = 0.001;
+            heading_kp = 1.5; heading_ki = 0.001;
+            break;
 
-//   //计算胡萝卜点
-//    float carrot_X = X_target - sin(to_rad(angle_target)) * (lead * target_distance + setback);
-//    float carrot_Y = Y_target - cos(to_rad(angle_target)) * (lead * target_distance + setback);
+        default:
+            drive_kp = 0.15; drive_kd = 0.12;
+            heading_kp = 0.01; heading_ki = 0.01; heading_kd = 0.01;
+    }
 
-//   //计算朝向误差和路程误差
-//    float drive_error = hypot(carrot_X - X_position, carrot_Y - Y_position);
-//    float heading_error = reduce_negative_180_to_180(to_deg(atan2(carrot_X - X_position,carrot_Y - Y_position))-get_absolute_heading());
+    double target_distance = hypot(X_target - X_position,
+                                   Y_target - Y_position);
 
-//    if(drive_error<drive_settle_error || crossed_center_line || drive_error < setback){
-//       heading_error = reduce_negative_180_to_180(angle_target-get_absolute_heading()); 
-//       drive_error = target_distance;
-//    }
+    PID drivePID(target_distance, drive_kp, drive_ki, drive_kd,
+                 drive_starti, drive_settle_error,
+                 drive_settle_time, drive_timeout);
 
-//   //计算输出
-//    float drive_output = drivePID.compute(drive_error);
-//    float heading_scale_factor = cos(to_rad(heading_error));
-//    drive_output*=heading_scale_factor;
-//    heading_error = reduce_negative_90_to_90(heading_error);
-//    float heading_output = headingPID.compute(heading_error);
+    PID headingPID(0, heading_kp, heading_ki, heading_kd,
+                   heading_starti);
 
-//    drive_output = clamp(drive_output, -fabs(heading_scale_factor)*drive_max_speed, fabs(heading_scale_factor)*drive_max_speed);
-//    heading_output = clamp(heading_output, -heading_max_speed, heading_max_speed);
+    bool crossed_center_line = false;
 
-//    drive_output = clamp_min_voltage(drive_output, drive_min_speed);
+    while (!drivePID.is_settled())
+    {
+        target_distance = hypot(X_target - X_position,
+                                Y_target - Y_position);
 
-//    //控制输出
-//    LeftMotor1.spin(vex::directionType::fwd, left_voltage_scaling(drive_output, heading_output), voltageUnits::volt);
-//    RightMotor1.spin(vex::directionType::fwd, right_voltage_scaling(drive_output, heading_output), voltageUnits::volt);
-//    LeftMotor2.spin(vex::directionType::fwd,left_voltage_scaling(drive_output, heading_output), voltageUnits::volt);
-//    RightMotor2.spin(vex::directionType::fwd, right_voltage_scaling(drive_output, heading_output), voltageUnits::volt);
-//    LeftMotor3.spin(vex::directionType::fwd, left_voltage_scaling(drive_output, heading_output), voltageUnits::volt);
-//    RightMotor3.spin(vex::directionType::fwd, right_voltage_scaling(drive_output, heading_output), voltageUnits::volt);
+        // Carrot point
+        double carrot_X = X_target - sin(to_rad(angle_target)) *
+                          (lead * target_distance + setback);
 
-//    sleep(10);
+        double carrot_Y = Y_target - cos(to_rad(angle_target)) *
+                          (lead * target_distance + setback);
 
-//  }
+        double drive_error = hypot(carrot_X - X_position,
+                                   carrot_Y - Y_position);
 
-// }
+        double heading_error =
+            reduce_negative_180_to_180(
+                to_deg(atan2(carrot_Y - Y_position,
+                             carrot_X - X_position))
+                - get_absolute_heading());
+
+        if (drive_error < drive_settle_error ||
+            drive_error < setback)
+        {
+            heading_error =
+                reduce_negative_180_to_180(
+                    angle_target - get_absolute_heading());
+
+            drive_error = target_distance;
+        }
+
+        // PID outputs
+        double drive_output = drivePID.compute(drive_error);
+
+        double heading_output =
+            headingPID.compute(heading_error);
+
+        // Clamp
+        drive_output =
+            clamp(drive_output,
+                  -drive_max_speed,
+                   drive_max_speed);
+
+        heading_output =
+            clamp(heading_output,
+                  -heading_max_speed,
+                   heading_max_speed);
+
+        drive_output =
+            clamp_min_voltage(drive_output,
+                              drive_min_speed);
+
+        // Convert to millivolts
+        int left_voltage =
+            left_voltage_scaling(drive_output,
+                                 heading_output);
+
+        int right_voltage =
+            right_voltage_scaling(drive_output,
+                                  heading_output);
+
+        LF.move_voltage(left_voltage);
+        LM.move_voltage(left_voltage);
+        LB.move_voltage(left_voltage);
+
+        RF.move_voltage(right_voltage);
+        RM.move_voltage(right_voltage);
+        RB.move_voltage(right_voltage);
+
+        pros::delay(10);
+    }
+
+    // Stop motors
+    LF.move_voltage(0);
+    LM.move_voltage(0);
+    LB.move_voltage(0);
+
+    RF.move_voltage(0);
+    RM.move_voltage(0);
+    RB.move_voltage(0);
+}
 
 
 ///////////////////////////////////////////////////////////////
 
 //走到坐标
-void drive_to_point(float X_target, float Y_target, float drive_min_speed, float drive_max_speed, float heading_max_speed, float drive_settle_error, 
-float drive_settle_time, float drive_timeout, float drive_starti, float heading_starti, int p_point, int b_steps, float b_point){
-
-//PID参数
-float drive_kp=0.1;
-float drive_ki=0;
-float drive_kd=0.1;
-float heading_kp=0.1;
-float heading_ki=0;
-float heading_kd=0.1;
-
-//选择PID参数
-switch (p_point) 
+void drive_to_point(float X_target, float Y_target,
+                    float drive_min_speed,
+                    float drive_max_speed,
+                    float heading_max_speed,
+                    float drive_settle_error,
+                    float drive_settle_time,
+                    float drive_timeout,
+                    float drive_starti,
+                    float heading_starti,
+                    int p_point,
+                    int b_steps,
+                    float b_point)
 {
-    case 0: break;
-    case 1:drive_kp = 2.8;drive_ki = 0;drive_kd =1;heading_kp = 1.5;heading_ki = 0;heading_kd = 0.2;break; 
-    case 2:drive_kp = 2.9;drive_ki = 0;drive_kd =0.5;heading_kp = 1.5;heading_ki = 0;heading_kd = 0.2;break; 
-    case 3:drive_kp = 2.9;drive_ki = 0;drive_kd =1;heading_kp = 0.5;heading_ki = 0;heading_kd = 0.1;break; 
-    case 4:drive_kp = 3.3;drive_ki = 0;drive_kd =1;heading_kp = 2;heading_ki = 0;heading_kd = 0.8;break;//drive_to_point(0, 30, 50, 100, 40, 1, 200, 1500,0, 0, 4, 0, 0);(30,约为一个地垫)
-    case 5:drive_kp = 2.8;drive_ki = 0;drive_kd =1;heading_kp = 1.8;heading_ki = 0;heading_kd = 0.8;break;//drive_to_point(0, 30, 50, 100, 40, 1, 200, 1500,0, 0, 5, 0, 0);(50,约为两个个地垫)
-    case 6:drive_kp = 2.7;drive_ki = 0;drive_kd =1;heading_kp = 1.6;heading_ki = 0;heading_kd = 0.8;break;//drive_to_point(0, 72, 50, 100, 40, 1, 200, 1500,0, 0, 6, 0, 0);(72,约为三个地垫)
-    case 7:drive_kp = 4;drive_ki = 0;drive_kd =2;heading_kp = 2.3;heading_ki = 0;heading_kd = 1;break;//drive_to_point(0, 12, 90, 100, 60, 1, 200, 1500,0, 0, 7, 0, 0);(12,一个地垫内的微调)
-    case 8:drive_kp = 2;drive_ki = 0.001;drive_kd =0;heading_kp = 1.5;heading_ki = 0.001;heading_kd = 0;break; //auto5
-    case 9:drive_kp = 3.8;drive_ki = 0;drive_kd =1;heading_kp = 2.5;heading_ki = 0;heading_kd = 0.2;break; 
-    case 10:drive_kp = 2;drive_ki = 0;drive_kd =1;heading_kp = 2;heading_ki = 0;heading_kd = 0;break; 
-    default:drive_kp = 0.15;drive_ki = 0;drive_kd =0.12;heading_kp = 0.01;heading_ki = 0.01;heading_kd = 0.01;
+ 
 
+    // ---------------- PID PARAMETERS ----------------
+    float drive_kp=0.1, drive_ki=0, drive_kd=0.1;
+    float heading_kp=0.1, heading_ki=0, heading_kd=0.1;
+
+    switch (p_point)
+    {
+        case 1: drive_kp=2.8; drive_kd=1; heading_kp=1.5; heading_kd=0.2; break;
+        case 2: drive_kp=2.9; drive_kd=0.5; heading_kp=1.5; heading_kd=0.2; break;
+        case 3: drive_kp=2.9; drive_kd=1; heading_kp=0.5; heading_kd=0.1; break;
+        case 4: drive_kp=3.3; drive_kd=1; heading_kp=2; heading_kd=0.8; break;
+        case 5: drive_kp=2.8; drive_kd=1; heading_kp=1.8; heading_kd=0.8; break;
+        case 6: drive_kp=2.7; drive_kd=1; heading_kp=1.6; heading_kd=0.8; break;
+        case 7: drive_kp=4; drive_kd=2; heading_kp=2.3; heading_kd=1; break;
+        case 8: drive_kp=2; drive_ki=0.001; heading_kp=1.5; heading_ki=0.001; break;
+        case 9: drive_kp=3.8; drive_kd=1; heading_kp=2.5; heading_kd=0.2; break;
+        case 10: drive_kp=2.7; drive_kd=0.4; heading_kp=2; break;
+        default: break;
+    }
+
+    // ---------------- CREATE PID ----------------
+    PID drivePID(
+        hypot(X_target - get_X_position(),
+              Y_target - get_Y_position()),
+        drive_kp, drive_ki, drive_kd,
+        drive_starti,
+        drive_settle_error,
+        drive_settle_time,
+        drive_timeout);
+
+    float start_angle_deg =
+        to_deg(atan2(X_target - get_X_position(),
+                     Y_target - get_Y_position()));
+
+    PID headingPID(
+        start_angle_deg - get_absolute_heading(),
+        heading_kp, heading_ki, heading_kd,
+        heading_starti);
+
+    bool prev_line_settled =
+        is_line_settled(X_target, Y_target,
+                        start_angle_deg,
+                        get_X_position(),
+                        get_Y_position());
+
+    // ---------------- CONTROL LOOP ----------------
+    while (!drivePID.is_settled())
+    {
+        bool line_settled =
+            is_line_settled(X_target, Y_target,
+                            start_angle_deg,
+                            get_X_position(),
+                            get_Y_position());
+
+        if (line_settled && !prev_line_settled)
+            break;
+
+        prev_line_settled = line_settled;
+
+        float drive_error =
+            hypot(X_target - get_X_position(),
+                  Y_target - get_Y_position());
+
+        float heading_error =
+            reduce_negative_180_to_180(
+                to_deg(atan2(X_target - get_X_position(),
+                             Y_target - get_Y_position()))
+                - get_absolute_heading());
+
+       
+  
+
+        float drive_output =
+            drivePID.compute(drive_error);
+
+        float heading_scale_factor =
+            cos(to_rad(heading_error));
+
+        drive_output *= heading_scale_factor;
+
+        heading_error =
+            reduce_negative_90_to_90(heading_error);
+
+        float heading_output =
+            headingPID.compute(heading_error);
+
+        if (drive_error < drive_settle_error)
+            heading_output = 0;
+
+        heading_output =
+            std::clamp(heading_output,
+                       -heading_max_speed,
+                        heading_max_speed);
+
+        float left_output  = drive_output + heading_output;
+        float right_output = drive_output - heading_output;
+
+        // Convert to millivolts (percent-style → 12000 scale)
+        int left_voltage =
+            std::clamp((int)(left_output * 120),
+                       -12000, 12000);
+
+        int right_voltage =
+            std::clamp((int)(right_output * 120),
+                       -12000, 12000);
+
+        // Apply to motors
+        LF.move_voltage(left_voltage);
+        LM.move_voltage(left_voltage);
+        LB.move_voltage(left_voltage);
+
+        RF.move_voltage(right_voltage);
+        RM.move_voltage(right_voltage);
+        RB.move_voltage(right_voltage);
+
+        // Trigger step action
+        if (b_steps != -1)
+        {
+            if (b_point >= fabs(drive_error))
+            {
+                steps = b_steps;
+                b_steps = -1;
+            }
+        }
+
+        pros::delay(10);
+      
+    }
+
+    // Stop motors
+    BaseMotorStop(1);
+    LF.move_voltage(0);
+    LM.move_voltage(0);
+    LB.move_voltage(0);
+
+    RF.move_voltage(0);
+    RM.move_voltage(0);
+    RB.move_voltage(0);
+  }
+
+  PID::PID(float error, float kp, float ki, float kd, float starti) :
+  error(error),
+  kp(kp),
+  ki(ki),
+  kd(kd),
+  starti(starti)
+{};
+
+PID::PID(float error, float kp, float ki, float kd, float starti, 
+float settle_error, float settle_time, float timeout) :
+  error(error),
+  kp(kp),
+  ki(ki),
+  kd(kd),
+  starti(starti),
+  settle_error(settle_error),
+  settle_time(settle_time),
+  timeout(timeout)
+{};
+
+PID::PID(float error, float kp, float ki, float kd, float starti, 
+float settle_error, float settle_time, float timeout, float update_period) :
+  error(error),
+  kp(kp),
+  ki(ki),
+  kd(kd),
+  starti(starti),
+  settle_error(settle_error),
+  settle_time(settle_time),
+  timeout(timeout),
+  update_period(update_period)
+{};
+
+float PID::compute(float error){
+  if (fabs(error) < starti){
+    accumulated_error+=error;
+  }
+  // Checks if the error has crossed 0, and if it has, it eliminates the integral term.
+  if ((error>0 && previous_error<0)||(error<0 && previous_error>0)){ 
+    accumulated_error = 0; 
+  }
+
+  output = kp*error + ki*accumulated_error + kd*(error-previous_error);
+
+  previous_error=error;
+
+//计时器
+  if(fabs(error)<settle_error){
+    time_spent_settled+=10;
+  } else {
+    time_spent_settled = 0;
+  }
+
+  time_spent_running+=10;
+
+  return output;
 }
 
-// void kalmanTask(void* param) {
-//     KalmanFilter2D kf(0.01); // 10ms loop
-//     while (true) {
-//         // 1. Predict
-//         kf.predict();
-
-//         // 2. Read odometry
-//         double x_pos = (readLeft() + readRight()) / 2.0;
-//         double x_vel = (readLeft() - readRight()) / 2.0;
-//         double y_pos = readBack();
-//         double y_vel = 0; // optional
-
-//         Vector4d measurement;
-//         measurement << x_pos, x_vel, y_pos, y_vel;
-
-//         // 3. Update Kalman filter (only for state tracking)
-//         kf.update(measurement);
-
-//         // 4. Optional: print or log filtered position
-//         Vector2d filtered_pos = kf.getPosition();
-//         pros::lcd::print(0, "Filtered XY: %.2f, %.2f", filtered_pos(0), filtered_pos(1));
-
-//         pros::delay(10); // 10ms loop
-//     }
-// }
-
+bool PID::is_settled(){
+  if (time_spent_running>timeout && timeout != 0){
+    return(true);
+  } // If timeout does equal 0, the move will never actually time out. Setting timeout to 0 is the 
+    // equivalent of setting it to infinity.
+  if (time_spent_settled>settle_time){
+    return(true);
+  }
+  return(false);
 }
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////

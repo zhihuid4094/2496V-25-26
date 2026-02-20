@@ -3,12 +3,9 @@
 #include "main.h"
 #include "api.h"
 #include "auton.h"
-#include "pid.h"
 #include "pros/misc.h"
 #include "pros/motors.h"
 #include "robot.h"
-#include "odometry.h"
-#include "pure_pursuit.h"
 
 using namespace pros;
 using namespace std;
@@ -201,10 +198,6 @@ void opcontrol() {
   bool NEWR1 = false;
   bool arcToggle = false;
   bool tankToggle = true;
-  // bool intakeToggle = false;
-  // bool doinkerToggle = false;
-  // bool doinkerClampToggle = false;
-  // bool liftToggle = false;
   double maxRPM = 0;
   double motorTotal = 0;
   double avgRPM = 0;
@@ -215,85 +208,13 @@ void opcontrol() {
   bool macroControl = false;
   bool hookControl = false;
   bool descoreToggle = true;
-  bool intakeSlow = true; //intake at 50% speed
-
-
-
-
 
 
   imu.tare_heading();
-  // LadyBrown.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
-
-
-
-// while (true){
-//   LF.move(con.get_analog(ANALOG_LEFT_Y));
-//   LM.move(con.get_analog(ANALOG_LEFT_Y));
-//   LB.move(con.get_analog(ANALOG_LEFT_Y));
-//   RF.move(con.get_analog(ANALOG_RIGHT_Y));
-//   RM.move(con.get_analog(ANALOG_RIGHT_Y));
-//   RB.move(con.get_analog(ANALOG_RIGHT_Y));
-// }
-  
-
-
-TEST.move(127);
-//TEST2.move(127);
-//delay(3500);
 
 
 
 	while (true) {
-
-    // color = 1;
-    // ColorSort();
-    //ColorSorter.set_value(true);
-//MACROO!!!!!!!!!!!!!!!!!!!!!
-    // liftAngle = 36000-roto.get_angle();
-    
-    // if(liftAngle > 30000){
-    //   liftAngle -= 36000;
-    // }
-    // if(con.get_digital(E_CONTROLLER_DIGITAL_L1)){
-    //   FMintake.move(127);
-    //   Mintake.move(-127);
-    //   FTintake.move(127);//i might've grouped it wrong ;-;
-    //   FMintake.tare_position();
-    //   FTintake.tare_position();
-    //   Mintake.tare_position();
-
-
-    //   // if(liftAngle < 15500){
-    //   // LadyBrown.move(-127);
-    //   // macroControl = false;
-    //   // } else {
-    //   //   macroControl = true;
-    //   //   macro = 1;
-    //   // }
-
-    //     // LadyBrown.move(127);
-    //     // macroControl = false;
-
-    // } else if(con.get_digital(E_CONTROLLER_DIGITAL_L2)){
-    //   scraper.set_value(true);
-    //   blocker.set_value(false);
-    //   FMintake.move(-127);
-    //   Mintake.move(127);
-    //   FTintake.move(-127);
-    //   FMintake.tare_position();
-    //   FTintake.tare_position();
-    //   Mintake.tare_position();
-    //   // LadyBrown.move(-127);
-    //   // macroControl = false;
-    // }
-      // macro ++;
-      // macroControl = true;
-      // //hookControl = true;
-      // if(macro == 2 || macro == 3){
-      //   hookControl = true;
-      // }
-    
 
     if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_B)){
       scraperToggle  = !scraperToggle;
@@ -313,14 +234,6 @@ TEST.move(127);
         descore.set_value(true);
       }
     }
-    // if(con.get_digital(E_CONTROLLER_DIGITAL_Y)){
-      // hoodToggle = !hoodToggle;
-      // if(hoodToggle == true){
-      //   hood.set_value(false);
-      // }
-      // else{//store mode
-      //   hood.set_value(true);
-      // }
     //derrae
      if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_L1)){
       liftToggle = !liftToggle;
@@ -343,7 +256,8 @@ TEST.move(127);
     }
     //(a)b is descore, y is string blocker, right is color sort (b)is linkage
     if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_X)){
-      TurnVolpidNTo(100, 100, 1, 2000,30);
+      drive_to_point(0, 20, 50, 100, 80, 1, 0, 800, 1, 1, 10, 0,0);
+      // TurnVolpidNTo(100, 100, 1, 2000,30);
       // RunpidStraightNToHC(100,800,20,60,400,0,0,2000,0,39);
     }
 //TurnVolpidNTo(100, 180, 1, 2000,30);/34 for 120
@@ -375,29 +289,10 @@ TEST.move(127);
       Rintake.tare_position();
 
     }
-    // else if (con.get_digital(E_CONTROLLER_DIGITAL_DOWN)) {//score mode
-		// 	FMintake.move(127);
-    //   Mintake.move(-127);
-    //   FTintake.move(127);
-    //   FMintake.tare_position();
-    //   FTintake.tare_position();
-    //   Mintake.tare_position();
-		// } 
     else {
       Lintake.move(0);
       Rintake.move(0);
     }
-    
-    
-
-    // if(hookControl){
-    //   setConstants(1, 0, 0);
-    //   intake.move(calcPID2(120, intake.get_position(), 0, 0, true));
-    //   if(abs(120 - intake.get_position()) < 10){
-    //     hookControl = false;
-    //   }
-    // } 
-
 
   pros::c::imu_accel_s_t accel = imu.get_accel();
 
@@ -444,12 +339,6 @@ TEST.move(127);
 
    
     if (tankToggle) {
-      // LF.move(int(abs(con.get_analog(ANALOG_LEFT_Y)) * con.get_analog(ANALOG_LEFT_Y) / 127));
-      // LM.move(int(abs(con.get_analog(ANALOG_LEFT_Y)) * con.get_analog(ANALOG_LEFT_Y) / 127));
-      // LB.move(int(abs(con.get_analog(ANALOG_LEFT_Y)) * con.get_analog(ANALOG_LEFT_Y) / 127));
-      // RF.move(int(abs(con.get_analog(ANALOG_RIGHT_Y)) * con.get_analog(ANALOG_RIGHT_Y) / 127));
-      // RM.move(int(abs(con.get_analog(ANALOG_RIGHT_Y)) * con.get_analog(ANALOG_RIGHT_Y) / 127));
-      // RB.move(int(abs(con.get_analog(ANALOG_RIGHT_Y)) * con.get_analog(ANALOG_RIGHT_Y) / 127));
       LF.move(con.get_analog(ANALOG_LEFT_Y));
       LM.move(con.get_analog(ANALOG_LEFT_Y));
       LB.move(con.get_analog(ANALOG_LEFT_Y));
@@ -533,216 +422,6 @@ TEST.move(127);
     else if (atn == 9) {
       atn = 0;
     }
-
-  // if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_R1)){
-  //   NEWR1 = true;
-  // } else {
-  //   NEWR1 = false;
-  // }
-
-  // if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_R2)){
-  //   NEWR2 = true;
-  // } else {
-  //   NEWR2 = false;
-  // }
-
-  // if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_L2)){
-  //   NEWL2 = true;
-  // } else {
-  //   NEWL2 = false;
-  // }
-
-  
-  // if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_L1)){
-  //   NEWL1 = true;
-  // } else {
-  //   NEWL1 = false;
-  // }
-
-//Double Press Logic
-
-    // if (((con.get_digital(E_CONTROLLER_DIGITAL_R1) && NEWR2) || (NEWR1 && con.get_digital(E_CONTROLLER_DIGITAL_R2))) || ((NEWR1 && NEWR2) || (con.get_digital(E_CONTROLLER_DIGITAL_R1) && con.get_digital(E_CONTROLLER_DIGITAL_R2)))){
-    //   //Double Press action
-    //   INTAKE.move(127);
-    //   HOOKS.move(-95);
-    // // HOOKS.move(-127);
-    // } else if  (con.get_digital(E_CONTROLLER_DIGITAL_R1)) {
-		// 	INTAKE.move(-127);
-    //   HOOKS.move(-127);
-		// } else if (con.get_digital(E_CONTROLLER_DIGITAL_R2)) {
-		// 	INTAKE.move(127);
-    //  HOOKS.move(127);
-		// } else {
-		// 	INTAKE.move(0);
-    //   HOOKS.move(0);
-		// }
-    // sreverse = false;
-    // stallProtection = true;
-    // stall();
-    // hooks(127);
-
-
-// INTAKE.move(127);
-// ColorSort(1);
-//lift
-    // if (con.get_digital(E_CONTROLLER_DIGITAL_L1)) {
-    //   LBD.move(127);
-    //   liftAngle = LIFT.get_position();
-    //   liftToggle = false;
-    // }
-    // else if (con.get_digital(E_CONTROLLER_DIGITAL_L2)){
-    //   LBD.move(-127);
-    //   liftAngle = LIFT.get_position();
-    //   liftToggle = false;
-    // } else if (liftToggle){
-    //   setConstants(LIFT_KP2,LIFT_KI2,LIFT_KD2);
-    //   if(roto.get_angle() < 15000){
-    //     rotoAngle = roto.get_angle() + 36000;
-    //   } else {
-    //     rotoAngle = roto.get_angle();
-    //   }
-    //   LBD.move(calcPID(30200,(rotoAngle),0,0,true));
-    // } else {
-    //   setConstants(LIFT_KP,LIFT_KI,LIFT_KD);
-    //   LBD.move(calcPID(liftAngle,LIFT.get_position(),0,0,true));
-    // }
-
-
-
-
-    // if (con.get_digital(E_CONTROLLER_DIGITAL_L1)) {
-		// 	LadyBrown.move(127);
-		// } 
-    // else if (con.get_digital(E_CONTROLLER_DIGITAL_L2)) {
-		// 	LadyBrown.move(-127);
-		// } 
-    // else {
-		// 	LadyBrown.move(0);
-		// }
-
-
-
-//Non Double Press Logic
-    // if (con.get_digital(E_CONTROLLER_DIGITAL_R1)) {
-		// 	INTAKE.move(127);
-		// } 
-    // else if (con.get_digital(E_CONTROLLER_DIGITAL_R2)) {
-		// 	INTAKE.move(-127);
-		// } 
-    // else {
-		// 	INTAKE.move(0);
-		// }
-
-
-
-
-
-
-//hello
-    //pid tester
-    // if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_Y)) {
-    //   RunpidStraightNTo(100,1500,100,50,1300,1,1100,1500,175,37);
-    // }
-      //driveStraightR(2000);
-      // driveStraight2(1000);
-      // driveTurn2(180);
-      // driveTurn2(-60);
-      // longValues = true;
-      
-      // driveClampS(-2500, 400, 70);
-      // longValues = false;
-    //   chasMove(40,40,40,40,40,40);
-    //  hang.set_value(true);
-    //   delay(2000);
-
-    //driveTurn2(-90);
-      // driveArcRF(90, 450, 5000);
-      // driveStraight2(600);
-
-      
-      //driveArcLF(130, 600, 3000);
-      // mogoValues=true;
-      //  driveTurn2(40);
-      // setPosition(0,0,0);
-      // boomerang(0, -1000);
-      //boomerang(-1000, 1000);
-     // boomerang(0, 0);
-     //setPosition(0, 0, 0);
-     //boomerang(-1000, 1000);
-     // driveArcLF(-90, 100, 1800);
-
-    //  driveArcL(90, 300, 3000);
-
-
-  // setPosition(0, 0, 0);
-  // //boomerang(0, 90);
-  // boomerang(48, 60);
-  // boomerang(0, 10);
-
-
-  
-    //  boomerang(-3500, 3500);
-    //  boomerang(-3500, 0);
-    //  boomerang(0, 0);
-    
-    // driveTurn2(175);
-    // driveStraight(625);
-    // LIFT.move(-127);
-    // driveStraight2(-1000);
-    // driveTurn2(100);
-    // driveStraight2(1000);
-    // mogoValues = true;
-    // driveTurn(175);
-
-    // driveArcLF(90,300,1800);
- 
-   // driveStraight2(100);
-    
-    // initializePath();
-    // initializePathDistances();
-    // purePursuitController();
-
-
-     
-      // while(true){
-      // odometry2();
-      // delay(5);
-      // }
-   // }
-
-    odometry2();
-
-  //   if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_RIGHT)){
-  //       intakeToggle = !intakeToggle;
-  //   }
-
-  //   if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_LEFT)){
-  //       liftToggle = !liftToggle;
-  //   }
-
-  // // doinkerClamp.set_value(doinkerClampToggle);
-
-
-  //   if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_DOWN)){
-  //       mogoToggle = !mogoToggle;
-  //   }
-
-  // // mogo.set_value(mogoToggle);
-
-  //     if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_X)){
-  //       doinkerToggle = !doinkerToggle;
-  //   }
-
-  // doinker.set_value(doinkerToggle);
-  //piston2.set_value(wingToggle);
-
-
-
-  // if (con.get_digital(E_CONTROLLER_DIGITAL_DOWN)){
-  //    piston.set_value(true);
-  // } else {
-  //    piston.set_value(false);
-  // }
 
       //printing stuff
 		double chasstempC = ((RF.get_temperature() + RB.get_temperature() + LF.get_temperature() + LB.get_temperature())/4);

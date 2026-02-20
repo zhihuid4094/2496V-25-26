@@ -2,8 +2,6 @@
 #include "auton.h"
 #include "main.h"
 #include "robot.h"
-#include "pid.h"
-#include "odometry.h"
 
 
 using namespace std;

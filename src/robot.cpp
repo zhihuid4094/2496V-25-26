@@ -21,7 +21,7 @@
 #define Lintake_PORT 17
 #define Rintake_PORT 7
 #define ODOMX_PORT 16
-#define ODOMY_PORT 1
+#define ODOMY_PORT 5
 #define TEST_PORT 5
 #define TEST_PORT2 6
 #define LDB_PORT 3
