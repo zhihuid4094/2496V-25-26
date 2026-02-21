@@ -10,7 +10,19 @@
 using namespace pros;
 using namespace std;
 
+void updateangle(void*) {
+  while (true) {
+    return_angle = imu.get_rotation();
+    pros::delay(10);
+  }
+}
 
+void updatelocation(void*) {
+  while (true) {
+    UpdateXY();
+    pros::delay(5);
+  }
+}
 
 // void resetEncoders() { //we can't add this to main.h because main.h doesn't
 // refer to robot.h (where LF, LB, etc. are located) 	LF.tare_position(); //or
@@ -48,9 +60,10 @@ void initialize() {
   OpticalC.set_led_pwm(100);
   pros::lcd::initialize();
   pros::lcd::set_text(1, "Hello PROS User!");
-  //imu.tare_position();
-  ODOMY.reset_position();
-  ODOMX.reset_position();
+  pros::Task angleTask(updateangle);
+  pros::Task locationTask(updatelocation);
+
+  
   //pros::Task kalman(kalmanTask, nullptr, "Kalman Filter Task");
 
 
@@ -79,7 +92,7 @@ void disabled() {}
 
 
 
-int atn = 5;
+int atn = 8;
 int ballColor = 2;
 int color = 0;
 int pressed = 0;
@@ -123,7 +136,8 @@ void competition_initialize() {
         atn = 0;
       }
 
- 
+  // imu.tare_heading();
+
 
 
       //resetEncoders();
@@ -211,6 +225,8 @@ void opcontrol() {
 
 
   imu.tare_heading();
+  ODOMY.reset_position();
+  ODOMX.reset_position();
 
 
 
@@ -256,7 +272,11 @@ void opcontrol() {
     }
     //(a)b is descore, y is string blocker, right is color sort (b)is linkage
     if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_X)){
-      drive_to_point(0, 20, 50, 100, 80, 1, 0, 800, 1, 1, 10, 0,0);
+      drive_to_point(10, 20, 50, 100, 80, 1, 0, 1000, 1, 1, 10, 0,0);
+      delay(1000);
+      drive_to_point(0, 0, 50, 100, 80, 1, 0, 1000, 1, 1, 10, 0,0);
+      // RunXY_Straight(80,0,90,1,1000,2);
+      // FaceToXY(80,100,0,0.4,1500);
       // TurnVolpidNTo(100, 100, 1, 2000,30);
       // RunpidStraightNToHC(100,800,20,60,400,0,0,2000,0,39);
     }
