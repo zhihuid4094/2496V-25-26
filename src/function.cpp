@@ -1424,7 +1424,7 @@ void RunXY_Straight(double speed_limit, double targetX,
     case 0: break;
     ////////////////////////////////400 3.25 6M////////////////////////////////////////
     case 1:Kp = 0.15;Ki = 0;Kd =0.12;K_gyro = 0.01;break; //RunpidStraightNTo(100,2970,20,10,400,0,0,1800,0,1);(3050)
-    case 2:Kp = 2;Ki = 0.001;Kd =0.4;K_gyro = 0.3;break;
+    case 2:Kp = 2;Ki = 0.001;Kd =0.4;K_gyro = 0.7;break;
     default:Kp = 2.5;Ki = 0.001;Kd =3;K_gyro = 0.7;
  }
 
@@ -1627,8 +1627,8 @@ void drive_to_pose(double X_target, double Y_target, double angle_target,
             break;
 
         case 2:
-            drive_kp = 0.45; drive_ki = 0.001; drive_kd = 1;
-            heading_kp = 0.4; heading_kd = 0.2;
+            drive_kp = 0.35; drive_ki = 0.005; drive_kd = 2.2;
+            heading_kp = 0.7; heading_kd = 3.5;
             break;
 
         case 3:
@@ -1774,7 +1774,7 @@ void drive_to_point(float X_target, float Y_target,
         case 7: drive_kp=4; drive_kd=2; heading_kp=2.3; heading_kd=1; break;
         case 8: drive_kp=2; drive_ki=0.001; heading_kp=1.5; heading_ki=0.001; break;
         case 9: drive_kp=3.8; drive_kd=1; heading_kp=2.5; heading_kd=0.2; break;
-        case 10: drive_kp=2.7; drive_kd=0.4; heading_kp=2; break;
+        case 10: drive_kp=2.2; drive_kd=0.6; heading_kp=2.5;heading_kd=0.2; break;
         default: break;
     }
 
@@ -1883,8 +1883,9 @@ void drive_to_point(float X_target, float Y_target,
             }
         }
 
+        
+        
         pros::delay(10);
-      
     }
 
     // Stop motors
@@ -1896,6 +1897,8 @@ void drive_to_point(float X_target, float Y_target,
     RF.move_voltage(0);
     RM.move_voltage(0);
     RB.move_voltage(0);
+
+    
   }
 
   PID::PID(float error, float kp, float ki, float kd, float starti) :
