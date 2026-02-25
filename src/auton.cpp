@@ -415,12 +415,14 @@ void autonomous() {
     TurnVolpidNTo(100, 45, 1, 300,37);
     RunpidStraightNTo(100,260,40,60,400,0,0,2000,0,39);
     TurnVolpidNTo(100, 130, 1, 600,37);
-    RunpidStraightNTo(100,900,100,60,400,0,0,1000,0,39);
-    TurnVolpidNTo(100, -179, 1, 800,37);
+    //long straight distane to goal
+    RunpidStraightNTo(100,1005,100,60,400,0,0,1000,0,39);
+    delay(50);
+    TurnVolpidNTo(100, -175, 1, 1000,37);
     scraper.set_value(true);
     delay(150);
     RunpidStraightNTo(60,500,20,60,400,0,0,800,0,39);
-    delay(25);
+    delay(15);
     RunpidStraightNTo(100,300,100,60,400,0,0,500,0,39);
     RunpidStraightNTo(100,-1000,40,60,400,0,0,2000,0,39);
     pto.set_value(false);
@@ -431,7 +433,7 @@ void autonomous() {
     Rintake.move(0);
     RunpidStraightNTo(100,400,40,60,400,0,0,500,0,39);
     TurnVolpidNTo(100, 60, 1, 500,36);
-    RunpidStraightNTo(100,-370,40,60,400,0,0,500,0,39);//-250, -30
+    RunpidStraightNTo(100,-350,40,60,400,0,0,500,0,39);//-250, -30
     TurnVolpidNTo(100, 0, 1, 500,36);
     RunpidStraightNTo(100,-900,40,60,400,0,0,2000,0,39);
     delay(50);
@@ -503,7 +505,44 @@ void autonomous() {
   } 
   
   else if (atn == 7){
-    
+    park.set_value(true);
+    pto.set_value(true);
+    Lintake.move(127);
+    Rintake.move(-127);
+    //intake 3 balls
+    RunpidStraightNTo(100,400,40,60,400,0,0,2000,0,39);
+    RunpidStraightNTo(100,250,30,60,400,0,0,2000,-40,39);
+    RunpidStraightNTo(100,200,40,60,400,0,0,2000,0,39);
+    TurnVolpidNTo(100, 230, 1, 500,36);
+    //drive backwards before turn to goal
+    RunpidStraightNTo(100,960,40,60,400,0,0,2000,0,39);
+    pros::delay(300);
+    TurnVolpidNTo(100, -179, 1, 500,36);
+    RunpidStraightNTo(100,-750,40,60,400,0,0,1000,0,39);
+    pto.set_value(false); //scoring
+    delay(800);
+    TurnVolpidNTo(100, 183, 1, 500,36);
+    scraper.set_value(true);
+    RunpidStraightNTo(50,1500,40,40,400,0,0,1500,0,39);
+    delay(100);
+    pto.set_value(true);
+    RunpidStraightNTo(70,-300,40,60,400,0,0,1000,0,39);
+    scraper.set_value(false);
+    TurnVolpidNTo(100, -134, 1, 500,36);
+    //turning to midle goal
+    lift.set_value(true);
+    RunpidStraightNTo(70,-1660,40,60,400,0,0,1500,0,39);
+    pto.set_value(false);
+    delay(500); //mid 
+    RunpidStraightNTo(70,300,40,60,400,0,0,2000,0,39);
+    RunpidStraightNTo(100,-400,40,60,400,0,0,2000,0,39); //dih tap 
+    RunpidStraightNTo(70,1090,40,60,400,0,0,2000,0,39); //drive out 
+    lift.set_value(false);
+    TurnVolpidNTo(100, 183, 1, 500,36); ////descore up and ready
+    RunpidStraightNTo(70,-1000,40,60,400,0,0,2000,0,39);
+    TurnVolpidNTo(100, -160, 1, 500,36);
+
+
   } 
   
   else if (atn == 8){
