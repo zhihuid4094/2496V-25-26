@@ -82,7 +82,7 @@ void disabled() {}
 
 
 
-int atn = 5;
+int atn = 0;
 int ballColor = 2;
 int color = 0;
 int pressed = 0;
@@ -326,9 +326,11 @@ TEST.move(127);
       liftToggle = !liftToggle;
       if(liftToggle == true){
         lift.set_value(false);
+        descore.set_value(false);
       }
       else{
         lift.set_value(true);
+        descore.set_value(false);
 
       }
     }
