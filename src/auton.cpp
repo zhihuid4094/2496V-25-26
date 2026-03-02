@@ -37,153 +37,153 @@ void autonomous() {
 
   if (atn == 0) {
     //97 skills
-    descore.set_value(true);
-    park.set_value(true);
-    pto.set_value(true);
-    Lintake.move(127);
-    Rintake.move(-127);
-    //arc to pickup balls 
-    RunpidStraightNTo(100,200,40,60,400,0,0,2000,0,39);
-    RunpidStraightNTo(100,250,30,60,400,0,0,2000,-40,39);
-    RunpidStraightNTo(100,380,40,60,400,0,0,2000,0,39);
-    lift.set_value(true);
-    TurnVolpidNTo(100, -131, 1, 500,36);
-    delay(100);
-    RunpidStraightNTo(100,-490,40,60,400,0,0,2000,0,39);
-    //score middle goal 
-    pto.set_value(false);
-    delay(1200);
-    RunpidStraightNTo(100,1590,30,30,400,0,0,4000,0,39);//1600
-     lift.set_value(false);
-     pto.set_value(true);
-     delay(100);
-    TurnVolpidNTo(100,179 , 1, 300,37);
-    scraper.set_value(true);
-    delay(100);
-    RunpidStraightNTo(60,470,20,60,400,0,0,1000,0,39);//
-    delay(400);
-    RunpidStraightNTo(100,30,100,60,400,0,0,1000,0,39);
-    delay(100);
-    RunpidStraightNTo(100,-500,100,10,400,0,0,1200,0,39);
-    delay(25);
-    scraper.set_value(false);
-    TurnVolpidNTo(100, -90, 1, 500,37);
-    Lintake.move(0);
-      Rintake.move(0);
-    RunpidStraightNTo(100,600,100,10,400,0,0,1200,0,39);
-    delay(50);
-    RunpidStraightNTo(100,-20,100,10,400,0,0,200,0,39);
-    delay(50);
-    TurnVolpidNTo(100, -10, 1, 500,37);
-    RunpidStraightNTo(100,2800,100,60,400,0,0,4000,0,39);
-    TurnVolpidNTo(100, -40, 1, 500,37);
-    RunpidStraightNTo(100,-550,100,30,400,0,0,4000,0,39);
-    TurnVolpidNTo(100, 0, 1, 500,37);
-    Lintake.move(127);
-      Rintake.move(-127);
-    RunpidStraightNTo(100,-500,100,30,400,0,0,800,0,39);
-    //score other side first loader balls
-    pto.set_value(false);
-    delay(1500);
-    scraper.set_value(true);
-    pto.set_value(true);
-    TurnVolpidNTo(100, 3, 1, 500,37);
-     RunpidStraightNTo(60,1000,20,60,400,0,0,1500,0,39);
-    delay(400);
-    RunpidStraightNTo(60,100,20,60,400,0,0,1500,0,39);
-    delay(300);
-    RunpidStraightNTo(80,-1100,80,60,400,0,0,4000,0,39);
-    //intake second and scored second loader
-    // RunpidStraightNTo(100,5000,100,30,400,0,0,2000,0,39);
-    scraper.set_value(false);
-    pto.set_value(false);
-    delay(900);
-    TurnVolpidNTo(100,30, 1, 500,37);
-    pto.set_value(true);
-    RunpidStraightNTo(100,1080,100,60,400,0,0,4000,0,39);
-    TurnVolpidNTo(100,85, 1, 500,37);
-      RunpidStraightNTo(100,650,100,60,400,0,0,1000,0,39);
-  RunpidStraightNTo(100,-300,100,30,400,0,0,2000,0,39);
-  // scraper.set_value(true);
-  RunpidStraightNTo(100,2000,100,30,400,0,0,2000,0,39);
-  RunpidStraightNTo(100,-200,100,30,400,0,0,500,0,39);
-  RunpidStraightNTo(100,3000,100,30,400,0,0,4500,0,39);
-  scraper.set_value(false);
-  RunpidStraightNTo(100,1500,100,30,400,0,0,2000,0,39);
-  TurnVolpidNTo(100,180, 1, 500,37);
-  delay(50);
-  TurnVolpidNTo(100,0, 1, 500,37);
-  delay(50);
-  RunpidStraightNTo(100,300,100,30,400,0,0,600,0,39);
-  RunpidStraightNTo(100,-780,100,30,400,0,0,2000,0,39);
-  delay(50);
-  TurnVolpidNTo(100,46, 1, 500,37);
-    delay(50);
-    RunpidStraightNTo(100,-1100,40,30,400,0,0,2300,0,39);
-    lift.set_value(true);
-    for(int i = 0; i <= 200; i++){
-      Lintake.move(-127);
-      Rintake.move(127);
-      delay(1);
-    }
-    Lintake.move(60);
-    Rintake.move(-60);
-    //score middle goal
-    delay(5000);
-    RunpidStraightNTo(100,1610,30,30,400,0,0,4000,0,39);
-    delay(50);
-    scraper.set_value(true);
-    lift.set_value(false);
-    pto.set_value(true);
-    TurnVolpidNTo(100,0, 1, 500,37);
-    delay(100);
-    //loader number 3
-    RunpidStraightNTo(60,470,20,60,400,0,0,1000,0,39);//
-    delay(400);
-    RunpidStraightNTo(100,30,100,60,400,0,0,1000,0,39);
-    delay(100);
-    RunpidStraightNTo(100,-500,100,10,400,0,0,1200,0,39);
-    delay(25);
-    scraper.set_value(false);
-    TurnVolpidNTo(100, 90, 1, 500,37);
-    //carry balls over
-    Lintake.move(0);
-    Rintake.move(0);
-    RunpidStraightNTo(100,600,100,10,400,0,0,1200,0,39);
-    delay(50);
-    RunpidStraightNTo(100,-20,100,10,400,0,0,200,0,39);
-    delay(50);
-    TurnVolpidNTo(100, 170, 1, 500,37);
-    RunpidStraightNTo(100,2800,100,60,400,0,0,4000,0,39);
-    TurnVolpidNTo(100, 140, 1, 500,37);
-    RunpidStraightNTo(100,-550,100,30,400,0,0,4000,0,39);
-    TurnVolpidNTo(100, 180, 1, 500,37);
-    Lintake.move(127);
-    Rintake.move(-127);
-    RunpidStraightNTo(100,-500,100,30,400,0,0,800,0,39);
-    pto.set_value(false);
-    delay(1500);
-    scraper.set_value(true);
-    pto.set_value(true);
-    TurnVolpidNTo(100, -177, 1, 500,37);
-    //loader number 4
-    RunpidStraightNTo(60,1000,20,60,400,0,0,1500,0,39);
-    delay(400);
-    RunpidStraightNTo(60,100,20,60,400,0,0,1500,0,39);
-    delay(300);
-    RunpidStraightNTo(80,-1100,80,60,400,0,0,4000,0,39);
-    scraper.set_value(false);
-    pto.set_value(false);
-    delay(1500);
-    TurnVolpidNTo(100,30, 1, 500,37);
-    pto.set_value(true);
-    RunpidStraightNTo(100,1080,100,60,400,0,0,4000,0,39);
-    TurnVolpidNTo(100,85, 1, 500,37);
-    RunpidStraightNTo(100,650,100,60,400,0,0,1000,0,39);
-    RunpidStraightNTo(100,-300,100,30,400,0,0,2000,0,39);
-    RunpidStraightNTo(100,2000,100,30,400,0,0,2000,0,39);
-    Lintake.move(127);
-    Rintake.move(-127);
+  //   descore.set_value(true);
+  //   park.set_value(true);
+  //   pto.set_value(true);
+  //   Lintake.move(127);
+  //   Rintake.move(-127);
+  //   //arc to pickup balls 
+  //   RunpidStraightNTo(100,200,40,60,400,0,0,2000,0,39);
+  //   RunpidStraightNTo(100,250,30,60,400,0,0,2000,-40,39);
+  //   RunpidStraightNTo(100,380,40,60,400,0,0,2000,0,39);
+  //   lift.set_value(true);
+  //   TurnVolpidNTo(100, -131, 1, 500,36);
+  //   delay(100);
+  //   RunpidStraightNTo(100,-490,40,60,400,0,0,2000,0,39);
+  //   //score middle goal 
+  //   pto.set_value(false);
+  //   delay(1200);
+  //   RunpidStraightNTo(100,1590,30,30,400,0,0,4000,0,39);//1600
+  //    lift.set_value(false);
+  //    pto.set_value(true);
+  //    delay(100);
+  //   TurnVolpidNTo(100,179 , 1, 300,37);
+  //   scraper.set_value(true);
+  //   delay(100);
+  //   RunpidStraightNTo(60,470,20,60,400,0,0,1000,0,39);//
+  //   delay(400);
+  //   RunpidStraightNTo(100,30,100,60,400,0,0,1000,0,39);
+  //   delay(100);
+  //   RunpidStraightNTo(100,-500,100,10,400,0,0,1200,0,39);
+  //   delay(25);
+  //   scraper.set_value(false);
+  //   TurnVolpidNTo(100, -90, 1, 500,37);
+  //   Lintake.move(0);
+  //     Rintake.move(0);
+  //   RunpidStraightNTo(100,600,100,10,400,0,0,1200,0,39);
+  //   delay(50);
+  //   RunpidStraightNTo(100,-20,100,10,400,0,0,200,0,39);
+  //   delay(50);
+  //   TurnVolpidNTo(100, -10, 1, 500,37);
+  //   RunpidStraightNTo(100,2800,100,60,400,0,0,4000,0,39);
+  //   TurnVolpidNTo(100, -40, 1, 500,37);
+  //   RunpidStraightNTo(100,-550,100,30,400,0,0,4000,0,39);
+  //   TurnVolpidNTo(100, 0, 1, 500,37);
+  //   Lintake.move(127);
+  //     Rintake.move(-127);
+  //   RunpidStraightNTo(100,-500,100,30,400,0,0,800,0,39);
+  //   //score other side first loader balls
+  //   pto.set_value(false);
+  //   delay(1500);
+  //   scraper.set_value(true);
+  //   pto.set_value(true);
+  //   TurnVolpidNTo(100, 3, 1, 500,37);
+  //    RunpidStraightNTo(60,1000,20,60,400,0,0,1500,0,39);
+  //   delay(400);
+  //   RunpidStraightNTo(60,100,20,60,400,0,0,1500,0,39);
+  //   delay(300);
+  //   RunpidStraightNTo(80,-1100,80,60,400,0,0,4000,0,39);
+  //   //intake second and scored second loader
+  //   // RunpidStraightNTo(100,5000,100,30,400,0,0,2000,0,39);
+  //   scraper.set_value(false);
+  //   pto.set_value(false);
+  //   delay(900);
+  //   TurnVolpidNTo(100,30, 1, 500,37);
+  //   pto.set_value(true);
+  //   RunpidStraightNTo(100,1080,100,60,400,0,0,4000,0,39);
+  //   TurnVolpidNTo(100,85, 1, 500,37);
+  //     RunpidStraightNTo(100,650,100,60,400,0,0,1000,0,39);
+  // RunpidStraightNTo(100,-300,100,30,400,0,0,2000,0,39);
+  // // scraper.set_value(true);
+  // RunpidStraightNTo(100,2000,100,30,400,0,0,2000,0,39);
+  // RunpidStraightNTo(100,-200,100,30,400,0,0,500,0,39);
+  // RunpidStraightNTo(100,3000,100,30,400,0,0,4500,0,39);
+  // scraper.set_value(false);
+  // RunpidStraightNTo(100,1500,100,30,400,0,0,2000,0,39);
+  // TurnVolpidNTo(100,180, 1, 500,37);
+  // delay(50);
+  // TurnVolpidNTo(100,0, 1, 500,37);
+  // delay(50);
+  // RunpidStraightNTo(100,300,100,30,400,0,0,600,0,39);
+  // RunpidStraightNTo(100,-780,100,30,400,0,0,2000,0,39);
+  // delay(50);
+  // TurnVolpidNTo(100,46, 1, 500,37);
+  //   delay(50);
+  //   RunpidStraightNTo(100,-1100,40,30,400,0,0,2300,0,39);
+  //   lift.set_value(true);
+  //   for(int i = 0; i <= 200; i++){
+  //     Lintake.move(-127);
+  //     Rintake.move(127);
+  //     delay(1);
+  //   }
+  //   Lintake.move(60);
+  //   Rintake.move(-60);
+  //   //score middle goal
+  //   delay(5000);
+  //   RunpidStraightNTo(100,1610,30,30,400,0,0,4000,0,39);
+  //   delay(50);
+  //   scraper.set_value(true);
+  //   lift.set_value(false);
+  //   pto.set_value(true);
+  //   TurnVolpidNTo(100,0, 1, 500,37);
+  //   delay(100);
+  //   //loader number 3
+  //   RunpidStraightNTo(60,470,20,60,400,0,0,1000,0,39);//
+  //   delay(400);
+  //   RunpidStraightNTo(100,30,100,60,400,0,0,1000,0,39);
+  //   delay(100);
+  //   RunpidStraightNTo(100,-500,100,10,400,0,0,1200,0,39);
+  //   delay(25);
+  //   scraper.set_value(false);
+  //   TurnVolpidNTo(100, 90, 1, 500,37);
+  //   //carry balls over
+  //   Lintake.move(0);
+  //   Rintake.move(0);
+  //   RunpidStraightNTo(100,600,100,10,400,0,0,1200,0,39);
+  //   delay(50);
+  //   RunpidStraightNTo(100,-20,100,10,400,0,0,200,0,39);
+  //   delay(50);
+  //   TurnVolpidNTo(100, 170, 1, 500,37);
+  //   RunpidStraightNTo(100,2800,100,60,400,0,0,4000,0,39);
+  //   TurnVolpidNTo(100, 140, 1, 500,37);
+  //   RunpidStraightNTo(100,-550,100,30,400,0,0,4000,0,39);
+  //   TurnVolpidNTo(100, 180, 1, 500,37);
+  //   Lintake.move(127);
+  //   Rintake.move(-127);
+  //   RunpidStraightNTo(100,-500,100,30,400,0,0,800,0,39);
+  //   pto.set_value(false);
+  //   delay(1500);
+  //   scraper.set_value(true);
+  //   pto.set_value(true);
+  //   TurnVolpidNTo(100, -177, 1, 500,37);
+  //   //loader number 4
+  //   RunpidStraightNTo(60,1000,20,60,400,0,0,1500,0,39);
+  //   delay(400);
+  //   RunpidStraightNTo(60,100,20,60,400,0,0,1500,0,39);
+  //   delay(300);
+  //   RunpidStraightNTo(80,-1100,80,60,400,0,0,4000,0,39);
+  //   scraper.set_value(false);
+  //   pto.set_value(false);
+  //   delay(1500);
+  //   TurnVolpidNTo(100,30, 1, 500,37);
+  //   pto.set_value(true);
+  //   RunpidStraightNTo(100,1080,100,60,400,0,0,4000,0,39);
+  //   TurnVolpidNTo(100,85, 1, 500,37);
+  //   RunpidStraightNTo(100,650,100,60,400,0,0,1000,0,39);
+  //   RunpidStraightNTo(100,-300,100,30,400,0,0,2000,0,39);
+  //   RunpidStraightNTo(100,2000,100,30,400,0,0,2000,0,39);
+  //   Lintake.move(127);
+  //   Rintake.move(-127);
 
   
 
@@ -193,124 +193,124 @@ void autonomous() {
     // RunpidStraightNTo(100,5000,100,60,400,0,0,5000,0,39);
 
     //75 skills
-  //     park.set_value(true);
-  //   pto.set_value(true);
-  //   Lintake.move(127);
-  //   Rintake.move(-127);
-  // RunpidStraightNTo(100,950,100,10,400,0,0,2000,0,39);
-  // delay(100);
-  // TurnVolpidNTo(100, 90, 1, 500,37);
-  // delay(25);
-  // scraper.set_value(true);
-  // delay(100);
-  // RunpidStraightNTo(40,580,40,10,800,0,0,1000,0,39);
-  // //1st scraper
-  // delay(900);
-  // RunpidStraightNTo(40,200,40,10,800,0,0,200,0,39);
-  // delay(100);
-  // RunpidStraightNTo(100,-500,100,10,400,0,0,1200,0,39);
-  // delay(25);
-  // scraper.set_value(false);
-  // TurnVolpidNTo(100, 0, 1, 500,37);
-  // Lintake.move(0);
-  //   Rintake.move(0);
-  // RunpidStraightNTo(100,400,100,10,400,0,0,1200,0,39);
-  // delay(50);
-  // TurnVolpidNTo(100, -90, 1, 500,37);
-  // RunpidStraightNTo(100,2700,100,60,400,0,0,4000,0,39);
-  // TurnVolpidNTo(100, -25, 1, 500,37);
-  // RunpidStraightNTo(100,-420,100,30,400,0,0,4000,0,39);
-  // TurnVolpidNTo(100, -90, 1, 500,37);
-  // Lintake.move(127);
-  //   Rintake.move(-127);
-  // RunpidStraightNTo(100,-500,100,30,400,0,0,800,0,39);
-  // pto.set_value(false);
-  // //1st scoring
-  // delay(1900);
-  // TurnVolpidNTo(100, -92, 1, 500,37);
-  // scraper.set_value(true);
-  // delay(50);
-  // pto.set_value(true);
-  // RunpidStraightNTo(40,1380,40,30,400,0,0,1700,0,39);
-  // //2nd loader
-  // delay(800);
-  // RunpidStraightNTo(40,100,40,10,800,0,0,200,0,39);
-  // delay(100);
-  // TurnVolpidNTo(100, -87, 1, 500,37);
-  // RunpidStraightNTo(100,-1300,100,30,400,0,0,1500,0,39);
-  // scraper.set_value(false);
-  // pto.set_value(false);
-  // //2nd scoring
-  // delay(1900);
-  // RunpidStraightNTo(100,350,100,30,400,0,0,4000,0,39);
-  // TurnVolpidNTo(100, -180, 1, 500,37);
-  // RunpidStraightNTo(100,3280,100,60,400,0,0,4000,0,39);
-  // delay(100);
-  // TurnVolpidNTo(100, -88, 1, 500,37);
-  // scraper.set_value(true);
-  // pto.set_value(true);
-  // RunpidStraightNTo(40,1300,40,10,400,0,0,1700,0,39);
-  // //3rd loader
-  // delay(800);
-  // RunpidStraightNTo(40,100,40,10,800,0,0,200,0,39);
-  // delay(100);
-  // scraper.set_value(false);
-  // TurnVolpidNTo(100, -92, 1, 500,37);
-  // RunpidStraightNTo(100,-500,100,10,400,0,0,1700,0,39);
-  // TurnVolpidNTo(100, -180, 1, 500,37);
-  // Lintake.move(0);
-  // Rintake.move(0);
-  // RunpidStraightNTo(40,650,40,10,400,0,0,1300,0,39);
-  // RunpidStraightNTo(40,-100,40,10,400,0,0,500,0,39);
-  // TurnVolpidNTo(100, 90, 1, 500,37);
-  // RunpidStraightNTo(100,2800,100,60,400,0,0,4000,0,39);
-  // TurnVolpidNTo(100, 145, 1, 500,37);
-  // RunpidStraightNTo(100,-460,100,60,400,0,0,800,0,39);
-  // TurnVolpidNTo(100, 90, 1, 500,37);
-  // RunpidStraightNTo(100,-500,100,60,400,0,0,800,0,39);
-  // Lintake.move(127);
-  //   Rintake.move(-127);
-  // pto.set_value(false);
-  // //3rd scoring
-  // delay(1900);
-  // scraper.set_value(true);
-  // pto.set_value(true);
-  // TurnVolpidNTo(100, 86, 1, 500,37);
-  // RunpidStraightNTo(40,1390,40,30,400,0,0,1700,0,39);
-  // //4th loader
-  // delay(800);
-  // RunpidStraightNTo(40,100,40,10,800,0,0,200,0,39);
-  // delay(100);
-  // TurnVolpidNTo(100, 91, 1, 500,37);
-  // RunpidStraightNTo(100,-1300,100,60,400,0,0,2000,0,39);
-  // pto.set_value(false);
-  // //4th scoring
-  // delay(1900);
-  // scraper.set_value(false);
-  // RunpidStraightNTo(100,550,100,60,400,0,0,2000,0,39);
-  // TurnVolpidNTo(100, -45, 1, 500,37);
-  // pto.set_value(true);
-  // RunpidStraightNTo(40,1600,40,30,400,0,0,2000,0,39);
-  // delay(300);
-  // TurnVolpidNTo(100, 124, 1, 500,37);
-  // lift.set_value(true);
-  // RunpidStraightNTo(100,-670,100,60,400,0,0,2000,0,39);
-  // pto.set_value(false);
-  // //mid goal
-  // delay(1000);
-  // RunpidStraightNTo(100,800,100,60,400,0,0,2000,0,39);
-  // TurnVolpidNTo(100, 90, 1, 500,37);
-  // //park
-  // lift.set_value(false);
-  // RunpidStraightNTo(100,400,100,60,400,0,0,2000,0,39);
-  // RunpidStraightNTo(100,400,100,60,400,0,0,2000,-120,39);
-  // RunpidStraightNTo(100,800,100,60,400,0,0,1000,0,39);
-  // RunpidStraightNTo(100,-200,100,30,400,0,0,2000,0,39);
-  // scraper.set_value(true);
-  // RunpidStraightNTo(100,1500,100,30,400,0,0,2000,0,39);
-  // scraper.set_value(false);
-  // Lintake.move(127);
-  // Rintake.move(-127);
+      park.set_value(true);
+    pto.set_value(true);
+    Lintake.move(127);
+    Rintake.move(-127);
+  RunpidStraightNTo(100,950,100,10,400,0,0,2000,0,39);
+  delay(100);
+  TurnVolpidNTo(100, 90, 1, 500,37);
+  delay(25);
+  scraper.set_value(true);
+  delay(100);
+  RunpidStraightNTo(40,580,40,10,800,0,0,1000,0,39);
+  //1st scraper
+  delay(900);
+  RunpidStraightNTo(40,200,40,10,800,0,0,200,0,39);
+  delay(100);
+  RunpidStraightNTo(100,-500,100,10,400,0,0,1200,0,39);
+  delay(25);
+  scraper.set_value(false);
+  TurnVolpidNTo(100, 0, 1, 500,37);
+  Lintake.move(0);
+    Rintake.move(0);
+  RunpidStraightNTo(100,400,100,10,400,0,0,1200,0,39);
+  delay(50);
+  TurnVolpidNTo(100, -90, 1, 500,37);
+  RunpidStraightNTo(100,2700,100,60,400,0,0,4000,0,39);
+  TurnVolpidNTo(100, -25, 1, 500,37);
+  RunpidStraightNTo(100,-420,100,30,400,0,0,4000,0,39);
+  TurnVolpidNTo(100, -90, 1, 500,37);
+  Lintake.move(127);
+    Rintake.move(-127);
+  RunpidStraightNTo(100,-500,100,30,400,0,0,800,0,39);
+  pto.set_value(false);
+  //1st scoring
+  delay(1900);
+  TurnVolpidNTo(100, -92, 1, 500,37);
+  scraper.set_value(true);
+  delay(50);
+  pto.set_value(true);
+  RunpidStraightNTo(40,1400,40,30,400,0,0,1700,0,39);
+  //2nd loader
+  delay(800);
+  RunpidStraightNTo(40,100,40,10,800,0,0,200,0,39);
+  delay(100);
+  TurnVolpidNTo(100, -87, 1, 500,37);
+  RunpidStraightNTo(100,-1300,100,30,400,0,0,1500,0,39);
+  scraper.set_value(false);
+  pto.set_value(false);
+  //2nd scoring
+  delay(1900);
+  RunpidStraightNTo(100,350,100,30,400,0,0,4000,0,39);
+  TurnVolpidNTo(100, -180, 1, 500,37);
+  RunpidStraightNTo(100,3230,100,60,400,0,0,4000,0,39);
+  delay(100);
+  TurnVolpidNTo(100, -88, 1, 500,37);
+  scraper.set_value(true);
+  pto.set_value(true);
+  RunpidStraightNTo(40,1300,40,10,400,0,0,1700,0,39);
+  //3rd loader
+  delay(800);
+  RunpidStraightNTo(40,100,40,10,800,0,0,200,0,39);
+  delay(100);
+  scraper.set_value(false);
+  TurnVolpidNTo(100, -92, 1, 500,37);
+  RunpidStraightNTo(100,-500,100,10,400,0,0,1700,0,39);
+  TurnVolpidNTo(100, -180, 1, 500,37);
+  Lintake.move(0);
+  Rintake.move(0);
+  RunpidStraightNTo(40,650,40,10,400,0,0,1300,0,39);
+  RunpidStraightNTo(40,-100,40,10,400,0,0,500,0,39);
+  TurnVolpidNTo(100, 90, 1, 500,37);
+  RunpidStraightNTo(100,2800,100,60,400,0,0,4000,0,39);
+  TurnVolpidNTo(100, 145, 1, 500,37);
+  RunpidStraightNTo(100,-500,100,60,400,0,0,800,0,39);
+  TurnVolpidNTo(100, 89, 1, 500,37);
+  RunpidStraightNTo(100,-500,100,60,400,0,0,800,0,39);
+  Lintake.move(127);
+    Rintake.move(-127);
+  pto.set_value(false);
+  //3rd scoring
+  delay(1900);
+  scraper.set_value(true);
+  pto.set_value(true);
+  TurnVolpidNTo(100, 89, 1, 500,37);
+  RunpidStraightNTo(40,1390,40,30,400,0,0,1700,0,39);
+  //4th loader
+  delay(800);
+  RunpidStraightNTo(40,200,40,10,800,0,0,200,0,39);
+  delay(100);
+  TurnVolpidNTo(100, 91, 1, 500,37);
+  RunpidStraightNTo(100,-1250,100,60,400,0,0,2000,0,39);
+  pto.set_value(false);
+  //4th scoring
+  delay(1900);
+  scraper.set_value(false);
+  RunpidStraightNTo(100,550,100,60,400,0,0,2000,0,39);
+  TurnVolpidNTo(100, -45, 1, 500,37);
+  pto.set_value(true);
+  RunpidStraightNTo(40,1600,40,30,400,0,0,2000,0,39);
+  delay(300);
+  TurnVolpidNTo(100, 135, 1, 1000,37);
+  lift.set_value(true);
+  RunpidStraightNTo(100,-630,100,60,400,0,0,2000,0,39);
+  pto.set_value(false);
+  //mid goal
+  delay(1000);
+  RunpidStraightNTo(100,800,100,60,400,0,0,2000,0,39);
+  TurnVolpidNTo(100, 90, 1, 500,37);
+  //park
+  lift.set_value(false);
+  RunpidStraightNTo(100,600,100,60,400,0,0,2000,0,39);
+  RunpidStraightNTo(100,380,100,60,400,0,0,2000,-120,39);
+  RunpidStraightNTo(100,600,100,60,400,0,0,1000,0,39);
+  RunpidStraightNTo(100,-200,100,30,400,0,0,500,0,39);
+  scraper.set_value(true);
+  RunpidStraightNTo(100,1700,100,30,400,0,0,2000,0,39);
+  scraper.set_value(false);
+  Lintake.move(127);
+  Rintake.move(-127);
 
 
 
@@ -366,7 +366,10 @@ void autonomous() {
     // TurnVolpidNTo(100, 15, 1, 500,36);
 
     //3+4 long goal first
-    //field 1
+
+    //field 1&2
+    //field 2 notes:
+    // - queue 23: 1. middle goal hits a bit to the left(not fixed) 2. timeout(fixed)
      park.set_value(true);
     pto.set_value(true);
     Lintake.move(127);
@@ -377,20 +380,20 @@ void autonomous() {
     RunpidStraightNTo(100,200,40,60,400,0,0,2000,0,39);
     TurnVolpidNTo(100, 230, 1, 500,36);
     //drive backwards before turn to goal
-    RunpidStraightNTo(100,960,40,60,400,0,0,2000,0,39);
+    RunpidStraightNTo(100,1000,40,60,400,0,0,2000,0,39);
     pros::delay(300);
     TurnVolpidNTo(100, -179, 1, 500,36);
-    RunpidStraightNTo(100,-750,40,60,400,0,0,1000,0,39);
+    RunpidStraightNTo(60,-750,20,60,400,0,0,1000,0,39);
     pto.set_value(false); //scoring
     delay(800);
-    TurnVolpidNTo(100, 183, 1, 500,36);
+    TurnVolpidNTo(100, 174, 1, 500,36);
     scraper.set_value(true);
-    RunpidStraightNTo(50,1500,40,40,400,0,0,1500,0,39);
-    delay(100);
+    RunpidStraightNTo(50,1510,40,40,400,0,0,1500,0,39);
+    delay(200);
     pto.set_value(true);
-    RunpidStraightNTo(70,-300,40,60,400,0,0,1000,0,39);
+    RunpidStraightNTo(70,-350,40,60,400,0,0,1000,0,39);
     scraper.set_value(false);
-    TurnVolpidNTo(100, -134, 1, 500,36);
+    TurnVolpidNTo(100, -133, 1, 500,36);
     //turning to midle goal
     lift.set_value(true);
     RunpidStraightNTo(70,-1660,40,60,400,0,0,1500,0,39);
@@ -402,13 +405,13 @@ void autonomous() {
     Lintake.move(127);
       Rintake.move(-127);
     pto.set_value(false);
-    delay(500); //mid 
+    delay(600); //mid 
     RunpidStraightNTo(70,300,40,60,400,0,0,2000,0,39);
-    RunpidStraightNTo(100,-400,40,60,400,0,0,2000,0,39); //dih tap 
-    RunpidStraightNTo(70,1095,40,60,400,0,0,2000,0,39); //drive out 
+    RunpidStraightNTo(100,-400,40,60,400,0,0,800,0,39); //dih tap 
+    RunpidStraightNTo(70,1040,40,60,400,0,0,2000,0,39); //drive out //1080 for field 2
     lift.set_value(false);
     TurnVolpidNTo(100, 183, 1, 500,36); ////descore up and ready
-    RunpidStraightNTo(70,-1000,40,60,400,0,0,2000,0,39);
+    RunpidStraightNTo(70,-940,40,60,400,0,0,2000,0,39);
     TurnVolpidNTo(100, -160, 1, 500,36);
 
     //  descore.set_value(true);
@@ -451,44 +454,71 @@ void autonomous() {
   }
   else if (atn == 2) { 
     //right low 3+4
-    park.set_value(true);
-    pto.set_value(true);
+     pto.set_value(true);
     Lintake.move(127);
     Rintake.move(-127);
-    RunpidStraightNTo(100,580,40,60,400,0,0,2000,0,39);
-    TurnVolpidNTo(100, 45, 1, 1000,36);
-    RunpidStraightNTo(100,370,40,60,400,0,0,2000,0,39);
-    RunpidStraightNTo(100,-45,40,60,400,0,0,2000,0,39);
-    TurnVolpidNTo(100, -44, 1, 1000,36);
-    RunpidStraightNTo(100,530,40,60,400,0,0,2000,0,39);
-    Lintake.move(-127);
+  RunpidStraightNTo(100,1060,100,10,400,0,0,2000,0,39);
+  delay(100);
+  TurnVolpidNTo(100, 91, 1, 500,37);
+  delay(25);
+  scraper.set_value(true);
+  delay(100);
+  RunpidStraightNTo(40,580,40,10,800,0,0,1000,0,39);
+  //1st scraper
+  delay(150);
+  RunpidStraightNTo(40,200,40,10,800,0,0,200,0,39);
+  delay(100);
+  RunpidStraightNTo(100,-1100,100,10,400,0,0,1200,0,39);
+  pto.set_value(false);
+  delay(1000);
+  scraper.set_value(false);
+  RunpidStraightNTo(100,400,100,10,400,0,0,1200,0,39);
+  TurnVolpidNTo(100, -143, 1, 1000,36);
+  RunpidStraightNTo(40,1700,40,10,800,0,0,2000,0,39);
+  Lintake.move(-127);
     Rintake.move(127);
-    delay(800);
-    pto.set_value(true);
-    lift.set_value(false);
-    Lintake.move(127);
-    Rintake.move(-127);
-    RunpidStraightNTo(100,-1820,70,40,400,0,0,2500,0,39);
-    delay(50);
-    TurnVolpidNTo(100, -179, 1, 1000,37);
-    scraper.set_value(true);
-    delay(50);
-    RunpidStraightNTo(40,500,40,10,400,0,0,700,0,39);
-    RunpidStraightNTo(100,200,100,10,400,0,0,300,0,39);
-    TurnVolpidNTo(100, 180, 1, 1000,37);
-    RunpidStraightNTo(100,-1100,40,10,400,0,0,2000,0,39);
-    pto.set_value(false);
-    delay(1000);
-    Lintake.move(0);
-    Rintake.move(0);
-    imu.set_rotation(0);
-    descore.set_value(false);
-    RunpidStraightNTo(100,400,40,60,400,0,0,500,0,39);
-    TurnVolpidNTo(100, 60, 1, 500,36);
-    RunpidStraightNTo(100,-370,40,60,400,0,0,500,0,39);//-250, -30
-    TurnVolpidNTo(100, 0, 1, 500,36);
-    RunpidStraightNTo(100,-1000,40,60,400,0,0,2000,0,39);
-    TurnVolpidNTo(100, 15, 1, 500,36);
+
+
+
+
+    // park.set_value(true);
+    // pto.set_value(true);
+    // Lintake.move(127);
+    // Rintake.move(-127);
+    // RunpidStraightNTo(100,580,40,60,400,0,0,2000,0,39);
+    // TurnVolpidNTo(100, 45, 1, 1000,36);
+    // RunpidStraightNTo(100,370,40,60,400,0,0,2000,0,39);
+    // RunpidStraightNTo(100,-45,40,60,400,0,0,2000,0,39);
+    // TurnVolpidNTo(100, -44, 1, 1000,36);
+    // RunpidStraightNTo(100,530,40,60,400,0,0,2000,0,39);
+    // Lintake.move(-127);
+    // Rintake.move(127);
+    // delay(800);
+    // pto.set_value(true);
+    // lift.set_value(false);
+    // Lintake.move(127);
+    // Rintake.move(-127);
+    // RunpidStraightNTo(100,-1820,70,40,400,0,0,2500,0,39);
+    // delay(50);
+    // TurnVolpidNTo(100, -179, 1, 1000,37);
+    // scraper.set_value(true);
+    // delay(50);
+    // RunpidStraightNTo(40,500,40,10,400,0,0,700,0,39);
+    // RunpidStraightNTo(100,200,100,10,400,0,0,300,0,39);
+    // TurnVolpidNTo(100, 180, 1, 1000,37);
+    // RunpidStraightNTo(100,-1100,40,10,400,0,0,2000,0,39);
+    // pto.set_value(false);
+    // delay(1000);
+    // Lintake.move(0);
+    // Rintake.move(0);
+    // imu.set_rotation(0);
+    // descore.set_value(false);
+    // RunpidStraightNTo(100,400,40,60,400,0,0,500,0,39);
+    // TurnVolpidNTo(100, 60, 1, 500,36);
+    // RunpidStraightNTo(100,-370,40,60,400,0,0,500,0,39);//-250, -30
+    // TurnVolpidNTo(100, 0, 1, 500,36);
+    // RunpidStraightNTo(100,-1000,40,60,400,0,0,2000,0,39);
+    // TurnVolpidNTo(100, 15, 1, 500,36);
   }
 //9 ball blue right //////
   else if (atn == 3) { 
@@ -620,17 +650,18 @@ void autonomous() {
     RunpidStraightNTo(60,400,60,60,400,0,0,2000,0,39);
     TurnVolpidNTo(100, 117, 1, 600,37);
     //long straight distane to goal
-    RunpidStraightNTo(100,950,100,40,400,0,0,1000,0,39);
     delay(50);
-    TurnVolpidNTo(100,163,1, 1000,37);
+    RunpidStraightNTo(100,1100,100,40,400,0,0,1600,0,39);//iffy value
+    delay(50);
+    TurnVolpidNTo(100,165,1, 1000,37);
     scraper.set_value(true);
     delay(150);
-    RunpidStraightNTo(60,520,20,60,400,0,0,800,0,39);
+    RunpidStraightNTo(40,520,20,60,400,0,0,800,0,39);
     delay(15);
     RunpidStraightNTo(100,300,100,60,400,0,0,500,0,39);
     RunpidStraightNTo(100,-1000,40,60,400,0,0,2000,0,39);
     pto.set_value(false);
-    delay(1700);
+    delay(2000);
     imu.set_rotation(0);
     descore.set_value(false);
     Lintake.move(0);
@@ -708,7 +739,7 @@ void autonomous() {
   } 
   
   else if (atn == 7){
-    
+    RunpidStraightNTo(100,200,40,60,400,0,0,2000,0,39);
   } 
   
   else if (atn == 8){

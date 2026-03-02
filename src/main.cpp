@@ -82,7 +82,7 @@ void disabled() {}
 
 
 
-int atn = 8;
+int atn = 1;
 int ballColor = 2;
 int color = 0;
 int pressed = 0;
@@ -313,6 +313,16 @@ TEST.move(127);
         descore.set_value(true);
       }
     }
+
+    if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_DOWN)){
+      descoreToggle  = !descoreToggle;
+      if(descoreToggle == true){
+        descore.set_value(false);
+      }
+      else{
+        descore.set_value(true);
+      }
+    }
     // if(con.get_digital(E_CONTROLLER_DIGITAL_Y)){
       // hoodToggle = !hoodToggle;
       // if(hoodToggle == true){
@@ -335,13 +345,125 @@ TEST.move(127);
       }
     }
     if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_RIGHT)){
-      parkToggle = !parkToggle;
-      if(parkToggle == true){
-        park.set_value(false);
-      }
-      else{
-        park.set_value(true);
-      }
+  //       park.set_value(true);
+  //   pto.set_value(true);
+  //   Lintake.move(127);
+  //   Rintake.move(-127);
+  // RunpidStraightNTo(100,950,100,10,400,0,0,2000,0,39);
+  // delay(100);
+  // TurnVolpidNTo(100, 90, 1, 500,37);
+  // delay(25);
+  // scraper.set_value(true);
+  // delay(100);
+  // RunpidStraightNTo(40,580,40,10,800,0,0,1000,0,39);
+  // //1st scraper
+  // delay(900);
+  // RunpidStraightNTo(40,200,40,10,800,0,0,200,0,39);
+  // delay(100);
+  // RunpidStraightNTo(100,-500,100,10,400,0,0,1200,0,39);
+  // delay(25);
+  // scraper.set_value(false);
+  // TurnVolpidNTo(100, 0, 1, 500,37);
+  // Lintake.move(0);
+  //   Rintake.move(0);
+  // RunpidStraightNTo(100,400,100,10,400,0,0,1200,0,39);
+  // delay(50);
+  // TurnVolpidNTo(100, -90, 1, 500,37);
+  // RunpidStraightNTo(100,2700,100,60,400,0,0,4000,0,39);
+  // TurnVolpidNTo(100, -25, 1, 500,37);
+  // RunpidStraightNTo(100,-420,100,30,400,0,0,4000,0,39);
+  // TurnVolpidNTo(100, -90, 1, 500,37);
+  // Lintake.move(127);
+  //   Rintake.move(-127);
+  // RunpidStraightNTo(100,-500,100,30,400,0,0,800,0,39);
+  // pto.set_value(false);
+  // //1st scoring
+  // delay(1900);
+  // TurnVolpidNTo(100, -92, 1, 500,37);
+  // scraper.set_value(true);
+  // delay(50);
+  // pto.set_value(true);
+  // RunpidStraightNTo(40,1400,40,30,400,0,0,1700,0,39);
+  // //2nd loader
+  // delay(800);
+  // RunpidStraightNTo(40,100,40,10,800,0,0,200,0,39);
+  // delay(100);
+  // TurnVolpidNTo(100, -87, 1, 500,37);
+  // RunpidStraightNTo(100,-1300,100,30,400,0,0,1500,0,39);
+  // scraper.set_value(false);
+  // pto.set_value(false);
+  // //2nd scoring
+  // delay(1900);
+  // RunpidStraightNTo(100,350,100,30,400,0,0,4000,0,39);
+  // TurnVolpidNTo(100, -180, 1, 500,37);
+  // RunpidStraightNTo(100,3230,100,60,400,0,0,4000,0,39);
+  // delay(100);
+  // TurnVolpidNTo(100, -88, 1, 500,37);
+  // scraper.set_value(true);
+  // pto.set_value(true);
+  // RunpidStraightNTo(40,1300,40,10,400,0,0,1700,0,39);
+  // //3rd loader
+  // delay(800);
+  // RunpidStraightNTo(40,100,40,10,800,0,0,200,0,39);
+  // delay(100);
+  // scraper.set_value(false);
+  // TurnVolpidNTo(100, -92, 1, 500,37);
+  // RunpidStraightNTo(100,-500,100,10,400,0,0,1700,0,39);
+  // TurnVolpidNTo(100, -180, 1, 500,37);
+  // Lintake.move(0);
+  // Rintake.move(0);
+  // RunpidStraightNTo(40,650,40,10,400,0,0,1300,0,39);
+  // RunpidStraightNTo(40,-100,40,10,400,0,0,500,0,39);
+  // TurnVolpidNTo(100, 90, 1, 500,37);
+  // RunpidStraightNTo(100,2800,100,60,400,0,0,4000,0,39);
+  // TurnVolpidNTo(100, 145, 1, 500,37);
+  // RunpidStraightNTo(100,-500,100,60,400,0,0,800,0,39);
+  // TurnVolpidNTo(100, 89, 1, 500,37);
+  // RunpidStraightNTo(100,-500,100,60,400,0,0,800,0,39);
+  // Lintake.move(127);
+  //   Rintake.move(-127);
+  // pto.set_value(false);
+  // //3rd scoring
+  // delay(1900);
+  // scraper.set_value(true);
+  // pto.set_value(true);
+  // TurnVolpidNTo(100, 89, 1, 500,37);
+  // RunpidStraightNTo(40,1390,40,30,400,0,0,1700,0,39);
+  // //4th loader
+  // delay(800);
+  // RunpidStraightNTo(40,200,40,10,800,0,0,200,0,39);
+  // delay(100);
+  // TurnVolpidNTo(100, 91, 1, 500,37);
+  // RunpidStraightNTo(100,-1250,100,60,400,0,0,2000,0,39);
+  // pto.set_value(false);
+  // //4th scoring
+  // delay(1900);
+  // scraper.set_value(false);
+  // RunpidStraightNTo(100,550,100,60,400,0,0,2000,0,39);
+  // TurnVolpidNTo(100, -45, 1, 500,37);
+  // pto.set_value(true);
+  // RunpidStraightNTo(40,1600,40,30,400,0,0,2000,0,39);
+  // delay(300);
+  // TurnVolpidNTo(100, 135, 1, 1000,37);
+  // lift.set_value(true);
+  // RunpidStraightNTo(100,-630,100,60,400,0,0,2000,0,39);
+  // pto.set_value(false);
+  // //mid goal
+  // delay(1000);
+  // RunpidStraightNTo(100,800,100,60,400,0,0,2000,0,39);
+  // TurnVolpidNTo(100, 90, 1, 500,37);
+  // //park
+  // lift.set_value(false);
+  // RunpidStraightNTo(100,600,100,60,400,0,0,2000,0,39);
+  // RunpidStraightNTo(100,380,100,60,400,0,0,2000,-120,39);
+  // RunpidStraightNTo(100,600,100,60,400,0,0,1000,0,39);
+  // RunpidStraightNTo(100,-200,100,30,400,0,0,500,0,39);
+  // scraper.set_value(true);
+  // RunpidStraightNTo(100,1700,100,30,400,0,0,2000,0,39);
+  // scraper.set_value(false);
+  // Lintake.move(127);
+  // Rintake.move(-127);
+
     }
     //(a)b is descore, y is string blocker, right is color sort (b)is linkage
     if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_X)){
