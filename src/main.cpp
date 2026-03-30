@@ -54,7 +54,6 @@ void initialize() {
   //imu.tare_position();
   ODOMY.reset_position();
   ODOMX.reset_position();
-  //pros::Task kalman(kalmanTask, nullptr, "Kalman Filter Task");
 
 
   // pros::lcd::register_btn1_cb(on_center_button);
@@ -127,10 +126,6 @@ void competition_initialize() {
         atn = 0;
       }
 
- 
-
-
-      //resetEncoders();
       
       if (atn == 0) {
         autstr = "skills";

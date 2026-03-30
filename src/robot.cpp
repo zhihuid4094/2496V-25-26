@@ -27,6 +27,7 @@
 #define LDB_PORT 3
 #define OPTICAL_PORT 8
 #define ROTO_PORT 2
+#define Distance_PORT 1
 
 
 
@@ -35,6 +36,7 @@
 pros::Rotation roto(ROTO_PORT);
 pros::Rotation ODOMX(ODOMX_PORT);
 pros::Rotation ODOMY(ODOMY_PORT);
+pros::Distance distance(Distance_PORT);
 
 pros::Motor LF (LF_PORT, pros::E_MOTOR_GEARSET_06, true);
 pros::Motor LM (LM_PORT, pros::E_MOTOR_GEARSET_06, true);//spins backwards
