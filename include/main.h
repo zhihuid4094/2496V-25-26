@@ -71,12 +71,8 @@ void opcontrol(void);
 #ifdef __cplusplus
 }
 #endif
-extern bool Global; 
+
 extern int atn;
-extern int RingColor;
-extern int color;
-extern float errorp;
-extern bool mogoValues;
 extern bool mogoToggle;
 
 #ifdef __cplusplus

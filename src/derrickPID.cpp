@@ -23,7 +23,7 @@ double HCKI = .001;
 double HCKD = .1;
 double HCMAXI = 500;
 
-double wallKP = .05;
+double wallKP = .075;
 double wallKI = 0;
 double wallKD = 0;  
 
@@ -146,13 +146,12 @@ double calcPID(int error, double kP=HCKP, double kI=HCKI, double kD=HCKD, double
 }
 
 //--------------------------------------------------------------------------------------------
-//DRIVEPID (distance, max speed, timeout, tolerance, tolerance time, decel (put in value, like at 700, start decel), decel min speed, kp config)
-//drivePID (1000, 100, 5000, 15, 50, 700, 10)
+// DRIVE STRAIGHT
 //--------------------------------------------------------------------------------------------
 void drivePID(int desiredValue, int maxSpeed, int timeout = 5000,
               int errorThreshold = 15, int settleCount = 50,
               int dec_point = -1, int minSpeed = 10, int p_point = 0, 
-              int chainValue = 0)
+              int chainValue = 0,  int triggerDist = -1, int triggerSpeed = 0)
 {
     bool enableDrivePID = true;
     double prevError = 0;
@@ -166,7 +165,6 @@ void drivePID(int desiredValue, int maxSpeed, int timeout = 5000,
     double maxI = driveMAXI;
     int integralThreshold = 150;
 
-    // p_point: pick constants based on movement
     switch (p_point)
 {
     case 0: break;
@@ -184,10 +182,6 @@ void drivePID(int desiredValue, int maxSpeed, int timeout = 5000,
 
      int pidTarget = (chainValue != 0) ? desiredValue + chainValue : desiredValue;
 
-    // double initialValue = imu.get_heading();
-    // if (initialValue > 180) {
-    //     initialValue = initialValue - 360;
-    // }
 
     int startTime = pros::millis();
     double acc = 0.4; // speed units per ms, higher = faster ramp (TUNE)
@@ -228,7 +222,11 @@ void drivePID(int desiredValue, int maxSpeed, int timeout = 5000,
         double currentPos = fabs(currentValue);
 
         // proportional
-           double error = pidTarget - currentValue;
+        double error = pidTarget - currentValue;
+
+        if (triggerDist != -1 && fabs(error) <= triggerDist) {
+            Lintake.move(triggerSpeed);
+        }
 
         // derivative
         double derivative = error - prevError;
@@ -305,13 +303,16 @@ void drivePID(int desiredValue, int maxSpeed, int timeout = 5000,
     chasBrake();
 }
 
+//--------------------------------------------------------------------------------------------
+// DRIVE STRAIGHT USING DISTANCE SENSOR
+//--------------------------------------------------------------------------------------------
 
 void drivePIDW(int desiredValue, int maxSpeed, int timeout = 5000, int wallDistanceTarget = 5000,
                   int wallOffStart1 = -1, int wallOnAgain1 = -1,
                   int wallOffStart2 = -1, int wallOnAgain2 = -1,
                   int errorThreshold = 15, int settleCount = 50,
                   int sensorSide = 0, int dec_point = -1, int minSpeed = 10, int p_point = 0,
-                  int chainValue = 0)
+                  int chainValue = 0, int triggerDist = -1, int triggerSpeed = 0)
 {
     bool enableDrivePID = true;
 
@@ -388,6 +389,11 @@ void drivePIDW(int desiredValue, int maxSpeed, int timeout = 5000, int wallDista
         // DRIVE PID
         // =====================
         double error = pidTarget - currentValue;
+
+        if (triggerDist != -1 && abs(error) <= triggerDist) {
+            Lintake.move(triggerSpeed);
+        }
+        
         double derivative = error - prevError;
 
         if (fabs(error) < integralThreshold) {
@@ -476,7 +482,7 @@ void drivePIDW(int desiredValue, int maxSpeed, int timeout = 5000, int wallDista
         } else if (time % 100 == 0 && time % 150 != 0){
             con.print(1, 0, "IMU: %.2f          ", imu.get_heading());
         } else if (time % 150 == 0){
-            con.print(2, 0, "time: %d            ", time);
+            con.print(2, 0, "distance: %d            ", distanceSensorL.get());
         }
 
         delay(10);
@@ -485,6 +491,10 @@ void drivePIDW(int desiredValue, int maxSpeed, int timeout = 5000, int wallDista
 
     chasBrake();
 }
+
+//--------------------------------------------------------------------------------------------
+// TURNING
+//--------------------------------------------------------------------------------------------
 
 void turnPID(double desiredValue, int topSpeed = 127, int timeout = 5000, int errorThreshold = 1, int settleCount = 50, int p_point = 0)
 {   
@@ -527,7 +537,7 @@ void turnPID(double desiredValue, int topSpeed = 127, int timeout = 5000, int er
         }
 
         // proportional
-        error = fmod((desiredValue - imu.get_heading() + 540), 360) - 180;
+        double error = fmod((desiredValue - imu.get_heading() + 540), 360) - 180;
 
         // derivative
         double derivative = error - prevError;
@@ -570,7 +580,7 @@ void turnPID(double desiredValue, int topSpeed = 127, int timeout = 5000, int er
         }
         
         if (time % 50 == 0 && time % 100 != 0 && time % 150 != 0){
-            con.print(0, 0, "error: %.5f        ", -error);
+            con.print(0, 0, "error: %.2f        ", -error);
         } else if (time % 100 == 0 && time % 150 != 0){
             con.print(1, 0, "IMU: %.2f          ", imu.get_heading());
         } else if (time % 150 == 0){
@@ -585,6 +595,10 @@ void turnPID(double desiredValue, int topSpeed = 127, int timeout = 5000, int er
     universal_target_heading = desiredValue;
 }
 
+
+//--------------------------------------------------------------------------------------------
+// ARC LEFT
+//--------------------------------------------------------------------------------------------
 
 void driveArcL(double theta, double radius, int timeout = 5000, int speed = 100, 
                int errorThreshold = 1, int settleCount = 50, int chainValue = 0)
@@ -692,6 +706,9 @@ void driveArcL(double theta, double radius, int timeout = 5000, int speed = 100,
     universal_target_heading -= theta;
 }
 
+//--------------------------------------------------------------------------------------------
+// ARC RIGHT
+//--------------------------------------------------------------------------------------------
 
 void driveArcR(double theta, double radius, int timeout = 5000, int speed = 100, 
                int errorThreshold = 1, int settleCount = 50, int chainValue = 0)

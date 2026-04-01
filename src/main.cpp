@@ -11,14 +11,6 @@
 using namespace pros;
 using namespace std;
 
-//derrick
-
-// void resetEncoders() { //we can't add this to main.h because main.h doesn't
-// refer to robot.h (where LF, LB, etc. are located) 	LF.tare_position(); //or
-// set_zero_position(0) or set_zero_position(LF.get_position()); (sets current
-// encoder position to 0) 	LB.tare_position(); 	RF.tare_position();
-// 	RB.tare_position();
-// }
 
 /**
  * A callback function for LLEMU's center button.
@@ -46,16 +38,11 @@ void on_center_button() {
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-  OpticalC.set_led_pwm(100);
   pros::lcd::initialize();
   pros::lcd::set_text(1, "Hello PROS User!");
   //imu.tare_position();
-  ODOMY.reset_position();
-  ODOMX.reset_position();
 
 
-  // pros::lcd::register_btn1_cb(on_center_button);
-  // optical.set_led_pwm(100);
 
 
 }
@@ -80,93 +67,23 @@ void disabled() {}
 
 
 
-int atn = 1;
-int ballColor = 2;
-int color = 0;
-int pressed = 0;
+int atn = 0;
 string autstr;
-float errorp;
-bool mogoToggle = false;
 bool scraperToggle = false;
-bool blockerToggle = false;
-bool colorSorterToggle = false;
-bool linkageToggle = false;
-
-bool parkToggle = false;
-bool ptoToggle = false;
 bool liftToggle = false;
 
 
  
 void competition_initialize() {
-
-  
-    while(true) {
-      // if(selec.get_value() == true) {
-      //   atn ++;  
-      //   delay(350);
-      // }
-
-      if(selec.get_value() == true) {
-        pressed ++;  
-      } else {
-        pressed = 0;
-      }
-
-      if (pressed == 1){
-        atn++;
-      }
-
-      if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_A)){
-        atn++;
-      }
-      if(atn>8){
-        atn = 0;
-      }
-
-      
-      if (atn == 0) {
-        autstr = "skills";
-        con.print(0, 0, "Aut 0: %s", autstr);
-      }
-      else if (atn == 1) {
-        autstr = "3+4 left";
-        con.print(0, 0, "Aut 1: %s", autstr);
-      }
-      else if (atn == 2) {
-        autstr = "3+4 right";
-        con.print(0, 0, "Aut 2: %s", autstr);
-      }
-      else if (atn == 3) {
-       autstr = "7 left";
-        con.print(0, 0, "Aut 3: %s", autstr);
-      }
-      else if (atn == 4) {  
-       autstr = "7 right";
-        con.print(0, 0, "Aut 4: %s", autstr);
-      }
-      else if (atn == 5) {
-       autstr = "4 Fast Left";
-        con.print(0, 0, "Aut 5: %s", autstr);
-      }
-      else if (atn == 6) {
-       autstr = "4 Fast Right";
-        con.print(0, 0, "Aut 6: %s", autstr);
-      } 
-      else if (atn == 7) {
-        autstr = "sawp";
-         con.print(0, 0, "Aut 6: %s", autstr);
-       } 
-       else if (atn == 8) {
-        autstr = "misc";
-         con.print(0, 0, "Aut 6: %s", autstr);
-       } 
-      else if (atn == 9) {
-       atn = 0;
-      }
-  
-      con.clear();
-    }
+    if (atn == 0)      { autstr = "skills";       con.print(0, 0, "Aut 0: %s", autstr); }
+    else if (atn == 1) { autstr = "3+4 left";     con.print(0, 0, "Aut 1: %s", autstr); }
+    else if (atn == 2) { autstr = "3+4 right";    con.print(0, 0, "Aut 2: %s", autstr); }
+    else if (atn == 3) { autstr = "7 left";       con.print(0, 0, "Aut 3: %s", autstr); }
+    else if (atn == 4) { autstr = "7 right";      con.print(0, 0, "Aut 4: %s", autstr); }
+    else if (atn == 5) { autstr = "4 Fast Left";  con.print(0, 0, "Aut 5: %s", autstr); }
+    else if (atn == 6) { autstr = "4 Fast Right"; con.print(0, 0, "Aut 6: %s", autstr); }
+    else if (atn == 7) { autstr = "sawp";         con.print(0, 0, "Aut 7: %s", autstr); }
+    else if (atn == 8) { autstr = "misc";         con.print(0, 0, "Aut 8: %s", autstr); }
 }
 
 
@@ -187,29 +104,10 @@ void competition_initialize() {
 
 
 void opcontrol() {
-  int cycle = 0;
   int time = 0;
-  bool NEWL1 = false;
-  bool NEWL2 = false;
-  bool NEWR2 = false;
-  bool NEWR1 = false;
   bool arcToggle = false;
   bool tankToggle = true;
-  // bool intakeToggle = false;
-  // bool doinkerToggle = false;
-  // bool doinkerClampToggle = false;
-  // bool liftToggle = false;
-  double maxRPM = 0;
-  double motorTotal = 0;
-  double avgRPM = 0;
-  double liftAngle = 0; 
-  double rotoAngle = 0;
-  float xvelo = 0;
-  int macro = 1;
-  bool macroControl = false;
-  bool hookControl = false;
   bool descoreToggle = true;
-  bool intakeSlow = true; //intake at 50% speed
 
 
 
@@ -217,11 +115,6 @@ void opcontrol() {
 
 
   imu.tare_heading();
-
-
-TEST.move(127);
-//TEST2.move(127);
-//delay(3500);
 
 
 
@@ -306,49 +199,16 @@ TEST.move(127);
       Rintake.tare_position();
 
     }
-    // else if (con.get_digital(E_CONTROLLER_DIGITAL_DOWN)) {//score mode
-		// 	FMintake.move(127);
-    //   Mintake.move(-127);
-    //   FTintake.move(127);
-    //   FMintake.tare_position();
-    //   FTintake.tare_position();
-    //   Mintake.tare_position();
-		// } 
+
     else {
       Lintake.move(0);
       Rintake.move(0);
     }
     
-    
 
-    // if(hookControl){
-    //   setConstants(1, 0, 0);
-    //   intake.move(calcPID2(120, intake.get_position(), 0, 0, true));
-    //   if(abs(120 - intake.get_position()) < 10){
-    //     hookControl = false;
-    //   }
-    // } 
 
 
   pros::c::imu_accel_s_t accel = imu.get_accel();
-
-  // if(abs(accel.x)>0.04){
-  // xvelo += accel.x;
-  // }
-  xvelo += accel.x-0.032;
-
-    OpticalC.set_led_pwm(100);
-
-    //TEST2.move_velocity(300);
-    if(TEST.get_actual_velocity() > maxRPM){
-      maxRPM = TEST.get_actual_velocity();
-    }
-
-    
-
-    motorTotal += TEST.get_actual_velocity();
-    cycle++;
-    avgRPM = motorTotal/cycle;
 
 
 
@@ -400,42 +260,15 @@ TEST.move(127);
 
 
 
-    //auton selector
-    if (selec.get_value() == true) { 
-      atn++;
-      delay(350);
-    }
-    
-    if (atn == 0) {
-      autstr = "SKILLS";
-    }
-    if (atn == 1) {
-      autstr = "3+4 left";
-    }
-    else if (atn == 2) {
-      autstr = "3+4 right";
-    }
-    else if (atn == 3) {
-      autstr = "9 ball right";
-    }
-    else if (atn == 4) {
-      autstr = "14 ball";
-    }
-    else if (atn == 5) {
-      autstr = "7 ball right";
-    } 
-    else if (atn == 6) {
-      autstr = "sawp";
-    }
-    else if (atn == 7) {
-      autstr = "BLUE GOAL SAFE";
-    }
-    else if (atn == 8) {
-      autstr = "4 ball rush";
-    }
-    else if (atn == 9) {
-      atn = 0;
-    }
+    if (atn == 0)      { autstr = "skills";       con.print(0, 0, "Aut 0: %s", autstr); }
+    else if (atn == 1) { autstr = "3+4 left";     con.print(0, 0, "Aut 1: %s", autstr); }
+    else if (atn == 2) { autstr = "3+4 right";    con.print(0, 0, "Aut 2: %s", autstr); }
+    else if (atn == 3) { autstr = "7 left";       con.print(0, 0, "Aut 3: %s", autstr); }
+    else if (atn == 4) { autstr = "7 right";      con.print(0, 0, "Aut 4: %s", autstr); }
+    else if (atn == 5) { autstr = "4 Fast Left";  con.print(0, 0, "Aut 5: %s", autstr); }
+    else if (atn == 6) { autstr = "4 Fast Right"; con.print(0, 0, "Aut 6: %s", autstr); }
+    else if (atn == 7) { autstr = "sawp";         con.print(0, 0, "Aut 7: %s", autstr); }
+    else if (atn == 8) { autstr = "misc";         con.print(0, 0, "Aut 8: %s", autstr); }
 
 
 

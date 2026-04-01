@@ -24,53 +24,43 @@ using namespace pros;
 
 void autonomous() {
   
-  //INDEX
-    //AUTON 0: SKILLS
-    //AUTON 1: blue right
-    //AUTON 2: blue left
-    //AUTON 3:red right
-    //AUTON 4: red left
-    //AUTON 5: elims
-
 //---------------------------------------------------------------------------------------------------------------------------------------
-//drivePID(Target, Maxspeed, Timeout, Error Width, Time Within Error, When To Start Slow Down, Min Speed, Kp Selector, chainValue) 
-
-//            drivePID(1000, 127, 5000, 15, 50, 700, 30, 0, 0);       (9 Parameters)
+//drivePID(Target, Maxspeed, Timeout, Error Width, Time Within Error, When To Start Slow Down, Min Speed, Kp Selector, chainValue, Trigger Distance, Speed) 
+//
+//            drivePID(1000, 127, 5000, 15, 50, 700, 30, 0, 0, -1, 0);       (11 Parameters)
 //---------------------------------------------------------------------------------------------------------------------------------------
 //drivePIDW(Target, Maxspeed, Timeout, Distance from Wall, -1, -1, -1, -1, Error Width,
-//           Time Within Error, 0 = Left Sensor/1 = Right Sensor, When To Start Slow Down, Min Speed, Kp Selector, chainValue) 
-
-//            drivePIDW(1000, 127, 5000, 360, -1, -1, -1, -1, 15, 50, 0, 700, 30, 0, 0);       (15 Parameters)
+//           Time Within Error, 0 = Left Sensor/1 = Right Sensor, When To Start Slow Down, Min Speed, Kp Selector, chainValue, Trigger Distance, Speed) 
+//
+//            drivePIDW(1000, 127, 5000, 360, -1, -1, -1, -1, 15, 50, 0, 700, 30, 0, 0, -1, 0);       (17 Parameters)
 //---------------------------------------------------------------------------------------------------------------------------------------
 //turnPID(Target, MaxSpeed, Timeout, Error Width, Time Within Error, Kp Selector)
-
+//
 //            turnPID(90, 127, 5000, 15, 50, 0);     (6 Parameters)
 //---------------------------------------------------------------------------------------------------------------------------------------
 //driveArcL(Target, radius, timeout, max Speed, Error Width, Time in Error, chainValue)
-
+//
 //            driveArcL(90, 500, 5000, 100, 15, 50, 0)      (7 Parameters)  
 //            driveArcR(90, 500, 5000, 10, 15, 50, 0)      (7 Parameters)
 //---------------------------------------------------------------------------------------------------------------------------------------
+//chasSlow(speed, time), for like reseting in goal position
+//
+//            chasMove(50, 1000);
+//---------------------------------------------------------------------------------------------------------------------------------------
+
                       
   if (atn == 0) {
     //skills
+    //drivePID(-1000, 50, 3000, 15, 50, 700, 40, 0, 0, -1, 0);
+    //drivePIDW(-1000, 50, 3000, 400, -1, -1, -1, -1, 15, 50, 0, 700, 40, 0, 0, -1, 0); 
+    //turnPID(90, 50, 3000, 15, 50, 0);
+    //driveArcR(-90, 400, 5000, 100, 15, 50, 0);
+
   } 
  
 
   else if (atn == 1) {
     //3+4 left
-     pros::delay(2000);
-
-     //drivePIDW(1000, 50, 5000, 360, -1, -1, -1, -1, 15, 4900, 0, 1000, 50, 0, 0);
-    //turnPID(90, 80, 5000, .1, 4500, 0);
-    
-    
-
-    //drivePID(1000, 50, 5000, 5, 50, 1000, 50, 0, 0); 
-
-
-    //driveArcR(90, 400, 5000, 50, 15, 4900, 0);
-    //drivePID(1000, 500, 5000, 15, 50, 1000, 100, 0, 0); 
   }
 
 
