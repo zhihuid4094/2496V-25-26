@@ -2,8 +2,6 @@
 #include "auton.h"
 #include "main.h"
 #include "robot.h"
-#include "pid.h"
-#include "odometry.h"
 #include "derrickPID.h"
 
 
@@ -62,6 +60,18 @@ void autonomous() {
 
   else if (atn == 1) {
     //3+4 left
+     pros::delay(2000);
+
+     //drivePIDW(1000, 50, 5000, 360, -1, -1, -1, -1, 15, 4900, 0, 1000, 50, 0, 0);
+    //turnPID(90, 80, 5000, .1, 4500, 0);
+    
+    
+
+    //drivePID(1000, 50, 5000, 5, 50, 1000, 50, 0, 0); 
+
+    
+    //driveArcR(90, 400, 5000, 50, 15, 4900, 0);
+    //drivePID(1000, 500, 5000, 15, 50, 1000, 100, 0, 0); 
   }
 
 

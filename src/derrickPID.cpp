@@ -5,7 +5,6 @@
 #include "pros/misc.h"
 #include "pros/motors.h"
 #include "robot.h"
-#include "odometry.h"
 
 
 using namespace pros;
@@ -26,7 +25,7 @@ double HCMAXI = 500;
 
 double wallKP = .05;
 double wallKI = 0;
-double wallKD = 0;
+double wallKD = 0;  
 
 
 double turnKP = 1.65;
