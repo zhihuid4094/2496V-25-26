@@ -23,7 +23,8 @@ using namespace pros;
 
 
 void autonomous() {
-  
+
+  //KEY (LOOK HERE IF YOU ARE LOST ON WHAT PARAMETERS MEAN)  
 //---------------------------------------------------------------------------------------------------------------------------------------
 //drivePID(Target, Maxspeed, Timeout, Error Width, Time Within Error, When To Start Slow Down, Min Speed, Kp Selector, chainValue, Trigger Distance, Speed) 
 //
@@ -47,53 +48,62 @@ void autonomous() {
 //
 //            chasMove(50, 1000);
 //---------------------------------------------------------------------------------------------------------------------------------------
+//Copy and Paste from Here
+//  drivePID(-1000, 50, 3000, 15, 50, 700, 40, 0, 0, -1, 0);
+//  drivePIDW(-1000, 50, 3000, 400, -1, -1, -1, -1, 15, 50, 0, 700, 40, 0, 0, -1, 0); 
+//  turnPID(90, 50, 3000, 15, 50, 0);
+//  driveArcR(-90, 400, 5000, 100, 15, 50, 0);
+//---------------------------------------------------------------------------------------------------------------------------------------
 
                       
   if (atn == 0) {
     //skills
-    //drivePID(-1000, 50, 3000, 15, 50, 700, 40, 0, 0, -1, 0);
-    //drivePIDW(-1000, 50, 3000, 400, -1, -1, -1, -1, 15, 50, 0, 700, 40, 0, 0, -1, 0); 
-    //turnPID(90, 50, 3000, 15, 50, 0);
-    //driveArcR(-90, 400, 5000, 100, 15, 50, 0);
-
+      
   } 
  
 
   else if (atn == 1) {
     //3+4 left
+
   }
 
 
   else if (atn == 2) { 
    //3+4 right
+    
   } 
 
   else if (atn == 3 ){
    //7 left
+    
   } 
 
 
   else if(atn == 4) {
     //7 right
+
   } 
 
   else if (atn == 5){
     //4 Fast Left
+      
   } 
   
 
   else if (atn == 6){
     //4 Fast Right
+
   } 
   
 
   else if (atn == 7){
     //sawp
-     
+
   } 
 
   else if (atn == 8){
     //misc
+
   }
 }
 

@@ -17,7 +17,6 @@ double driveKI = 0;
 double driveKD = 8;
 double driveMAXI = 500;
 
-
 double HCKP = .6;
 double HCKI = .001;
 double HCKD = .1;
@@ -26,7 +25,6 @@ double HCMAXI = 500;
 double wallKP = .075;
 double wallKI = 0;
 double wallKD = 0;  
-
 
 double turnKP = 1.65;
 double turnKI = 0;
@@ -98,6 +96,16 @@ void chasSlow(int speed, int ms) {
 }
 
 
+
+
+
+
+
+
+
+
+
+
 //--------------------------------------------------------------------------------------------
 //CALCPID
 //--------------------------------------------------------------------------------------------
@@ -144,6 +152,18 @@ double calcPID(int error, double kP=HCKP, double kI=HCKI, double kD=HCKD, double
 
   return speed;
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 //--------------------------------------------------------------------------------------------
 // DRIVE STRAIGHT
@@ -302,6 +322,17 @@ void drivePID(int desiredValue, int maxSpeed, int timeout = 5000,
 
     chasBrake();
 }
+
+
+
+
+
+
+
+
+
+
+
 
 //--------------------------------------------------------------------------------------------
 // DRIVE STRAIGHT USING DISTANCE SENSOR
@@ -492,6 +523,17 @@ void drivePIDW(int desiredValue, int maxSpeed, int timeout = 5000, int wallDista
     chasBrake();
 }
 
+
+
+
+
+
+
+
+
+
+
+
 //--------------------------------------------------------------------------------------------
 // TURNING
 //--------------------------------------------------------------------------------------------
@@ -594,6 +636,19 @@ void turnPID(double desiredValue, int topSpeed = 127, int timeout = 5000, int er
     chasBrake();
     universal_target_heading = desiredValue;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //--------------------------------------------------------------------------------------------
@@ -705,6 +760,19 @@ void driveArcL(double theta, double radius, int timeout = 5000, int speed = 100,
     chasBrake();
     universal_target_heading -= theta;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //--------------------------------------------------------------------------------------------
 // ARC RIGHT

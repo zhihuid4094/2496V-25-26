@@ -12,6 +12,8 @@ using namespace pros;
 using namespace std;
 
 
+
+
 /**
  * A callback function for LLEMU's center button.
  *
@@ -30,7 +32,6 @@ void on_center_button() {
 
 
 
-
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
@@ -41,11 +42,12 @@ void initialize() {
   pros::lcd::initialize();
   pros::lcd::set_text(1, "Hello PROS User!");
   //imu.tare_position();
-
-
-
-
 }
+
+
+
+
+
 
 /**
  * Runs while the robot is in the disabled state of Field Management System or
@@ -63,11 +65,11 @@ void disabled() {}
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
  */
-//did i fix the compiler
 
-
-
+//--------------------------------------------------------------------------------------------------------------------------------------
+//SELECT AUTON HERE
 int atn = 0;
+//--------------------------------------------------------------------------------------------------------------------------------------
 string autstr;
 bool scraperToggle = false;
 bool liftToggle = false;
@@ -109,18 +111,9 @@ void opcontrol() {
   bool tankToggle = true;
   bool descoreToggle = true;
 
-
-
-
-
-
   imu.tare_heading();
 
-
-
 	while (true) {
-
-
 
     if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_B)){
       scraperToggle  = !scraperToggle;
@@ -165,7 +158,6 @@ void opcontrol() {
     }
     if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_RIGHT)){
   
-
     }
    
     if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_X)){
@@ -208,7 +200,7 @@ void opcontrol() {
 
 
 
-  pros::c::imu_accel_s_t accel = imu.get_accel();
+    pros::c::imu_accel_s_t accel = imu.get_accel();
 
 
 
