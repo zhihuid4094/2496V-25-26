@@ -8,7 +8,7 @@
 #include "pros/motors.h"
 #include "robot.h"
 #include "odometry.h"
-#include "pure_pursuit.h"
+
 
 using namespace pros;
 using namespace std;
@@ -136,31 +136,31 @@ void competition_initialize() {
         con.print(0, 0, "Aut 1: %s", autstr);
       }
       else if (atn == 2) {
-        autstr = "7 ball long";
+        autstr = "3+4 right";
         con.print(0, 0, "Aut 2: %s", autstr);
       }
       else if (atn == 3) {
-       autstr = "9 ball long";
+       autstr = "7 left";
         con.print(0, 0, "Aut 3: %s", autstr);
       }
       else if (atn == 4) {
-       autstr = "14 ball SAWP";
+       autstr = "7 right";
         con.print(0, 0, "Aut 4: %s", autstr);
       }
       else if (atn == 5) {
-       autstr = "ELIMS BLUE RIGHT PUSH";
+       autstr = "4 Fast Left";
         con.print(0, 0, "Aut 5: %s", autstr);
       }
       else if (atn == 6) {
-       autstr = "7 ball SAWP";
+       autstr = "4 Fast Right";
         con.print(0, 0, "Aut 6: %s", autstr);
       } 
       else if (atn == 7) {
-        autstr = "BLUE GOAL SAFE";
+        autstr = "sawp";
          con.print(0, 0, "Aut 6: %s", autstr);
        } 
        else if (atn == 8) {
-        autstr = "RED GOAL SAFE";
+        autstr = "misc";
          con.print(0, 0, "Aut 6: %s", autstr);
        } 
       else if (atn == 9) {
@@ -820,7 +820,6 @@ TEST.move(127);
     
     // initializePath();
     // initializePathDistances();
-    // purePursuitController();
 
 
      

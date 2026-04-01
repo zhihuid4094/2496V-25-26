@@ -218,7 +218,7 @@ void setConstants2(double kp, double ki, double kd) {
 
 
 
-void resetEncoders() { //reset the chassis motors every time a target is reached
+void resetEncoders1() { //reset the chassis motors every time a target is reached
     LF.tare_position(); //or set_zero_position(0) or set_zero_position(LF.get_position()); (sets current encoder position to 0)
     LB.tare_position();
 	RF.tare_position();
@@ -231,7 +231,7 @@ void resetEncoders() { //reset the chassis motors every time a target is reached
 
 
 //setting method for driving straight or turning (pos neg voltages change directions)
-void chasMove(int left, int right) { //voltage to each chassis motor
+void chasMov1(int left, int right) { //voltage to each chassis motor
     LF.move(left);
     LM.move(left);
     LB.move(left);
@@ -713,7 +713,7 @@ void driveStraight(int target) {
 
     //timeout = (0 * pow(x,5)) + (0 * pow(x, 4)) + (0 * pow(x, 3)) + (0 * pow(x, 2)) + (0 * x) + 0; //Tune with Desmos
     
-    resetEncoders();
+    resetEncoders1();
     while(true) {
         if(abs(target - encoderAvg)<25){
             setConstants(2.5, 0, 0);
@@ -762,7 +762,7 @@ void driveStraight(int target) {
             voltage = -127;
         }
         errorp = abs(target - encoderAvg);
-        chasMove((voltage + heading_error ), (voltage - heading_error));
+        chasMov1((voltage + heading_error ), (voltage - heading_error));
         if (abs(target - encoderAvg) <= 2) count++;
         if (count >= 8 || time2 > timeout){
             break;
@@ -809,7 +809,7 @@ void driveClamp(int target, int clampDistance, int speed) {
     }
 
     setConstants(STRAIGHT_KP, STRAIGHT_KI, STRAIGHT_KD);
-    resetEncoders();
+    resetEncoders1();
    
 
     while(true) {
@@ -878,7 +878,7 @@ void driveClamp(int target, int clampDistance, int speed) {
 
 
 
-        chasMove( (voltage + heading_error ), (voltage - heading_error));
+        chasMov1( (voltage + heading_error ), (voltage - heading_error));
         if (abs(target - encoderAvg) <= 4) count++;
         if (count >= 20 || time2 > timeout){
             break;
@@ -924,7 +924,7 @@ void driveClampD(int target, int clampDistance, int intakeDistance, int speed) {
     }
 
     setConstants(STRAIGHT_KP, STRAIGHT_KI, STRAIGHT_KD);
-    resetEncoders();
+    resetEncoders1();
    
 
     while(true) {
@@ -1002,7 +1002,7 @@ void driveClampD(int target, int clampDistance, int intakeDistance, int speed) {
 
 
 
-        chasMove( (voltage + heading_error ), (voltage - heading_error));
+        chasMov1( (voltage + heading_error ), (voltage - heading_error));
         if (abs(target - encoderAvg) <= 4) count++;
         if (count >= 20 || time2 > timeout){
             break;
@@ -1056,7 +1056,7 @@ void driveStraight2(int target, int speed) {
 
     timeout = timeout * (2.0 - double(speed)/100.0);
     
-    resetEncoders();
+    resetEncoders1();
    
 
     while(true) {
@@ -1121,7 +1121,7 @@ void driveStraight2(int target, int speed) {
             voltage = -127 * double(speed)/100.0;
         }
 
-        chasMove( (voltage + heading_error ), (voltage - heading_error));
+        chasMov1( (voltage + heading_error ), (voltage - heading_error));
         if (abs(target - encoderAvg) <= 4) count++;
         if (count >= 8 || time2 > timeout){
             break;
@@ -1174,7 +1174,7 @@ void driveStraightR(int target, int speed) {
 
     timeout = timeout * (2.0 - double(speed)/100.0);
     
-    resetEncoders();
+    resetEncoders1();
    
 
     while(true) {
@@ -1245,7 +1245,7 @@ void driveStraightR(int target, int speed) {
             voltage = -127 * double(speed)/100.0;
         }
 
-        chasMove( (voltage + heading_error ), (voltage - heading_error));
+        chasMov1( (voltage + heading_error ), (voltage - heading_error));
         if (abs(target - encoderAvg) <= 4) count++;
         if (count >= 8 || time2 > timeout){
             break;
@@ -1298,7 +1298,7 @@ void driveStraightC(int target) {
     }
 
     setConstants(STRAIGHT_KP, STRAIGHT_KI, STRAIGHT_KD);
-    resetEncoders();
+    resetEncoders1();
 
     while(true) {
         encoderAvg = (LF.get_position() + RF.get_position()) / 2;
@@ -1344,7 +1344,7 @@ void driveStraightC(int target) {
             voltage = -127;
         }
 
-        chasMove((voltage + heading_error ), (voltage - heading_error));
+        chasMov1((voltage + heading_error ), (voltage - heading_error));
         if (target > 0){
             if ((encoderAvg - (target-500)) > 0){
                 over = true;
@@ -1423,7 +1423,7 @@ void driveTurn(int target) { //target is inputted in autons
 
         voltage = calcPID(target, position, TURN_INTEGRAL_KI, TURN_MAX_INTEGRAL);
         
-        chasMove(voltage, -voltage);
+        chasMov1(voltage, -voltage);
         if (fabs(target - position) <= 0.5) count++; 
         if (count >= 20 || time2 > timeout) {
           break; 
@@ -1555,7 +1555,7 @@ void driveTurn2(int target) { //target is inputted in autons
         voltage = calcPID(target, position, TURN_INTEGRAL_KI, TURN_MAX_INTEGRAL);
 
         
-        chasMove(voltage, -voltage);
+        chasMov1(voltage, -voltage);
         
         if (abs(target - position) <= 0.5) count++; //0.35
         if (count >= 20 || time2 > timeout) {
@@ -1688,7 +1688,7 @@ void driveTurnD(int target) { //target is inputted in autons
         voltage = calcPID(target, position, TURN_INTEGRAL_KI, TURN_MAX_INTEGRAL);
 
         
-        chasMove(voltage, -voltage);
+        chasMov1(voltage, -voltage);
         
         if (abs(target - position) <= 0.5) count++; //0.35
         if (count >= 20 || time2 > timeout) {
@@ -1809,7 +1809,7 @@ void driveTurnT(int target) { //target is inputted in autons
         voltage = calcPIDT(target, position, TURN_INTEGRAL_KI, TURN_MAX_INTEGRAL);
 
         
-        chasMove(voltage, -voltage);
+        chasMov1(voltage, -voltage);
         
         if (abs(target - position) <= 0.5) count++; //0.35
         if (count >= 20 || time2 > timeout) {
@@ -1848,7 +1848,7 @@ void driveArcL(double theta, double radius, int timeout, int speed){
     double pi = 3.14159265359;
     int count = 0;
     time2 = 0;
-    resetEncoders();
+    resetEncoders1();
     con.clear();
     //int timeout = 5000;
     ltarget = double((theta / 360) * 2 * pi * radius); 
@@ -1905,7 +1905,7 @@ void driveArcL(double theta, double radius, int timeout, int speed){
         int fix = calcPID3((trueTarget + leftcorrect), position, ARC_HEADING_INTEGRAL_KI, ARC_HEADING_MAX_INTEGRAL);
         totalError += error3;
     
-        chasMove((voltageL + fix), (voltageR - fix));
+        chasMov1((voltageL + fix), (voltageR - fix));
         if ((abs(ltarget - encoderAvgL) <= 4) && (abs(rtarget - encoderAvgR) <= 4)) count++;
         if (count >= 20 || time2 > timeout){
             trueTarget -= theta;
@@ -1939,7 +1939,7 @@ void driveArcLF(double theta, double radius, int timeout, int speed){
     bool over = false;
     int count = 0;
     int time = 0;
-    resetEncoders();
+    resetEncoders1();
     con.clear();
 
 
@@ -2016,7 +2016,7 @@ void driveArcLF(double theta, double radius, int timeout, int speed){
         setConstants(ARC_HEADING_KP, ARC_HEADING_KI, ARC_HEADING_KD);
         int fix = calcPID3((trueTarget + leftcorrect), position, ARC_HEADING_INTEGRAL_KI, ARC_HEADING_MAX_INTEGRAL);
 
-        chasMove((voltageL + fix), (voltageR - fix));
+        chasMov1((voltageL + fix), (voltageR - fix));
 
         // if (theta > 0){
         //     if ((encoderAvgL - ltargetFinal) > 0){
@@ -2067,7 +2067,7 @@ void driveArcR(double theta, double radius, int timeout, int speed){
 
     int count = 0;
     int time = 0;
-    resetEncoders();
+    resetEncoders1();
     con.clear();
     //int timeout = 5000;
     ltarget = double((theta / 360) * 2 * pi * (radius + 390)); // * double(2) * pi * double(radius));
@@ -2131,7 +2131,7 @@ void driveArcR(double theta, double radius, int timeout, int speed){
         setConstants(ARC_HEADING_KP, ARC_HEADING_KI, ARC_HEADING_KD);
         int fix = calcPID3((trueTarget + rightcorrect), position, ARC_HEADING_INTEGRAL_KI, ARC_HEADING_MAX_INTEGRAL);
 
-        chasMove((voltageL + fix), (voltageR - fix));
+        chasMov1((voltageL + fix), (voltageR - fix));
         if ((abs(ltarget - encoderAvgL) <= 4) && (abs(rtarget - encoderAvgR) <= 4)) count++;
         if (count >= 20 || time > timeout){
             trueTarget += theta;
@@ -2168,7 +2168,7 @@ void driveArcRF(double theta, double radius, int timeout, int speed){
     int count = 0;
     int time = 0;
     double rightcorrect = 0;
-    resetEncoders();
+    resetEncoders1();
     con.clear();
     //int timeout = 5000;
     ltargetFinal = double((theta / 360) * 2 * pi * (radius+390)); // * double(2) * pi * double(radius));
@@ -2228,7 +2228,7 @@ void driveArcRF(double theta, double radius, int timeout, int speed){
 
 
 
-        chasMove((voltageL + fix), (voltageR - fix));
+        chasMov1((voltageL + fix), (voltageR - fix));
 
         // if (theta > 0){
         //     if ((encoderAvgR - rtargetFinal) > 0){

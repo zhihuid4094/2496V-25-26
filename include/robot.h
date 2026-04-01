@@ -16,8 +16,10 @@ extern pros::Controller con;
 extern pros::Rotation roto;
 extern pros::Rotation ODOMX;
 extern pros::Rotation ODOMY;
+extern pros::Distance distanceSensorL;
+extern pros::Distance distanceSensorR;
 
-//chassis motors
+//chassis motors  
 extern pros::Motor LF;
 extern pros::Motor LB;
 extern pros::Motor RF;

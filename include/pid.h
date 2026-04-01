@@ -35,8 +35,7 @@ extern void intake2(int speed);
 extern void stall();
 extern void LadyBrownMacro();
 
-extern int time2; 
-extern float error;
+extern int time2;
 extern float error2;
 extern int integral;
 extern int ColorCount;
