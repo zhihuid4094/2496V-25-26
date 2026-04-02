@@ -17,8 +17,8 @@ double driveKI = 0;
 double driveKD = 8;
 double driveMAXI = 500;
 
-double HCKP = .6;
-double HCKI = .001;
+double HCKP = 0.7;
+double HCKI = 0.01;
 double HCKD = .1;
 double HCMAXI = 500;
 
@@ -39,8 +39,8 @@ double arcMAXI = 50;
 // ================================
 // DRIVE p_point constants 
 // ================================
-double driveKP1 = 0.5;  double driveKI1 = 0.0;  double driveKD1 = 0.2;  // case 1 < 500
-double driveKP2 = 0.3;  double driveKI2 = 0.0;  double driveKD2 = 0.4;  // case 2 < 1000
+double driveKP1 = 1.4;  double driveKI1 = 0.02;  double driveKD1 = 7;  // case 1 < 500
+double driveKP2 = 1.4;  double driveKI2 = 0.0;  double driveKD2 = 9;  // case 2 < 1000
 double driveKP3 = 0.2;  double driveKI3 = 0.0;  double driveKD3 = 0.5;  // case 3 < 1500
 double driveKP4 = 0.5;  double driveKI4 = 0.0;  double driveKD4 = 0.2;  // case 4 < 2000
 double driveKP5 = 0.3;  double driveKI5 = 0.0;  double driveKD5 = 0.4;  // case 5 < 2500
@@ -200,11 +200,11 @@ void drivePID(int desiredValue, int maxSpeed, int timeout = 5000,
     resetEncoders();
     con.clear();
 
-     int pidTarget = (chainValue != 0) ? desiredValue + chainValue : desiredValue;
+     double pidTarget = (chainValue != 0) ? desiredValue + chainValue : desiredValue;
 
 
     int startTime = pros::millis();
-    double acc = 0.4; // speed units per ms, higher = faster ramp (TUNE)
+    double acc = .35; // speed units per ms, higher = faster ramp (TUNE)
 
     while (enableDrivePID)
     {
@@ -302,7 +302,10 @@ void drivePID(int desiredValue, int maxSpeed, int timeout = 5000,
             // normal mode: settle near target
             if (fabs(error) < errorThreshold) {
                 count++;
+            } else {
+                count = 0; // reset if it leaves the threshold
             }
+
             if (count > settleCount) {
                 enableDrivePID = false;
             }
@@ -502,6 +505,8 @@ void drivePIDW(int desiredValue, int maxSpeed, int timeout = 5000, int wallDista
         else {
             if (fabs(error) < errorThreshold) {
                 count++;
+            } else {
+                count = 0; // reset if it leaves the threshold
             }
             if (count > settleCount) {
                 enableDrivePID = false;
@@ -615,8 +620,11 @@ void turnPID(double desiredValue, int topSpeed = 127, int timeout = 5000, int er
         prevError = error;
 
         if (fabs(error) < errorThreshold) {
-            count++;
-        }
+                count++;
+            } else {
+                count = 0; // reset if it leaves the threshold
+            }
+        
         if (count > settleCount) {
             enableTurnPID = false;
         }
