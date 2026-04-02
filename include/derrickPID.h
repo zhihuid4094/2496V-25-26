@@ -41,11 +41,11 @@ extern void chasSlow(int speed, int ms);
 extern double calcPID(int error, double kP, double kI, double kD, double totalError, double prevError, double integralThreshold, double maxI);
 
 // Drive functions
-extern void drivePID(int desiredValue, int maxSpeed, int timeout, int errorThreshold, int settleCount, int dec_point, int minSpeed, int p_point, int chainValue, int triggerDist, int triggerSpeed);
-extern void drivePIDW(int desiredValue, int maxSpeed, int timeout, int wallDistanceTarget, int wallOffStart1, int wallOnAgain1, int wallOffStart2, int wallOnAgain2, int errorThreshold, int settleCount, int sensorSide, int dec_point, int minSpeed, int p_point, int chainValue,  int triggerDist, int triggerSpeed);
+extern void drivePID(int desiredValue, int maxSpeed, int timeout, int errorThreshold, int settleCount, int dec_point, int minSpeed, int chainValue, int triggerDist, int triggerSpeed);
+extern void drivePIDW(int desiredValue, int maxSpeed, int timeout, int wallDistanceTarget, int wallOffStart1, int wallOnAgain1, int wallOffStart2, int wallOnAgain2, int errorThreshold, int settleCount, int sensorSide, int dec_point, int minSpeed, int chainValue,  int triggerDist, int triggerSpeed);
 
 // Turn functions
-extern void turnPID(double desiredValue, int topSpeed, int timeout, int errorThreshold, int settleCount, int p_point);
+extern void turnPID(double desiredValue, int topSpeed, int timeout, int errorThreshold, int settleCount);
 
 // Arc functions
 extern void driveArcL(double theta, double radius, int timeout, int speed, int errorThreshold, int settleCount, int chainValue);

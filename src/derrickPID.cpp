@@ -17,14 +17,14 @@ double driveKI = 0;
 double driveKD = 8;
 double driveMAXI = 500;
 
-double HCKP = 0.7;
+double HCKP = 1.5;
 double HCKI = 0.01;
 double HCKD = .1;
 double HCMAXI = 500;
 
-double wallKP = .075;
+double wallKP = .12;
 double wallKI = 0;
-double wallKD = 0;  
+double wallKD = 5;  
 
 double turnKP = 1.65;
 double turnKI = 0;
@@ -37,7 +37,7 @@ double arcKD = 6;
 double arcMAXI = 50;
 
 // ================================
-// DRIVE p_point constants 
+// DRIVE Constnts
 // ================================
 double driveKP1 = 1.4;  double driveKI1 = 0.02;  double driveKD1 = 7;  // case 1 < 500
 double driveKP2 = 1.4;  double driveKI2 = 0.0;  double driveKD2 = 9;  // case 2 < 1000
@@ -47,7 +47,7 @@ double driveKP5 = 0.3;  double driveKI5 = 0.0;  double driveKD5 = 0.4;  // case 
 double driveKP6 = 0.2;  double driveKI6 = 0.0;  double driveKD6 = 0.5;  // case 6 < 3000
 
 // ================================
-// TURN p_point constants 
+// TURN constants
 // ================================
 double turnKP1 = 0.0;  double turnKI1 = 0.0;  double turnKD1 = 0.0;  // case 1 < 5
 double turnKP2 = 0.0;  double turnKI2 = 0.0;  double turnKD2 = 0.0;  // case 2 < 10
@@ -55,11 +55,11 @@ double turnKP3 = 0.0;  double turnKI3 = 0.0;  double turnKD3 = 0.0;  // case 3 <
 double turnKP4 = 0.0;  double turnKI4 = 0.0;  double turnKD4 = 0.0;  // case 4 < 40
 double turnKP5 = 0.0;  double turnKI5 = 0.0;  double turnKD5 = 0.0;  // case 5 < 60
 double turnKP6 = 0.0;  double turnKI6 = 0.0;  double turnKD6 = 0.0;  // case 6 < 80
-double turnKP7 = 0.0;  double turnKI7 = 0.0;  double turnKD7 = 0.0;  // case 7 < 100
+double turnKP7 = 3.3;  double turnKI7 = 0.01;  double turnKD7 = 20;  // case 7 < 100
 double turnKP8 = 0.0;  double turnKI8 = 0.0;  double turnKD8 = 0.0;  // case 8 < 120
 double turnKP9 = 0.0;  double turnKI9 = 0.0;  double turnKD9 = 0.0;  // case 9 < 140
 double turnKP10 = 0.0;  double turnKI10 = 0.0;  double turnKD10 = 0.0;  // case 10 < 160
-double turnKP11 = 0.0;  double turnKI11 = 0.0;  double turnKD11 = 0.0;  // case 11 < 180
+double turnKP11 = 2.2;  double turnKI11 = 0;  double turnKD11 = 14.5;  // case 11 < 190
 
 
 void chasMove(int left, int right) { //voltage to each chassis motor
@@ -170,7 +170,7 @@ double calcPID(int error, double kP=HCKP, double kI=HCKI, double kD=HCKD, double
 //--------------------------------------------------------------------------------------------
 void drivePID(int desiredValue, int maxSpeed, int timeout = 5000,
               int errorThreshold = 15, int settleCount = 50,
-              int dec_point = -1, int minSpeed = 10, int p_point = 0, 
+              int dec_point = -1, int minSpeed = 10, 
               int chainValue = 0,  int triggerDist = -1, int triggerSpeed = 0)
 {
     bool enableDrivePID = true;
@@ -185,17 +185,14 @@ void drivePID(int desiredValue, int maxSpeed, int timeout = 5000,
     double maxI = driveMAXI;
     int integralThreshold = 150;
 
-    switch (p_point)
-{
-    case 0: break;
-    case 1: kP = driveKP1; kI = driveKI1; kD = driveKD1; break;
-    case 2: kP = driveKP2; kI = driveKI2; kD = driveKD2; break;
-    case 3: kP = driveKP3; kI = driveKI3; kD = driveKD3; break;
-    case 4: kP = driveKP4; kI = driveKI4; kD = driveKD4; break;
-    case 5: kP = driveKP5; kI = driveKI5; kD = driveKD5; break;
-    case 6: kP = driveKP6; kI = driveKI6; kD = driveKD6; break;
-    default: break;
-}
+    double driveDelta = fabs((double)desiredValue);
+
+    if      (driveDelta < 500)  { kP = driveKP1; kI = driveKI1; kD = driveKD1; }
+        else if (driveDelta < 1000) { kP = driveKP2; kI = driveKI2; kD = driveKD2; }
+        else if (driveDelta < 1500) { kP = driveKP3; kI = driveKI3; kD = driveKD3; }
+        else if (driveDelta < 2000) { kP = driveKP4; kI = driveKI4; kD = driveKD4; }
+        else if (driveDelta < 2500) { kP = driveKP5; kI = driveKI5; kD = driveKD5; }
+        else                        { kP = driveKP6; kI = driveKI6; kD = driveKD6; }
 
     resetEncoders();
     con.clear();
@@ -345,7 +342,7 @@ void drivePIDW(int desiredValue, int maxSpeed, int timeout = 5000, int wallDista
                   int wallOffStart1 = -1, int wallOnAgain1 = -1,
                   int wallOffStart2 = -1, int wallOnAgain2 = -1,
                   int errorThreshold = 15, int settleCount = 50,
-                  int sensorSide = 0, int dec_point = -1, int minSpeed = 10, int p_point = 0,
+                  int sensorSide = 0, int dec_point = -1, int minSpeed = 10,
                   int chainValue = 0, int triggerDist = -1, int triggerSpeed = 0)
 {
     bool enableDrivePID = true;
@@ -359,23 +356,20 @@ void drivePIDW(int desiredValue, int maxSpeed, int timeout = 5000, int wallDista
     double wallPrevError = 0;
     double wallTotalError = 0;
 
+    double driveDelta = fabs((double)desiredValue);
+
     double kP = driveKP;
     double kI = driveKI;
     double kD = driveKD;
     double maxI = driveMAXI;
     int integralThreshold = 150;
 
-    switch (p_point)
-    {
-        case 0: break;
-        case 1: kP = driveKP1; kI = driveKI1; kD = driveKD1; break;
-        case 2: kP = driveKP2; kI = driveKI2; kD = driveKD2; break;
-        case 3: kP = driveKP3; kI = driveKI3; kD = driveKD3; break;
-        case 4: kP = driveKP4; kI = driveKI4; kD = driveKD4; break;
-        case 5: kP = driveKP5; kI = driveKI5; kD = driveKD5; break;
-        case 6: kP = driveKP6; kI = driveKI6; kD = driveKD6; break;
-        default: break;
-    }
+      if      (driveDelta < 500)  { kP = driveKP1; kI = driveKI1; kD = driveKD1; }
+        else if (driveDelta < 1000) { kP = driveKP2; kI = driveKI2; kD = driveKD2; }
+        else if (driveDelta < 1500) { kP = driveKP3; kI = driveKI3; kD = driveKD3; }
+        else if (driveDelta < 2000) { kP = driveKP4; kI = driveKI4; kD = driveKD4; }
+        else if (driveDelta < 2500) { kP = driveKP5; kI = driveKI5; kD = driveKD5; }
+        else                        { kP = driveKP6; kI = driveKI6; kD = driveKD6; }
 
     resetEncoders();
     con.clear();
@@ -543,13 +537,15 @@ void drivePIDW(int desiredValue, int maxSpeed, int timeout = 5000, int wallDista
 // TURNING
 //--------------------------------------------------------------------------------------------
 
-void turnPID(double desiredValue, int topSpeed = 127, int timeout = 5000, int errorThreshold = 1, int settleCount = 50, int p_point = 0)
+void turnPID(double desiredValue, int topSpeed = 127, int timeout = 5000, int errorThreshold = 1, int settleCount = 50)
 {   
     bool enableTurnPID = true;
     double prevError = 0;
     double totalError = 0;
     int count = 0;
     int time = 0;
+
+    double turnDelta = fabs(fmod((desiredValue - imu.get_heading() + 540), 360) - 180);
 
     double kP = turnKP;
     double kI = turnKI;
@@ -558,22 +554,17 @@ void turnPID(double desiredValue, int topSpeed = 127, int timeout = 5000, int er
     int integralThreshold = 30;
 
 
-     switch (p_point)
-{
-    case 0: break;
-    case 1: kP = turnKP1; kI = turnKI1; kD = turnKD1; break;
-    case 2: kP = turnKP2; kI = turnKI2; kD = turnKD2; break;
-    case 3: kP = turnKP3; kI = turnKI3; kD = turnKD3; break;
-    case 4: kP = turnKP4; kI = turnKI4; kD = turnKD4; break;
-    case 5: kP = turnKP5; kI = turnKI5; kD = turnKD5; break;
-    case 6: kP = turnKP6; kI = turnKI6; kD = turnKD6; break;
-    case 7: kP = turnKP7; kI = turnKI7; kD = turnKD7; break;
-    case 8: kP = turnKP8; kI = turnKI8; kD = turnKD8; break;
-    case 9: kP = turnKP9; kI = turnKI9; kD = turnKD9; break;
-    case 10: kP = turnKP10; kI = turnKI10; kD = turnKD10; break;
-    case 11: kP = turnKP11; kI = turnKI11; kD = turnKD11; break;
-    default: break;
-}
+  if      (turnDelta < 5)   { kP = turnKP1;  kI = turnKI1;  kD = turnKD1; }
+    else if (turnDelta < 10)  { kP = turnKP2;  kI = turnKI2;  kD = turnKD2; }
+    else if (turnDelta < 20)  { kP = turnKP3;  kI = turnKI3;  kD = turnKD3; }
+    else if (turnDelta < 40)  { kP = turnKP4;  kI = turnKI4;  kD = turnKD4; }
+    else if (turnDelta < 60)  { kP = turnKP5;  kI = turnKI5;  kD = turnKD5; }
+    else if (turnDelta < 80)  { kP = turnKP6;  kI = turnKI6;  kD = turnKD6; }
+    else if (turnDelta < 100) { kP = turnKP7;  kI = turnKI7;  kD = turnKD7; }
+    else if (turnDelta < 120) { kP = turnKP8;  kI = turnKI8;  kD = turnKD8; }
+    else if (turnDelta < 140) { kP = turnKP9;  kI = turnKI9;  kD = turnKD9; }
+    else if (turnDelta < 160) { kP = turnKP10; kI = turnKI10; kD = turnKD10; }
+    else if (turnDelta < 190) { kP = turnKP11; kI = turnKI11; kD = turnKD11; }
 
     con.clear();
 

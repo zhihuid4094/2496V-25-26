@@ -26,18 +26,18 @@ void autonomous() {
 
   //KEY (LOOK HERE IF YOU ARE LOST ON WHAT PARAMETERS MEAN)  
 //---------------------------------------------------------------------------------------------------------------------------------------
-//drivePID(Target, Maxspeed, Timeout, Error Width, Time Within Error, When To Start Slow Down, Min Speed, Kp Selector, chainValue, Trigger Distance, Speed) 
+//drivePID(Target, Maxspeed, Timeout, Error Width, Time Within Error, When To Start Slow Down, Min Speed, chainValue, Trigger Distance, Speed) 
 //
-//            drivePID(1000, 127, 5000, 15, 50, 700, 30, 0, 0, -1, 0);       (11 Parameters)
+//            drivePID(1000, 127, 5000, 15, 50, 700, 30, 0, -1, 0);       (10 Parameters)
 //---------------------------------------------------------------------------------------------------------------------------------------
 //drivePIDW(Target, Maxspeed, Timeout, Distance from Wall, -1, -1, -1, -1, Error Width,
-//           Time Within Error, 0 = Left Sensor/1 = Right Sensor, When To Start Slow Down, Min Speed, Kp Selector, chainValue, Trigger Distance, Speed) 
+//           Time Within Error, 0 = Left Sensor/1 = Right Sensor, When To Start Slow Down, Min Speed, chainValue, Trigger Distance, Speed) 
 //
-//            drivePIDW(1000, 127, 5000, 360, -1, -1, -1, -1, 15, 50, 0, 700, 30, 0, 0, -1, 0);       (17 Parameters)
+//            drivePIDW(1000, 127, 5000, 360, -1, -1, -1, -1, 15, 50, 0, 700, 30, 0, -1, 0);       (16 Parameters)
 //---------------------------------------------------------------------------------------------------------------------------------------
-//turnPID(Target, MaxSpeed, Timeout, Error Width, Time Within Error, Kp Selector)
+//turnPID(Target, MaxSpeed, Timeout, Error Width, Time Within Error)
 //
-//            turnPID(90, 127, 5000, 15, 50, 0);     (6 Parameters)
+//            turnPID(90, 127, 5000, 15, 50);     (5 Parameters)
 //---------------------------------------------------------------------------------------------------------------------------------------
 //driveArcL(Target, radius, timeout, max Speed, Error Width, Time in Error, chainValue)
 //
@@ -49,17 +49,20 @@ void autonomous() {
 //            chasSlow(-50, 400);
 //---------------------------------------------------------------------------------------------------------------------------------------
 //Copy and Paste from Here
-//  drivePID(-1000, 50, 3000, 15, 50, 700, 40, 0, 0, -1, 0);
-//  drivePIDW(-1000, 50, 3000, 400, -1, -1, -1, -1, 15, 50, 0, 700, 40, 0, 0, -1, 0); 
-//  turnPID(90, 50, 3000, 15, 50, 0);
-//  driveArcR(-90, 400, 5000, 100, 15, 50, 0);
+//  drivePID(-1000, 50, 3000, 15, 50, 700, 40, 0, -1, 0);
+//  drivePIDW(-1000, 50, 3000, 400, -1, -1, -1, -1, 15, 50, 0, 700, 40, 0, -1, 0); 
+//  turnPID(90, 50, 3000, 1, 50);
+//  driveArcR(90, 400, 5000, 100, 15, 50, 0);
 //---------------------------------------------------------------------------------------------------------------------------------------
 
                       
   if (atn == 0) {
     //skills
+
+    turnPID(90, 100, 3000, 1, 10);
+    drivePID(2000, 80, 3000, 15, 50, 999, 80, 0, -1, 0);
     
-     drivePID(6000, 60, 5000, 3, 50, 5300, 50, 2, 0, -1, 0);
+  
 
      
   } 
@@ -95,11 +98,11 @@ void autonomous() {
 
   else if (atn == 6){
     //4 Fast Right
-    drivePID(600, 80, 3000, 15, 50, 999, 80, 0, 500, -1, 0);
+    drivePID(600, 80, 3000, 15, 50, 999, 80, 500, -1, 0);
     driveArcR(95, 100, 3000, 100, 15, 50, 300);
-    drivePID(900, 100, 3000, 15, 50, 999, 100, 0, 500, -1, 0);
-    turnPID(158, 100, 400, 1, 50, 0);
-    drivePIDW(-1000, 100, 3000, 460, -1, -1, -1, -1, 15, 50, 0, 999, 100, 0, 0, -1, 0); 
+    drivePID(900, 100, 3000, 15, 50, 999, 100, 500, -1, 0);
+    turnPID(158, 100, 400, 1, 50);
+    drivePIDW(-1000, 100, 3000, 460, -1, -1, -1, -1, 15, 50, 0, 999, 100, 0, -1, 0); 
 
   } 
   
