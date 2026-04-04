@@ -25,8 +25,8 @@ extern pros::Motor LM;
 
 
 // intake/mechanism motors
-extern pros::Motor Lintake;
-extern pros::Motor Rintake;
+extern pros::Motor intake;
+extern pros::Motor Lever;
 
 // imu
 extern pros::Imu imu;
@@ -34,7 +34,6 @@ extern pros::Imu imu;
 // pneumatics
 extern pros::ADIDigitalOut scraper;
 extern pros::ADIDigitalOut descore;
-extern pros::ADIDigitalOut pto;
 extern pros::ADIDigitalOut lift;
 extern pros::ADIDigitalOut park;
  

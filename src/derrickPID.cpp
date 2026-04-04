@@ -39,7 +39,7 @@ double arcMAXI = 50;
 // ================================
 // DRIVE Constnts
 // ================================
-double driveKP1 = 1.4;  double driveKI1 = 0.02;  double driveKD1 = 7;  // case 1 < 500
+double driveKP1 = 6;  double driveKI1 = 0;  double driveKD1 = 0;  // case 1 < 500
 double driveKP2 = 1.4;  double driveKI2 = 0.0;  double driveKD2 = 9;  // case 2 < 1000
 double driveKP3 = 0.2;  double driveKI3 = 0.0;  double driveKD3 = 0.5;  // case 3 < 1500
 double driveKP4 = 0.5;  double driveKI4 = 0.0;  double driveKD4 = 0.2;  // case 4 < 2000
@@ -49,17 +49,17 @@ double driveKP6 = 0.2;  double driveKI6 = 0.0;  double driveKD6 = 0.5;  // case 
 // ================================
 // TURN constants
 // ================================
-double turnKP1 = 0.0;  double turnKI1 = 0.0;  double turnKD1 = 0.0;  // case 1 < 5
-double turnKP2 = 0.0;  double turnKI2 = 0.0;  double turnKD2 = 0.0;  // case 2 < 10
-double turnKP3 = 0.0;  double turnKI3 = 0.0;  double turnKD3 = 0.0;  // case 3 < 20
-double turnKP4 = 0.0;  double turnKI4 = 0.0;  double turnKD4 = 0.0;  // case 4 < 40
-double turnKP5 = 0.0;  double turnKI5 = 0.0;  double turnKD5 = 0.0;  // case 5 < 60
-double turnKP6 = 0.0;  double turnKI6 = 0.0;  double turnKD6 = 0.0;  // case 6 < 80
-double turnKP7 = 3.3;  double turnKI7 = 0.01;  double turnKD7 = 20;  // case 7 < 100
-double turnKP8 = 0.0;  double turnKI8 = 0.0;  double turnKD8 = 0.0;  // case 8 < 120
-double turnKP9 = 0.0;  double turnKI9 = 0.0;  double turnKD9 = 0.0;  // case 9 < 140
-double turnKP10 = 0.0;  double turnKI10 = 0.0;  double turnKD10 = 0.0;  // case 10 < 160
-double turnKP11 = 2.2;  double turnKI11 = 0;  double turnKD11 = 14.5;  // case 11 < 190
+double turnKP1 = 8;  double turnKI1 = 0.005;  double turnKD1 = 13;  // case 1 < 7
+double turnKP2 = 3.7;  double turnKI2 = 0.001;  double turnKD2 = 16;  // case 2 < 15
+double turnKP3 = 3.65;  double turnKI3 = 0.001;  double turnKD3 = 18;  // case 3 < 20
+double turnKP4 = 2.87;  double turnKI4 = 0.001;  double turnKD4 = 16;  // case 4 < 40
+double turnKP5 = 2.7;  double turnKI5 = 0.001;  double turnKD5 = 16.5;  // case 5 < 60
+double turnKP6 = 2.58;  double turnKI6 = 0.001;  double turnKD6 = 17;  // case 6 < 80
+double turnKP7 = 2.49;  double turnKI7 = 0.001;  double turnKD7 = 17;  // case 7 < 100 
+double turnKP8 = 2.39;  double turnKI8 = 0.001;  double turnKD8 = 17;  // case 8 < 120
+double turnKP9 = 2.34;  double turnKI9 = 0.001;  double turnKD9 = 17.7;  // case 9 < 140
+double turnKP10 = 2.34;  double turnKI10 = 0.001;  double turnKD10 = 17.9;  // case 10 < 160
+double turnKP11 = 3;  double turnKI11 = .001;  double turnKD11 = 25;  // case 11 < 190 
 
 
 void chasMove(int left, int right) { //voltage to each chassis motor
@@ -242,7 +242,7 @@ void drivePID(int desiredValue, int maxSpeed, int timeout = 5000,
         double error = pidTarget - currentValue;
 
         if (triggerDist != -1 && fabs(error) <= triggerDist) {
-            Lintake.move(triggerSpeed);
+            Lever.move(triggerSpeed);
         }
 
         // derivative
@@ -419,7 +419,7 @@ void drivePIDW(int desiredValue, int maxSpeed, int timeout = 5000, int wallDista
         double error = pidTarget - currentValue;
 
         if (triggerDist != -1 && abs(error) <= triggerDist) {
-            Lintake.move(triggerSpeed);
+            Lever.move(triggerSpeed);
         }
         
         double derivative = error - prevError;
@@ -554,8 +554,8 @@ void turnPID(double desiredValue, int topSpeed = 127, int timeout = 5000, int er
     int integralThreshold = 30;
 
 
-  if      (turnDelta < 5)   { kP = turnKP1;  kI = turnKI1;  kD = turnKD1; }
-    else if (turnDelta < 10)  { kP = turnKP2;  kI = turnKI2;  kD = turnKD2; }
+  if      (turnDelta < 7)   { kP = turnKP1;  kI = turnKI1;  kD = turnKD1; }
+    else if (turnDelta < 15)  { kP = turnKP2;  kI = turnKI2;  kD = turnKD2; }
     else if (turnDelta < 20)  { kP = turnKP3;  kI = turnKI3;  kD = turnKD3; }
     else if (turnDelta < 40)  { kP = turnKP4;  kI = turnKI4;  kD = turnKD4; }
     else if (turnDelta < 60)  { kP = turnKP5;  kI = turnKI5;  kD = turnKD5; }

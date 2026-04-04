@@ -144,18 +144,17 @@ void opcontrol() {
       }
     }
     
-     if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_L1)){
-      liftToggle = !liftToggle;
-      if(liftToggle == true){
-        lift.set_value(false);
-        descore.set_value(false);
-      }
-      else{
-        lift.set_value(true);
-        descore.set_value(false);
+    //  if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_L1)){
+    //   liftToggle = !liftToggle;
+    //   if(liftToggle == true){
+    //     lift.set_value(false);
+    //     descore.set_value(false);
+    //   }
+    //   else{
+    //     lift.set_value(true);
+    //     descore.set_value(false);
 
-      }
-    }
+    //   }
     if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_RIGHT)){
   
     }
@@ -163,38 +162,42 @@ void opcontrol() {
     if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_X)){
       
     }
+    
+
+    if (con.get_digital(E_CONTROLLER_DIGITAL_L1)) {//score mode
+			Lever.move(127);
+      Lever.tare_position();
+
+		} 
+    else if(con.get_digital(E_CONTROLLER_DIGITAL_L2)){//store mode
+      Lever.move(-127);
+      Lever.tare_position();
+    }
+
+    else {
+      Lever.move(0);
+    }
+
+
 
     if (con.get_digital(E_CONTROLLER_DIGITAL_R1)) {//score mode
-      pto.set_value(true);
-			Lintake.move(127);
-      Rintake.move(-127);
-      Lintake.tare_position();
-      Rintake.tare_position();
+			intake.move(127);
+      intake.tare_position();
+
 		} 
     else if(con.get_digital(E_CONTROLLER_DIGITAL_R2)){//store mode
-      pto.set_value(false);
-      Lintake.move(127);
-      Rintake.move(-127);
-      Lintake.tare_position();
-      Rintake.tare_position();
+      intake.move(-127);
+      intake.tare_position();
     }
-    else if (con.get_digital(E_CONTROLLER_DIGITAL_L2)) {//outake mode
-      Lintake.move(-127);
-      Rintake.move(127);
-      Lintake.tare_position();
-      Rintake.tare_position();
-    }
+
     else if (con.get_digital(E_CONTROLLER_DIGITAL_UP)) {//middle goal mode
-      Lintake.move(60);
-      Rintake.move(-60);
-      Lintake.tare_position();
-      Rintake.tare_position();
+      intake.move(-60);
+      intake.tare_position();
 
     }
 
     else {
-      Lintake.move(0);
-      Rintake.move(0);
+      intake.move(0);
     }
     
 
@@ -266,7 +269,7 @@ void opcontrol() {
 
 
 		double chasstempC = ((RF.get_temperature() + RB.get_temperature() + LF.get_temperature() + LB.get_temperature())/4);
-    double intaketempc = ((Lintake.get_temperature() + Rintake.get_temperature())/2);
+    double intaketempc = (intake.get_temperature());
     if (time % 50 == 0 && time % 100 != 0 && time % 150 != 0){
       con.print(0, 0, "AUTON: %s           ", autstr);
       
@@ -281,6 +284,5 @@ void opcontrol() {
 	  	time += 1;
 		  delay(1);
 	  }
-  }
   
-    
+  }
