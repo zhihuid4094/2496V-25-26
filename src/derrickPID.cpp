@@ -17,9 +17,9 @@ double driveKI = 0;
 double driveKD = 8;
 double driveMAXI = 500;
 
-double HCKP = 1.5;
+double HCKP = .55;
 double HCKI = 0.01;
-double HCKD = .1;
+double HCKD = 3;
 double HCMAXI = 500;
 
 double wallKP = .12;
@@ -39,13 +39,16 @@ double arcMAXI = 50;
 // ================================
 // DRIVE Constnts
 // ================================
-double driveKP1 = 6;  double driveKI1 = 0;  double driveKD1 = 0;  // case 1 < 500
-double driveKP2 = 1.4;  double driveKI2 = 0.0;  double driveKD2 = 9;  // case 2 < 1000
-double driveKP3 = 0.2;  double driveKI3 = 0.0;  double driveKD3 = 0.5;  // case 3 < 1500
-double driveKP4 = 0.5;  double driveKI4 = 0.0;  double driveKD4 = 0.2;  // case 4 < 2000
-double driveKP5 = 0.3;  double driveKI5 = 0.0;  double driveKD5 = 0.4;  // case 5 < 2500
-double driveKP6 = 0.2;  double driveKI6 = 0.0;  double driveKD6 = 0.5;  // case 6 < 3000
-
+double driveKP1  = .289;  double driveKI1  = .001;    double driveKD1  = 2; // case 1  < 300
+double driveKP2  = .16;  double driveKI2  = 0;    double driveKD2  = .3; // case 2  < 500
+double driveKP3  = .15;  double driveKI3  = 0;    double driveKD3  = .18; // case 3  < 700
+double driveKP4  = .135;  double driveKI4  = 0;    double driveKD4  = .18; // case 4  < 1000
+double driveKP5  = .133;  double driveKI5  = 0;    double driveKD5  = 0.2;  // case 5  < 1200
+double driveKP6  = 0.131;  double driveKI6  = 0;    double driveKD6  = 0.26;  // case 6  < 1500
+double driveKP7  = 0.125;  double driveKI7  = 0;    double driveKD7  = 0.332;  // case 7  < 2000
+double driveKP8  = 0.119;  double driveKI8  = 0;    double driveKD8  = 0.4;  // case 8  < 2500
+double driveKP9  = 0.113;  double driveKI9  = 0;    double driveKD9  = 0.46;  // case 9  < 3000
+double driveKP10 = 0.107;  double driveKI10 = 0;    double driveKD10 = 0.52;  // case 10 >= 3000
 // ================================
 // TURN constants
 // ================================
@@ -187,12 +190,16 @@ void drivePID(int desiredValue, int maxSpeed, int timeout = 5000,
 
     double driveDelta = fabs((double)desiredValue);
 
-    if      (driveDelta < 500)  { kP = driveKP1; kI = driveKI1; kD = driveKD1; }
-        else if (driveDelta < 1000) { kP = driveKP2; kI = driveKI2; kD = driveKD2; }
-        else if (driveDelta < 1500) { kP = driveKP3; kI = driveKI3; kD = driveKD3; }
-        else if (driveDelta < 2000) { kP = driveKP4; kI = driveKI4; kD = driveKD4; }
-        else if (driveDelta < 2500) { kP = driveKP5; kI = driveKI5; kD = driveKD5; }
-        else                        { kP = driveKP6; kI = driveKI6; kD = driveKD6; }
+     if      (driveDelta < 300)  { kP = driveKP1;  kI = driveKI1;  kD = driveKD1;  }
+        else if (driveDelta < 500)  { kP = driveKP2;  kI = driveKI2;  kD = driveKD2;  }
+        else if (driveDelta < 700)  { kP = driveKP3;  kI = driveKI3;  kD = driveKD3;  }
+        else if (driveDelta < 1000) { kP = driveKP4;  kI = driveKI4;  kD = driveKD4;  }
+        else if (driveDelta < 1200) { kP = driveKP5;  kI = driveKI5;  kD = driveKD5;  }
+        else if (driveDelta < 1500) { kP = driveKP6;  kI = driveKI6;  kD = driveKD6;  }
+        else if (driveDelta < 2000) { kP = driveKP7;  kI = driveKI7;  kD = driveKD7;  }
+        else if (driveDelta < 2500) { kP = driveKP8;  kI = driveKI8;  kD = driveKD8;  }
+        else if (driveDelta < 3000) { kP = driveKP9;  kI = driveKI9;  kD = driveKD9;  }
+        else                        { kP = driveKP10; kI = driveKI10; kD = driveKD10; }
 
     resetEncoders();
     con.clear();
@@ -364,13 +371,16 @@ void drivePIDW(int desiredValue, int maxSpeed, int timeout = 5000, int wallDista
     double maxI = driveMAXI;
     int integralThreshold = 150;
 
-      if      (driveDelta < 500)  { kP = driveKP1; kI = driveKI1; kD = driveKD1; }
-        else if (driveDelta < 1000) { kP = driveKP2; kI = driveKI2; kD = driveKD2; }
-        else if (driveDelta < 1500) { kP = driveKP3; kI = driveKI3; kD = driveKD3; }
-        else if (driveDelta < 2000) { kP = driveKP4; kI = driveKI4; kD = driveKD4; }
-        else if (driveDelta < 2500) { kP = driveKP5; kI = driveKI5; kD = driveKD5; }
-        else                        { kP = driveKP6; kI = driveKI6; kD = driveKD6; }
-
+      if      (driveDelta < 300)  { kP = driveKP1;  kI = driveKI1;  kD = driveKD1;  }
+        else if (driveDelta < 500)  { kP = driveKP2;  kI = driveKI2;  kD = driveKD2;  }
+        else if (driveDelta < 700)  { kP = driveKP3;  kI = driveKI3;  kD = driveKD3;  }
+        else if (driveDelta < 1000) { kP = driveKP4;  kI = driveKI4;  kD = driveKD4;  }
+        else if (driveDelta < 1200) { kP = driveKP5;  kI = driveKI5;  kD = driveKD5;  }
+        else if (driveDelta < 1500) { kP = driveKP6;  kI = driveKI6;  kD = driveKD6;  }
+        else if (driveDelta < 2000) { kP = driveKP7;  kI = driveKI7;  kD = driveKD7;  }
+        else if (driveDelta < 2500) { kP = driveKP8;  kI = driveKI8;  kD = driveKD8;  }
+        else if (driveDelta < 3000) { kP = driveKP9;  kI = driveKI9;  kD = driveKD9;  }
+        else                        { kP = driveKP10; kI = driveKI10; kD = driveKD10; }
     resetEncoders();
     con.clear();
 
