@@ -51,4 +51,7 @@ extern void turnPID(double desiredValue, int topSpeed, int timeout, int errorThr
 extern void driveArcL(double theta, double radius, int timeout, int speed, int errorThreshold, int settleCount, int chainValue);
 extern void driveArcR(double theta, double radius, int timeout, int speed, int errorThreshold, int settleCount, int chainValue);
 
+// Lever
+extern void leverPID(int derivedValue, int maxSpeed, int timeout, int errorThreshold, int settleCount, int dec_point, int minSpeed);
+
 #endif

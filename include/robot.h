@@ -35,7 +35,7 @@ extern pros::Imu imu;
 extern pros::ADIDigitalOut scraper;
 extern pros::ADIDigitalOut descore;
 extern pros::ADIDigitalOut lift;
-extern pros::ADIDigitalOut park;
+extern pros::ADIDigitalOut blocker;
  
 
 // constants

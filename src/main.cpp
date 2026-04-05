@@ -6,6 +6,7 @@
 #include "pros/misc.h"
 #include "pros/motors.h"
 #include "robot.h"
+#include "derrickPID.h"
 
 
 using namespace pros;
@@ -71,8 +72,6 @@ void disabled() {}
 int atn = 0;
 //--------------------------------------------------------------------------------------------------------------------------------------
 string autstr;
-bool scraperToggle = false;
-bool liftToggle = false;
 
 
  
@@ -106,78 +105,54 @@ void competition_initialize() {
 
 
 void opcontrol() {
+  con.clear();
   int time = 0;
   bool arcToggle = false;
   bool tankToggle = true;
-  bool descoreToggle = true;
+  bool liftToggle = false;
+  bool descoreToggle = false;
+  bool blockerToggle = false;
+  bool scraperToggle = false;
+  LF.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+  LM.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+  LB.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+  RF.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+  RM.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+  RB.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
 
   imu.tare_heading();
 
-	while (true) {
+  while (true) {
 
-    if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_B)){
-      scraperToggle  = !scraperToggle;
-      if(scraperToggle == true){
-        scraper.set_value(false);
-      }
-      else{
-        scraper.set_value(true);
-      }
-    }
-    if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_DOWN)){
-      descoreToggle  = !descoreToggle;
-      if(descoreToggle == true){
-        descore.set_value(false);
-      }
-      else{
-        descore.set_value(true);
-      }
+    if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_L1)) {
+      liftToggle = !liftToggle;
+      lift.set_value(liftToggle);
     }
 
-    if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_DOWN)){
-      descoreToggle  = !descoreToggle;
-      if(descoreToggle == true){
-        descore.set_value(false);
-      }
-      else{
-        descore.set_value(true);
-      }
+    if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_DOWN)) {
+      descoreToggle = !descoreToggle;
+      descore.set_value(descoreToggle);
     }
-    
-    //  if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_L1)){
-    //   liftToggle = !liftToggle;
-    //   if(liftToggle == true){
-    //     lift.set_value(false);
-    //     descore.set_value(false);
-    //   }
-    //   else{
-    //     lift.set_value(true);
-    //     descore.set_value(false);
 
-    //   }
-    if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_RIGHT)){
-  
-    }
-   
-    if(con.get_digital_new_press(E_CONTROLLER_DIGITAL_X)){
-      
+    if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_A)) {
+      scraperToggle = !scraperToggle;
+      scraper.set_value(scraperToggle);
     }
     
 
-    if (con.get_digital(E_CONTROLLER_DIGITAL_L1)) {//score mode
-			Lever.move(127);
-      Lever.tare_position();
-
-		} 
-    else if(con.get_digital(E_CONTROLLER_DIGITAL_L2)){//store mode
-      Lever.move(-127);
-      Lever.tare_position();
-    }
-
-    else {
-      Lever.move(0);
-    }
-
+    if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_L2)) {
+    pros::Task leverTask([](){
+        blocker.set_value(false);
+        leverPID(750, 127, 2000, 100, 10, 550, 50);
+        pros::delay(500);
+        blocker.set_value(true);
+        leverPID(-550, 127, 2000, 100, 10, 400, 50);
+        Lever.move(-20);
+        pros::delay(800);
+        Lever.move(0);
+        pros::Task::current().remove();
+    });
+}
 
 
     if (con.get_digital(E_CONTROLLER_DIGITAL_R1)) {//score mode
@@ -255,34 +230,30 @@ void opcontrol() {
 
 
 
-    if (atn == 0)      { autstr = "skills";       con.print(0, 0, "Aut 0: %s", autstr); }
-    else if (atn == 1) { autstr = "3+4 left";     con.print(0, 0, "Aut 1: %s", autstr); }
-    else if (atn == 2) { autstr = "3+4 right";    con.print(0, 0, "Aut 2: %s", autstr); }
-    else if (atn == 3) { autstr = "7 left";       con.print(0, 0, "Aut 3: %s", autstr); }
-    else if (atn == 4) { autstr = "7 right";      con.print(0, 0, "Aut 4: %s", autstr); }
-    else if (atn == 5) { autstr = "4 Fast Left";  con.print(0, 0, "Aut 5: %s", autstr); }
-    else if (atn == 6) { autstr = "4 Fast Right"; con.print(0, 0, "Aut 6: %s", autstr); }
-    else if (atn == 7) { autstr = "sawp";         con.print(0, 0, "Aut 7: %s", autstr); }
-    else if (atn == 8) { autstr = "misc";         con.print(0, 0, "Aut 8: %s", autstr); }
+       // set autstr once per loop without printing
+    if      (atn == 0) autstr = "skills";
+    else if (atn == 1) autstr = "3+4 left";
+    else if (atn == 2) autstr = "3+4 right";
+    else if (atn == 3) autstr = "7 left";
+    else if (atn == 4) autstr = "7 right";
+    else if (atn == 5) autstr = "4 Fast Left";
+    else if (atn == 6) autstr = "4 Fast Right";
+    else if (atn == 7) autstr = "sawp";
+    else if (atn == 8) autstr = "misc";
 
+    double chasstempC = ((RF.get_temperature() + RB.get_temperature() + RM.get_temperature() + LF.get_temperature() + LB.get_temperature() + LM.get_temperature()) / 6);
+    double intaketempc = intake.get_temperature();
 
-
-
-		double chasstempC = ((RF.get_temperature() + RB.get_temperature() + LF.get_temperature() + LB.get_temperature())/4);
-    double intaketempc = (intake.get_temperature());
-    if (time % 50 == 0 && time % 100 != 0 && time % 150 != 0){
-      con.print(0, 0, "AUTON: %s           ", autstr);
-      
-    } else if (time % 100 == 0 && time % 150 != 0){
-        con.print(1, 0, "imu: %f         ", imu.get_rotation());
-        
-    } 
-    else if (time % 150 == 0){
-      con.print(2, 0, "C:%i int:%i ", int(chasstempC), int(intaketempc)); 
-    } 
-
-	  	time += 1;
-		  delay(1);
-	  }
-  
+    //   if (time % 101 == 0) {
+    //     con.print(0, 0, "AUTON: %s           ", autstr);
+    // }
+    // if (time % 103 == 0) {
+    //     con.print(1, 0, "imu: %.2f           ", imu.get_rotation());
+    // } 
+    // if (time % 107 == 0) {
+    //     con.print(2, 0, "C:%i int:%i         ", int(chasstempC), int(intaketempc)); 
+    // }
+    time += 1;
+    delay(1);
   }
+}

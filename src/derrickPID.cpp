@@ -31,9 +31,9 @@ double turnKI = 0;
 double turnKD = 8;
 double turnMAXI = 500;
 
-double arcKP = 6;
-double arcKI = 0.002;
-double arcKD = 6;
+double arcKP = 2.1;
+double arcKI = 0;
+double arcKD = .2;
 double arcMAXI = 50;
 
 // ================================
@@ -677,7 +677,6 @@ void driveArcL(double theta, double radius, int timeout = 5000, int speed = 100,
     double rtargetPID = (chainValue != 0) ? rtarget + chainValue : rtarget;
 
     double speedProp = ltarget / rtarget;
-    if (speedProp < .35) speedProp = .35;
 
     double kP = arcKP;
     double kI = arcKI;
@@ -708,7 +707,7 @@ void driveArcL(double theta, double radius, int timeout = 5000, int speed = 100,
         double right_error = rtargetPID - encoderAvgR;
         double left_error  = ltargetPID - encoderAvgL;
 
-        double leftcorrect = (encoderAvgL * 360.0) / (2.0 * pi * radius);
+        double leftcorrect = (encoderAvgL * 360.0) / (2.0 * pi * (radius + 415));
 
         double currentIMUValue = imu.get_heading();
         if (currentIMUValue > 180) currentIMUValue -= 360;
@@ -793,20 +792,19 @@ void driveArcR(double theta, double radius, int timeout = 5000, int speed = 100,
     double pi = 3.14159265359;
 
     double rtarget = (theta / 360.0) * 2 * pi * radius;
-    double ltarget = (theta / 360.0) * 2 * pi * (radius + 360);
+    double ltarget = (theta / 360.0) * 2 * pi * (radius + 330);
 
     // extend targets if chaining
     double ltargetPID = (chainValue != 0) ? ltarget + chainValue : ltarget;
     double rtargetPID = (chainValue != 0) ? rtarget + chainValue : rtarget;
 
     double speedProp = rtarget / ltarget;
-    if (speedProp < .35) speedProp = .35;
 
     double kP = arcKP;
     double kI = arcKI;
     double kD = arcKD;
     double maxI = arcMAXI;
-    double arcHeadingKP = 1;
+    double arcHeadingKP = .7;
     int integralThreshold = 150;
 
     double prevError = 0;
@@ -831,7 +829,7 @@ void driveArcR(double theta, double radius, int timeout = 5000, int speed = 100,
         double right_error = rtargetPID - encoderAvgR;
         double left_error  = ltargetPID - encoderAvgL;
 
-        double rightcorrect = (encoderAvgR * 360.0) / (2.0 * pi * radius);
+       double rightcorrect = (encoderAvgL * 360.0) / (2.0 * pi * (radius + 330));
 
         double currentIMUValue = imu.get_heading();
         if (currentIMUValue > 180) currentIMUValue -= 360;
@@ -892,3 +890,70 @@ void driveArcR(double theta, double radius, int timeout = 5000, int speed = 100,
     chasBrake();
     universal_target_heading += theta;
 }
+// if speed 30, the right addition is 528. 
+
+
+void leverPID(int desiredValue, int maxSpeed = 127, int timeout = 3000, 
+              int errorThreshold = 10, int settleCount = 20, int dec_point = 200, int minSpeed = 20)
+{
+    Lever.tare_position();
+    con.clear();
+    
+    double kP = 2.5;  // tune these
+    double kD = 5.7;
+    
+    double prevError = 0;
+    int count = 0;
+    int time = 0;
+
+    int startTime = pros::millis();
+    double acc = 0.5; // ramp up speed
+
+    while (true) {
+        if (time > timeout) break;
+
+        double currentPos = Lever.get_position();
+        double error = desiredValue - currentPos;
+        double derivative = error - prevError;
+
+        double speed = error * kP + derivative * kD;
+
+        // acceleration ramp
+        double rampedMax = acc * (pros::millis() - startTime);
+        if (rampedMax > maxSpeed) rampedMax = maxSpeed;
+
+        // deceleration near target
+        double currentAbs = fabs(currentPos);
+        if (dec_point != -1 && currentAbs > dec_point) {
+            double decMax = maxSpeed - (currentAbs - dec_point) / 5.0;
+            if (decMax < minSpeed) decMax = minSpeed;
+            if (rampedMax > decMax) rampedMax = decMax;
+        }
+
+        if (speed >  rampedMax) speed =  rampedMax;
+        if (speed < -rampedMax) speed = -rampedMax;
+
+        Lever.move(speed);
+        prevError = error;
+
+        if (fabs(error) < errorThreshold) count++;
+        else count = 0;
+
+        if (count > settleCount) break;
+
+        
+        if (time % 50 == 0 && time % 100 != 0 && time % 150 != 0){
+            con.print(0, 0, "error: %.5f    ", error);
+        } else if (time % 100 == 0 && time % 150 != 0){
+            con.print(1, 0, "imu: %.3f          ", imu.get_heading());
+        } else if (time % 150 == 0){
+            con.print(2, 0, "time: %d           ", time);
+        
+        }
+        delay(10);
+        time += 10;
+    }
+
+    Lever.move(0);
+}
+

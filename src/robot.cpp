@@ -10,7 +10,7 @@
 #define RF_PORT 17
 #define RM_PORT 16
 #define RB_PORT 15
-#define IMU_PORT 10
+#define IMU_PORT 12
 #define intake_PORT 14
 #define Lever_PORT 13
 #define ROTO_PORT 2
@@ -31,13 +31,13 @@ pros::Motor RM(RM_PORT, pros::E_MOTOR_GEARSET_06, false);
 pros::Motor RB(RB_PORT, pros::E_MOTOR_GEARSET_06, false);
 
 // intake motors
-pros::Motor Lever(Lever_PORT, pros::E_MOTOR_GEARSET_06, false);
+pros::Motor Lever(Lever_PORT, pros::E_MOTOR_GEARSET_06, true);
 pros::Motor intake(intake_PORT, pros::E_MOTOR_GEARSET_06, false);
 
 // pneumatics
-pros::ADIDigitalOut lift('B', false);
-pros::ADIDigitalOut descore('E', false);
-pros::ADIDigitalOut park('G', false);
+pros::ADIDigitalOut lift('A', true);
+pros::ADIDigitalOut descore('G', false);
+pros::ADIDigitalOut blocker('B', true);
 pros::ADIDigitalOut scraper('C', false);
 
 // sensors
