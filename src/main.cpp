@@ -244,15 +244,15 @@ void opcontrol() {
     double chasstempC = ((RF.get_temperature() + RB.get_temperature() + RM.get_temperature() + LF.get_temperature() + LB.get_temperature() + LM.get_temperature()) / 6);
     double intaketempc = intake.get_temperature();
 
-    //   if (time % 101 == 0) {
-    //     con.print(0, 0, "AUTON: %s           ", autstr);
-    // }
-    // if (time % 103 == 0) {
-    //     con.print(1, 0, "imu: %.2f           ", imu.get_rotation());
-    // } 
-    // if (time % 107 == 0) {
-    //     con.print(2, 0, "C:%i int:%i         ", int(chasstempC), int(intaketempc)); 
-    // }
+      if (time % 101 == 0) {
+        con.print(0, 0, "AUTON: %s           ", autstr);
+    }
+    if (time % 103 == 0) {
+        con.print(1, 0, "imu: %.2f           ", imu.get_rotation());
+    } 
+    if (time % 107 == 0) {
+        con.print(2, 0, "C:%i int:%i         ", int(chasstempC), int(intaketempc)); 
+    }
     time += 1;
     delay(1);
   }

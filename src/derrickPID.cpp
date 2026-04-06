@@ -942,14 +942,14 @@ void leverPID(int desiredValue, int maxSpeed = 127, int timeout = 3000,
         if (count > settleCount) break;
 
         
-        if (time % 50 == 0 && time % 100 != 0 && time % 150 != 0){
-            con.print(0, 0, "error: %.5f    ", error);
-        } else if (time % 100 == 0 && time % 150 != 0){
-            con.print(1, 0, "imu: %.3f          ", imu.get_heading());
-        } else if (time % 150 == 0){
-            con.print(2, 0, "time: %d           ", time);
+        // if (time % 50 == 0 && time % 100 != 0 && time % 150 != 0){
+        //     con.print(0, 0, "error: %.5f    ", error);
+        // } else if (time % 100 == 0 && time % 150 != 0){
+        //     con.print(1, 0, "imu: %.3f          ", imu.get_heading());
+        // } else if (time % 150 == 0){
+        //     con.print(2, 0, "time: %d           ", time);
         
-        }
+        // }
         delay(10);
         time += 10;
     }
