@@ -45,7 +45,7 @@ extern void drivePID(int desiredValue, int maxSpeed, int timeout, int errorThres
 extern void drivePIDW(int desiredValue, int maxSpeed, int timeout, int wallDistanceTarget, int wallOffStart1, int wallOnAgain1, int wallOffStart2, int wallOnAgain2, int errorThreshold, int settleCount, int sensorSide, int dec_point, int minSpeed, int chainValue,  int triggerDist, int triggerSpeed);
 
 // Turn functions
-extern void turnPID(double desiredValue, int topSpeed, int timeout, int errorThreshold, int settleCount);
+extern void turnPID(double desiredValue, int topSpeed, int timeout, int errorThreshold, int settleCount, double chainValue);
 
 // Arc functions
 extern void driveArcL(double theta, double radius, int timeout, int speed, int errorThreshold, int settleCount, int chainValue);

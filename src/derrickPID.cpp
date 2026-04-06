@@ -547,7 +547,7 @@ void drivePIDW(int desiredValue, int maxSpeed, int timeout = 5000, int wallDista
 // TURNING
 //--------------------------------------------------------------------------------------------
 
-void turnPID(double desiredValue, int topSpeed = 127, int timeout = 5000, int errorThreshold = 1, int settleCount = 50)
+void turnPID(double desiredValue, int topSpeed = 127, int timeout = 5000, int errorThreshold = 1, int settleCount = 50, double chainDelta = 0)
 {   
     bool enableTurnPID = true;
     double prevError = 0;
@@ -578,6 +578,8 @@ void turnPID(double desiredValue, int topSpeed = 127, int timeout = 5000, int er
 
     con.clear();
 
+    double pidTarget = (chainDelta != 0) ? desiredValue + chainDelta : desiredValue;
+
     while (enableTurnPID)
     {
         if (time > timeout) {
@@ -585,7 +587,7 @@ void turnPID(double desiredValue, int topSpeed = 127, int timeout = 5000, int er
         }
 
         // proportional
-        double error = fmod((desiredValue - imu.get_heading() + 540), 360) - 180;
+        double error = fmod((pidTarget - imu.get_heading() + 540), 360) - 180;
 
         // derivative
         double derivative = error - prevError;
@@ -620,15 +622,24 @@ void turnPID(double desiredValue, int topSpeed = 127, int timeout = 5000, int er
 
         prevError = error;
 
-        if (fabs(error) < errorThreshold) {
-                count++;
-            } else {
-                count = 0; // reset if it leaves the threshold
-            }
-        
-        if (count > settleCount) {
+
+        if (chainDelta != 0) {
+        // chain mode: exit when real target is reached
+            double realError = fmod((desiredValue - imu.get_heading() + 540), 360) - 180;
+            if (fabs(realError) <= errorThreshold) {
             enableTurnPID = false;
+            }
+        } else {
+        // normal settle
+            if (fabs(error) < errorThreshold) {
+            count++;
+            } else {
+            count = 0;
         }
+        if (count > settleCount) {
+        enableTurnPID = false;
+    }
+}
         
         if (time % 50 == 0 && time % 100 != 0 && time % 150 != 0){
             con.print(0, 0, "error: %.2f        ", -error);
