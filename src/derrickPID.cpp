@@ -547,7 +547,7 @@ void drivePIDW(int desiredValue, int maxSpeed, int timeout = 5000, int wallDista
 // TURNING
 //--------------------------------------------------------------------------------------------
 
-void turnPID(double desiredValue, int topSpeed = 127, int timeout = 5000, int errorThreshold = 1, int settleCount = 50, double chainDelta = 0)
+void turnPID(double desiredValue, int topSpeed = 127, int timeout = 5000, double errorThreshold = 1, int settleCount = 50, double chainDelta = 0)
 {   
     bool enableTurnPID = true;
     double prevError = 0;
