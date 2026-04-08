@@ -13,9 +13,9 @@
 #define IMU_PORT 12
 #define intake_PORT 14
 #define Lever_PORT 13
-#define ROTO_PORT 2
-#define Distance_PORTL 16
-#define Distance_PORTR 9
+#define ROTO_PORT 3
+#define Distance_PORTL 2
+#define Distance_PORTR 11
 
 // rotation sensors
 pros::Rotation roto(ROTO_PORT);
@@ -35,7 +35,7 @@ pros::Motor Lever(Lever_PORT, pros::E_MOTOR_GEARSET_06, true);
 pros::Motor intake(intake_PORT, pros::E_MOTOR_GEARSET_06, false);
 
 // pneumatics
-pros::ADIDigitalOut lift('A', true);
+pros::ADIDigitalOut lift('A', false);
 pros::ADIDigitalOut descore('G', false);
 pros::ADIDigitalOut blocker('B', true);
 pros::ADIDigitalOut scraper('C', false);

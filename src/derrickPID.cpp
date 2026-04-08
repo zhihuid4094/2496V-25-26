@@ -22,9 +22,9 @@ double HCKI = 0.01;
 double HCKD = 3;
 double HCMAXI = 500;
 
-double wallKP = .12;
+double wallKP = 30;
 double wallKI = 0;
-double wallKD = 5;  
+double wallKD = 4;  
 
 double turnKP = 1.65;
 double turnKI = 0;
@@ -429,6 +429,7 @@ void drivePIDW(int desiredValue, int maxSpeed, int timeout = 5000, int wallDista
         double error = pidTarget - currentValue;
 
         if (triggerDist != -1 && abs(error) <= triggerDist) {
+            blocker.set_value(false);
             Lever.move(triggerSpeed);
         }
         
@@ -681,7 +682,7 @@ void driveArcL(double theta, double radius, int timeout = 5000, int speed = 100,
     double pi = 3.14159265359;
 
     double ltarget = (theta / 360.0) * 2 * pi * radius;
-    double rtarget = (theta / 360.0) * 2 * pi * (radius + 360);
+    double rtarget = (theta / 360.0) * 2 * pi * (radius + 528);
 
     // extend targets if chaining
     double ltargetPID = (chainValue != 0) ? ltarget + chainValue : ltarget;
@@ -693,7 +694,7 @@ void driveArcL(double theta, double radius, int timeout = 5000, int speed = 100,
     double kI = arcKI;
     double kD = arcKD;
     double maxI = arcMAXI;
-    double arcHeadingKP = 1;
+    double arcHeadingKP = 0;
     int integralThreshold = 150;
 
     double prevError = 0;
@@ -718,7 +719,7 @@ void driveArcL(double theta, double radius, int timeout = 5000, int speed = 100,
         double right_error = rtargetPID - encoderAvgR;
         double left_error  = ltargetPID - encoderAvgL;
 
-        double leftcorrect = (encoderAvgL * 360.0) / (2.0 * pi * (radius + 415));
+        double leftcorrect = (encoderAvgL * 360.0) / (2.0 * pi * (radius + 528));
 
         double currentIMUValue = imu.get_heading();
         if (currentIMUValue > 180) currentIMUValue -= 360;
@@ -922,7 +923,7 @@ void leverPID(int desiredValue, int maxSpeed = 127, int timeout = 3000,
 
     while (true) {
         if (time > timeout) break;
-
+        Lever.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
         double currentPos = Lever.get_position();
         double error = desiredValue - currentPos;
         double derivative = error - prevError;

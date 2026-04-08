@@ -69,7 +69,7 @@ void disabled() {}
 
 //--------------------------------------------------------------------------------------------------------------------------------------
 //SELECT AUTON HERE
-int atn = 0;
+int atn = 1;
 //--------------------------------------------------------------------------------------------------------------------------------------
 string autstr;
 
@@ -125,8 +125,9 @@ void opcontrol() {
   while (true) {
 
     if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_L1)) {
-      liftToggle = !liftToggle;
+        liftToggle = !liftToggle;
       lift.set_value(liftToggle);
+      descore.set_value(false);
     }
 
     if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_DOWN)) {
@@ -134,7 +135,7 @@ void opcontrol() {
       descore.set_value(descoreToggle);
     }
 
-    if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_A)) {
+    if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_B)) {
       scraperToggle = !scraperToggle;
       scraper.set_value(scraperToggle);
     }
@@ -143,7 +144,7 @@ void opcontrol() {
     if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_L2)) {
     pros::Task leverTask([](){
         blocker.set_value(false);
-        leverPID(750, 127, 2000, 100, 10, 550, 50);
+        leverPID(750, 95, 2000, 100, 10, 550, 50);
         pros::delay(500);
         blocker.set_value(true);
         leverPID(-550, 127, 2000, 100, 10, 400, 50);

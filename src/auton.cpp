@@ -97,6 +97,31 @@ turnPID(0, 75, 1000, 1.6, 30, 0);      // ~165 turn
 
   else if (atn == 1) {
     //3+4 left
+    intake.move(127);
+    drivePID(800, 50, 1500, 10, 50, 500, 50, 200, -1, 0);
+    driveArcL(42, 1100, 1500, 30, 15, 50, 0);
+    turnPID(3, 75, 1000, 1.6, 30, 5); 
+    drivePID(-1300, 127, 1000, 10, 50, 700, 50, 200, -1, 0);
+    driveArcL(-135, 160, 1000, 60, 15, 50, 0);
+    turnPID(-140, 75, 100, 1.6, 30, 0); 
+    lift.set_value(true);
+    drivePIDW(-1600, 70, 2500, 460, -1, -1, -1, -1, 15, 50, 1, 699, 127, 0, -1, 0); 
+    chasSlow(-100, 300);
+    blocker.set_value(false);
+        leverPID(750, 95, 2000, 100, 10, 550, 50);
+        pros::delay(500);
+        blocker.set_value(true);
+        leverPID(-550, 127, 2000, 100, 10, 400, 50);
+        Lever.move(-20);
+        pros::delay(800);
+        Lever.move(0);
+
+    
+
+
+
+
+
 
   }
 
