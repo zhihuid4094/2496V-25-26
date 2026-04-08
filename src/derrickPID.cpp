@@ -22,7 +22,7 @@ double HCKI = 0.01;
 double HCKD = 3;
 double HCMAXI = 500;
 
-double wallKP = 30;
+double wallKP = 1;
 double wallKI = 0;
 double wallKD = 4;  
 
@@ -98,6 +98,22 @@ void chasSlow(int speed, int ms) {
     chasBrake();
 }
 
+void LeverScore(){
+    LF.move(-50);
+    LM.move(-50);
+    LB.move(-50);
+    RF.move(-50);
+    RM.move(-50);
+    RB.move(-50);
+    blocker.set_value(false);
+    leverPID(750, 85, 2000, 100, 10, 550, 50);
+    pros::delay(500);
+    blocker.set_value(true);
+    leverPID(-700, 127, 800, 100, 10, 600, 40);
+    Lever.move(-40);
+    pros::delay(300);
+    Lever.move(0);
+}
 
 
 
@@ -468,8 +484,8 @@ void drivePIDW(int desiredValue, int maxSpeed, int timeout = 5000, int wallDista
         wallTotalError += wallError;
 
         double wallCorrection = wallError * wallKP + wallDerivative * wallKD + wallTotalError * wallKI;
-        if (wallCorrection > 20) wallCorrection = 20;
-        if (wallCorrection < -20) wallCorrection = -20;
+        if (wallCorrection > 50) wallCorrection = 50;
+        if (wallCorrection < -50) wallCorrection = -50;
         wallPrevError = wallError;
 
         // =====================

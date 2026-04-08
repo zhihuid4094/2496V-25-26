@@ -77,7 +77,7 @@ string autstr;
  
 void competition_initialize() {
     if (atn == 0)      { autstr = "skills";       con.print(0, 0, "Aut 0: %s", autstr); }
-    else if (atn == 1) { autstr = "3+4 left";     con.print(0, 0, "Aut 1: %s", autstr); }
+    else if (atn == 1) { autstr = "6+3 rush";     con.print(0, 0, "Aut 1: %s", autstr); }
     else if (atn == 2) { autstr = "3+4 right";    con.print(0, 0, "Aut 2: %s", autstr); }
     else if (atn == 3) { autstr = "7 left";       con.print(0, 0, "Aut 3: %s", autstr); }
     else if (atn == 4) { autstr = "7 right";      con.print(0, 0, "Aut 4: %s", autstr); }

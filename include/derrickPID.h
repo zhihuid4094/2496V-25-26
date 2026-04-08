@@ -36,6 +36,7 @@ extern void chasMove(int left, int right);
 extern void resetEncoders();
 extern void chasBrake();
 extern void chasSlow(int speed, int ms);
+extern void LeverScore();
 
 // PID calc
 extern double calcPID(int error, double kP, double kI, double kD, double totalError, double prevError, double integralThreshold, double maxI);
