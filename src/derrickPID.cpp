@@ -12,7 +12,7 @@ using namespace std;
 
 double universal_target_heading = 0 ;
 
-double driveKP = .3;
+double driveKP = .2;
 double driveKI = 0;
 double driveKD = 8;
 double driveMAXI = 500;
@@ -22,9 +22,9 @@ double HCKI = 0.01;
 double HCKD = 3;
 double HCMAXI = 500;
 
-double wallKP = 1;
+double wallKP = .17;
 double wallKI = 0;
-double wallKD = 4;  
+double wallKD = 3;  
 
 double turnKP = 1.65;
 double turnKI = 0;
@@ -99,12 +99,12 @@ void chasSlow(int speed, int ms) {
 }
 
 void LeverScore(){
-    LF.move(-50);
-    LM.move(-50);
-    LB.move(-50);
-    RF.move(-50);
-    RM.move(-50);
-    RB.move(-50);
+    LF.move(-80);
+    LM.move(-80);
+    LB.move(-80);
+    RF.move(-80);
+    RM.move(-80);
+    RB.move(-80);
     blocker.set_value(false);
     leverPID(750, 85, 2000, 100, 10, 550, 50);
     pros::delay(500);
@@ -710,7 +710,7 @@ void driveArcL(double theta, double radius, int timeout = 5000, int speed = 100,
     double kI = arcKI;
     double kD = arcKD;
     double maxI = arcMAXI;
-    double arcHeadingKP = 0;
+    double arcHeadingKP = .04;
     int integralThreshold = 150;
 
     double prevError = 0;
@@ -820,7 +820,7 @@ void driveArcR(double theta, double radius, int timeout = 5000, int speed = 100,
     double pi = 3.14159265359;
 
     double rtarget = (theta / 360.0) * 2 * pi * radius;
-    double ltarget = (theta / 360.0) * 2 * pi * (radius + 330);
+    double ltarget = (theta / 360.0) * 2 * pi * (radius + 528);
 
     // extend targets if chaining
     double ltargetPID = (chainValue != 0) ? ltarget + chainValue : ltarget;
@@ -832,7 +832,7 @@ void driveArcR(double theta, double radius, int timeout = 5000, int speed = 100,
     double kI = arcKI;
     double kD = arcKD;
     double maxI = arcMAXI;
-    double arcHeadingKP = .7;
+    double arcHeadingKP = .04;
     int integralThreshold = 150;
 
     double prevError = 0;
@@ -857,7 +857,7 @@ void driveArcR(double theta, double radius, int timeout = 5000, int speed = 100,
         double right_error = rtargetPID - encoderAvgR;
         double left_error  = ltargetPID - encoderAvgL;
 
-       double rightcorrect = (encoderAvgL * 360.0) / (2.0 * pi * (radius + 330));
+       double rightcorrect = (encoderAvgL * 360.0) / (2.0 * pi * (radius + 528));
 
         double currentIMUValue = imu.get_heading();
         if (currentIMUValue > 180) currentIMUValue -= 360;

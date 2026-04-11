@@ -69,7 +69,7 @@ void disabled() {}
 
 //--------------------------------------------------------------------------------------------------------------------------------------
 //SELECT AUTON HERE
-int atn = 1;
+int atn = 6;
 //--------------------------------------------------------------------------------------------------------------------------------------
 string autstr;
 
@@ -144,7 +144,7 @@ void opcontrol() {
     if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_L2)) {
     pros::Task leverTask([](){
         blocker.set_value(false);
-        leverPID(750, 95, 2000, 100, 10, 550, 50);
+        leverPID(750, 85, 2000, 100, 10, 550, 50);
         pros::delay(500);
         blocker.set_value(true);
         leverPID(-550, 127, 2000, 100, 10, 400, 50);
