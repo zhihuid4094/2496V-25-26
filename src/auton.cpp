@@ -342,7 +342,7 @@ turnPID(0, 75, 1000, 1.6, 30, 0);      // ~165 turn
     // updateddddd 
     intake.move(127);
     drivePIDW(480, 127, 500, 600, -1, -1, -1, -1, 15, 50, 0, 260, 65, 50, -1, 0); 
-    drivePIDW(-1360, 127, 1000, 600, 800, -1, -1, -1, 15, 50, 0, 800, 65, -50, -1, 0); 
+    drivePIDW(-1360, 127, 1000, 600, 800, -1, -1, -1, 15, 50, 0, 800, 65, 0, -1, 0); 
     turnPID(-90, 75, 700, 1.6, 30, -2); 
     scraper.set_value(true);
     lift.set_value(true);
@@ -369,7 +369,7 @@ turnPID(0, 75, 1000, 1.6, 30, 0);      // ~165 turn
     Lever.move(-60);
     turnPID(10, 75, 1300, 1, 30, 0); 
     Lever.move(0);
-    driveArcL(120, 1500, 500, 50, 15, 50, 50);
+    driveArcL(10, 1500, 1000, 50, 15, 50, 0);
     scraper.set_value(true);
     pros::delay(100);
     scraper.set_value(false);
