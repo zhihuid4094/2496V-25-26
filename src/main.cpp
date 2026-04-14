@@ -69,7 +69,7 @@ void disabled() {}
 
 //--------------------------------------------------------------------------------------------------------------------------------------
 //SELECT AUTON HERE
-int atn = 6;
+int atn = 7;
 //--------------------------------------------------------------------------------------------------------------------------------------
 string autstr;
 
@@ -136,8 +136,9 @@ void opcontrol() {
     }
 
     if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_B)) {
-      scraperToggle = !scraperToggle;
-      scraper.set_value(scraperToggle);
+      // scraperToggle = !scraperToggle;
+      // scraper.set_value(scraperToggle);
+      drivePIDW(1500, 60, 1200, 1130, -1, -1, -1, -1, 15, 50, 1, 675, 30, 0, -1, 0);
     }
     
 
