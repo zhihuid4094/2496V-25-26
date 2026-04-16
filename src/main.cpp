@@ -69,7 +69,7 @@ void disabled() {}
 
 //--------------------------------------------------------------------------------------------------------------------------------------
 //SELECT AUTON HERE
-int atn = 7;
+int atn = 13;
 //--------------------------------------------------------------------------------------------------------------------------------------
 string autstr;
 
@@ -77,14 +77,24 @@ string autstr;
  
 void competition_initialize() {
     if (atn == 0)      { autstr = "skills";       con.print(0, 0, "Aut 0: %s", autstr); }
-    else if (atn == 1) { autstr = "6+3 rush";     con.print(0, 0, "Aut 1: %s", autstr); }
-    else if (atn == 2) { autstr = "3+4 right";    con.print(0, 0, "Aut 2: %s", autstr); }
-    else if (atn == 3) { autstr = "7 left";       con.print(0, 0, "Aut 3: %s", autstr); }
-    else if (atn == 4) { autstr = "7 right";      con.print(0, 0, "Aut 4: %s", autstr); }
-    else if (atn == 5) { autstr = "4 Fast Left";  con.print(0, 0, "Aut 5: %s", autstr); }
-    else if (atn == 6) { autstr = "4 Fast Right"; con.print(0, 0, "Aut 6: %s", autstr); }
-    else if (atn == 7) { autstr = "sawp";         con.print(0, 0, "Aut 7: %s", autstr); }
-    else if (atn == 8) { autstr = "misc";         con.print(0, 0, "Aut 8: %s", autstr); }
+    else if (atn == 1) { autstr = "6+3 left";     con.print(0, 0, "Aut 1: %s", autstr); }
+    else if (atn == 2) { autstr = "6+3 right";    con.print(0, 0, "Aut 2: %s", autstr); }
+    else if (atn == 3) { autstr = "4 left";       con.print(0, 0, "Aut 3: %s", autstr); }
+    else if (atn == 4) { autstr = "4 right";      con.print(0, 0, "Aut 4: %s", autstr); }
+    else if (atn == 5) { autstr = "3+4 left";  con.print(0, 0, "Aut 5: %s", autstr); }
+    else if (atn == 6) { autstr = "3+4 right"; con.print(0, 0, "Aut 6: %s", autstr); }
+    else if (atn == 7) { autstr = "9 left";         con.print(0, 0, "Aut 7: %s", autstr); }
+    else if (atn == 8) { autstr = "9 right";         con.print(0, 0, "Aut 8: %s", autstr); }
+    else if (atn == 9) { autstr = "7 left";         con.print(0, 0, "Aut 9: %s", autstr); }
+    else if (atn == 10) { autstr = "7 right";         con.print(0, 0, "Aut 10: %s", autstr); }
+    else if (atn == 11) { autstr = "6 left";         con.print(0, 0, "Aut 11: %s", autstr); }
+    else if (atn == 12) { autstr = "6 right";         con.print(0, 0, "Aut 12: %s", autstr); }
+    else if (atn == 13) { autstr = "sawp";         con.print(0, 0, "Aut 13: %s", autstr); }
+    else if (atn == 14) { autstr = "misc";         con.print(0, 0, "Aut 14: %s", autstr); }
+    else if (atn == 15) { autstr = "misc";         con.print(0, 0, "Aut 15: %s", autstr); }
+    else if (atn == 16) { autstr = "misc";         con.print(0, 0, "Aut 16: %s", autstr); }
+    else if (atn == 17) { autstr = "misc";         con.print(0, 0, "Aut 17: %s", autstr); }
+    else if (atn == 18) { autstr = "misc";         con.print(0, 0, "Aut 18: %s", autstr); }
 }
 
 
@@ -136,9 +146,8 @@ void opcontrol() {
     }
 
     if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_B)) {
-      // scraperToggle = !scraperToggle;
-      // scraper.set_value(scraperToggle);
-      drivePIDW(1500, 60, 1200, 1130, -1, -1, -1, -1, 15, 50, 1, 675, 30, 0, -1, 0);
+      scraperToggle = !scraperToggle;
+      scraper.set_value(scraperToggle);
     }
     
 
@@ -234,14 +243,24 @@ void opcontrol() {
 
        // set autstr once per loop without printing
     if      (atn == 0) autstr = "skills";
-    else if (atn == 1) autstr = "3+4 left";
-    else if (atn == 2) autstr = "3+4 right";
-    else if (atn == 3) autstr = "7 left";
-    else if (atn == 4) autstr = "7 right";
-    else if (atn == 5) autstr = "4 Fast Left";
-    else if (atn == 6) autstr = "4 Fast Right";
-    else if (atn == 7) autstr = "sawp";
-    else if (atn == 8) autstr = "misc";
+    else if (atn == 1) autstr = "6+3 left";
+    else if (atn == 2) autstr = "6+3 right";
+    else if (atn == 3) autstr = "4 left";
+    else if (atn == 4) autstr = "4 right";
+    else if (atn == 5) autstr = "3+4 left";
+    else if (atn == 6) autstr = "3+4 right";
+    else if (atn == 7) autstr = "9 left";
+    else if (atn == 8) autstr = "9 right";
+    else if (atn == 9) autstr = "7 left";
+    else if (atn == 10) autstr = "7 right";
+    else if (atn == 11) autstr = "6 left";
+    else if (atn == 12) autstr = "6 right";
+    else if (atn == 13) autstr = "sawp";
+    else if (atn == 14) autstr = "misc";
+    else if (atn == 15) autstr = "misc";
+    else if (atn == 16) autstr = "misc";
+    else if (atn == 17) autstr = "misc";
+    else if (atn == 18) autstr = "misc";
 
     double chasstempC = ((RF.get_temperature() + RB.get_temperature() + RM.get_temperature() + LF.get_temperature() + LB.get_temperature() + LM.get_temperature()) / 6);
     double intaketempc = intake.get_temperature();
