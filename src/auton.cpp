@@ -575,14 +575,14 @@ void autonomous() {
     RB.move(-80);
     blocker.set_value(false);
     leverPID(750, 85, 800, 100, 10, 550, 50);
-    blocker.set_value(true);
     intake.move(-127);
+    blocker.set_value(true);
     Lever.move(-65);
     scraper.set_value(true);
     intake.move(127);
     drivePIDW(1350, 60, 1500, 480, -1, -1, -1, -1, 15, 50, 1, 675, 30, 0, -1, 0);
     Lever.move(0);
-    drivePIDW(-180, 60, 500, 480, -1, -1, -1, -1, 15, 50, 1, 100, 50, -50, -1, 0);
+    drivePIDW(-140, 60, 500, 480, -1, -1, -1, -1, 15, 50, 1, 100, 50, -50, -1, 0);
     turnPID(-45, 75, 700, 1.6, 30, 2); 
     scraper.set_value(false);
     lift.set_value(false); 
