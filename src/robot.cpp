@@ -36,7 +36,7 @@ pros::Motor intake(intake_PORT, pros::E_MOTOR_GEARSET_06, false);
 
 // pneumatics
 pros::ADIDigitalOut lift('A', false);
-pros::ADIDigitalOut descore('G', false);
+pros::ADIDigitalOut descore('D', false);
 pros::ADIDigitalOut blocker('B', true);
 pros::ADIDigitalOut scraper('C', false);
 

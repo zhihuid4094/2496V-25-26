@@ -31,6 +31,9 @@ extern double turnKI;
 extern double turnKD;
 extern double turnMAXI;
 
+extern bool leverTaskRunning;
+extern bool leverSkipToDown;
+
 // Utility functions
 extern void chasMove(int left, int right);
 extern void resetEncoders();

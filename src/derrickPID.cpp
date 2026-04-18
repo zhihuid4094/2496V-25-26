@@ -938,6 +938,7 @@ void leverPID(int desiredValue, int maxSpeed = 127, int timeout = 3000,
     double acc = 0.5; // ramp up speed
 
     while (true) {
+        if (leverSkipToDown) break; 
         if (time > timeout) break;
         Lever.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
         double currentPos = Lever.get_position();

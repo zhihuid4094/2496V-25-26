@@ -113,6 +113,8 @@ void competition_initialize() {
  */
 
 
+bool leverTaskRunning = false;
+bool leverSkipToDown = false;
 
 void opcontrol() {
   con.clear();
@@ -150,22 +152,32 @@ void opcontrol() {
       scraper.set_value(scraperToggle);
     }
     
+if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_L2)) {
+    if (!leverTaskRunning) {
+        leverTaskRunning = true;
+        leverSkipToDown = false;
+        pros::Task leverTask([](){
+            blocker.set_value(false);
+            leverPID(750, 120, 1000, 100, 10, 550, 50);
 
-    if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_L2)) {
-    pros::Task leverTask([](){
-        blocker.set_value(false);
-        leverPID(750, 115, 1000, 100, 10, 550, 50);
-        Lever.move(50);
-        pros::delay(150);
-        blocker.set_value(true);
-        leverPID(-550, 127, 500, 100, 10, 400, 50);
-        Lever.move(-20);
-        pros::delay(800);
-        Lever.move(0);
-        pros::Task::current().remove();
-    });
+            if (!leverSkipToDown) {
+                Lever.move(50);
+                pros::delay(500);
+            }
+
+            blocker.set_value(true);
+            leverPID(-550, 127, 500, 100, 10, 400, 50);
+            Lever.move(-40);
+            pros::delay(800);
+            Lever.move(0);
+            leverTaskRunning = false;
+            leverSkipToDown = false;
+            pros::Task::current().remove();
+        });
+    } else {
+        leverSkipToDown = true; // this triggers the break in leverPID
+    }
 }
-
 
     if (con.get_digital(E_CONTROLLER_DIGITAL_R1)) {//score mode
 			intake.move(127);
