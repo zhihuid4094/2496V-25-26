@@ -69,7 +69,7 @@ void disabled() {}
 
 //--------------------------------------------------------------------------------------------------------------------------------------
 //SELECT AUTON HERE
-int atn = 13;
+int atn = 11;
 //--------------------------------------------------------------------------------------------------------------------------------------
 string autstr;
 
@@ -123,7 +123,7 @@ void opcontrol() {
   bool tankToggle = true;
   bool liftToggle = false;
   bool descoreToggle = false;
-  bool blockerToggle = false;
+  bool blockerToggle = true;
   bool scraperToggle = false;
   LF.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
   LM.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
