@@ -12,9 +12,44 @@
 using namespace pros;
 using namespace std;
 
+static const char SELECTOR_PORT = 'H';
+static const int  NUM_AUTONS    = 19;
 
+static const char* auton_name(int idx) {
+  switch (idx) {
+    case 0:  return "skills";
+    case 1:  return "6+3 left";
+    case 2:  return "6+3 right";
+    case 3:  return "4 left";
+    case 4:  return "4 right";
+    case 5:  return "3+4 left";
+    case 6:  return "3+4 right";
+    case 7:  return "9 left";
+    case 8:  return "9 right";
+    case 9:  return "7 left";
+    case 10: return "7 right";
+    case 11: return "6 left";
+    case 12: return "6 right";
+    case 13: return "sawp";
+    default: return "misc";
+  }
+}
 
-
+static void selector_task_fn(void*) {
+  pros::ADIDigitalIn btn(SELECTOR_PORT);
+  bool prev = false;
+  while (true) {
+    bool curr = btn.get_value();
+    if (curr && !prev) {                      // rising edge — button just pressed
+      atn = (atn + 1) % NUM_AUTONS;
+      pros::lcd::print(0, "[%d/%d] %s", atn + 1, NUM_AUTONS, auton_name(atn));
+      con.rumble(".");
+      con.print(0, 0, "Aut %d: %s       ", atn, auton_name(atn));
+    }
+    prev = curr;
+    pros::delay(25);
+  }
+}
 /**
  * A callback function for LLEMU's center button.
  *
@@ -42,6 +77,13 @@ void on_center_button() {
 void initialize() {
   pros::lcd::initialize();
   pros::lcd::set_text(1, "Hello PROS User!");
+ // Show default selection immediately
+  pros::lcd::print(0, "[%d/%d] %s", atn + 1, NUM_AUTONS, auton_name(atn));
+ 
+  // Start selector task — keeps running through competition_initialize
+  pros::Task selector_task(selector_task_fn, nullptr,
+                           TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT,
+                           "auton_sel");
   //imu.tare_position();
 }
 
@@ -67,6 +109,7 @@ void disabled() {}
  * starts.
  */
 
+
 //--------------------------------------------------------------------------------------------------------------------------------------
 //SELECT AUTON HERE
 int atn = 11;
@@ -76,25 +119,7 @@ string autstr;
 
  
 void competition_initialize() {
-    if (atn == 0)      { autstr = "skills";       con.print(0, 0, "Aut 0: %s", autstr); }
-    else if (atn == 1) { autstr = "6+3 left";     con.print(0, 0, "Aut 1: %s", autstr); }
-    else if (atn == 2) { autstr = "6+3 right";    con.print(0, 0, "Aut 2: %s", autstr); }
-    else if (atn == 3) { autstr = "4 left";       con.print(0, 0, "Aut 3: %s", autstr); }
-    else if (atn == 4) { autstr = "4 right";      con.print(0, 0, "Aut 4: %s", autstr); }
-    else if (atn == 5) { autstr = "3+4 left";  con.print(0, 0, "Aut 5: %s", autstr); }
-    else if (atn == 6) { autstr = "3+4 right"; con.print(0, 0, "Aut 6: %s", autstr); }
-    else if (atn == 7) { autstr = "9 left";         con.print(0, 0, "Aut 7: %s", autstr); }
-    else if (atn == 8) { autstr = "9 right";         con.print(0, 0, "Aut 8: %s", autstr); }
-    else if (atn == 9) { autstr = "7 left";         con.print(0, 0, "Aut 9: %s", autstr); }
-    else if (atn == 10) { autstr = "7 right";         con.print(0, 0, "Aut 10: %s", autstr); }
-    else if (atn == 11) { autstr = "6 left";         con.print(0, 0, "Aut 11: %s", autstr); }
-    else if (atn == 12) { autstr = "6 right";         con.print(0, 0, "Aut 12: %s", autstr); }
-    else if (atn == 13) { autstr = "sawp";         con.print(0, 0, "Aut 13: %s", autstr); }
-    else if (atn == 14) { autstr = "misc";         con.print(0, 0, "Aut 14: %s", autstr); }
-    else if (atn == 15) { autstr = "misc";         con.print(0, 0, "Aut 15: %s", autstr); }
-    else if (atn == 16) { autstr = "misc";         con.print(0, 0, "Aut 16: %s", autstr); }
-    else if (atn == 17) { autstr = "misc";         con.print(0, 0, "Aut 17: %s", autstr); }
-    else if (atn == 18) { autstr = "misc";         con.print(0, 0, "Aut 18: %s", autstr); }
+  con.print(0, 0, "Aut %d: %s       ", atn, auton_name(atn));
 }
 
 
@@ -255,25 +280,7 @@ if (con.get_digital_new_press(E_CONTROLLER_DIGITAL_L2)) {
 
 
        // set autstr once per loop without printing
-    if      (atn == 0) autstr = "skills";
-    else if (atn == 1) autstr = "6+3 left";
-    else if (atn == 2) autstr = "6+3 right";
-    else if (atn == 3) autstr = "4 left";
-    else if (atn == 4) autstr = "4 right";
-    else if (atn == 5) autstr = "3+4 left";
-    else if (atn == 6) autstr = "3+4 right";
-    else if (atn == 7) autstr = "9 left";
-    else if (atn == 8) autstr = "9 right";
-    else if (atn == 9) autstr = "7 left";
-    else if (atn == 10) autstr = "7 right";
-    else if (atn == 11) autstr = "6 left";
-    else if (atn == 12) autstr = "6 right";
-    else if (atn == 13) autstr = "sawp";
-    else if (atn == 14) autstr = "misc";
-    else if (atn == 15) autstr = "misc";
-    else if (atn == 16) autstr = "misc";
-    else if (atn == 17) autstr = "misc";
-    else if (atn == 18) autstr = "misc";
+    autstr = auton_name(atn);
 
     double chasstempC = ((RF.get_temperature() + RB.get_temperature() + RM.get_temperature() + LF.get_temperature() + LB.get_temperature() + LM.get_temperature()) / 6);
     double intaketempc = intake.get_temperature();
