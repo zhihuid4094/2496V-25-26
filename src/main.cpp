@@ -90,7 +90,7 @@ void competition_initialize() {
     else if (atn == 12) { autstr = "6 right";         con.print(0, 0, "Aut 12: %s", autstr); }
     else if (atn == 13) { autstr = "sawp";         con.print(0, 0, "Aut 13: %s", autstr); }
     else if (atn == 14) { autstr = "6 loader";         con.print(0, 0, "Aut 14: %s", autstr); }
-    else if (atn == 15) { autstr = "misc";         con.print(0, 0, "Aut 15: %s", autstr); }
+    else if (atn == 15) { autstr = "6 loder lef";         con.print(0, 0, "Aut 15: %s", autstr); }
     else if (atn == 16) { autstr = "misc";         con.print(0, 0, "Aut 16: %s", autstr); }
     else if (atn == 17) { autstr = "misc";         con.print(0, 0, "Aut 17: %s", autstr); }
     else if (atn == 18) { autstr = "misc";         con.print(0, 0, "Aut 18: %s", autstr); }
