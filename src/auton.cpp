@@ -332,9 +332,9 @@ void autonomous() {
     lift.set_value(true);
     drivePID(620, 127, 1500, 10, 50, 200, 80, 200, -1, 0);
     scraper.set_value(true);
-    turnPID(90, 75, 1000, 1.6, 30, -3); 
+    turnPID(90, 75, 1000, 1.6, 30, 3); 
     scraper.set_value(false);
-    drivePID(800, 200, 1500, 10, 50, 350, 100, 200, -1, 0);
+    drivePID(850, 200, 1500, 10, 50, 350, 100, 200, -1, 0);
     turnPID(143, 75, 400, 1.6, 30, 0); 
     drivePIDW(-600, 127, 500, 440, -1, -1, -1, -1, 15, 50, 0, 599, 65, 0, -1, 0); 
     LF.move(-80);
@@ -346,7 +346,7 @@ void autonomous() {
     blocker.set_value(false);
     leverPID(750, 115, 600, 100, 10, 550, 50);
     turnPID(103, 75, 300, 1.6, 30, -3); 
-    drivePID(230, 100, 500, 10, 50, 350, 100, 200, -1, 0);
+    drivePID(180, 100, 500, 10, 50, 350, 100, 200, -1, 0);
     turnPID(143, 75, 500, 1.6, 30, 3); 
     descore.set_value(false);
     drivePID(-750, 127, 800, 10, 50, 350, 127, -200, -1, 0);
@@ -445,7 +445,7 @@ void autonomous() {
     drivePID(-1200, 127, 1000, 50, 50, 350, 20, 0, -1, 0);
     turnPID(-30, 75, 1000, 3, 10, 0); 
     Lever.move(0);
-    drivePID(750, 127, 800, 10, 50, 350, 20, 200, -1, 0);
+    drivePID(850, 127, 800, 10, 50, 350, 20, 200, -1, 0);
     turnPID(-50, 75, 10000, 1.6, 9999, 0); 
     intake.move(0);
 
@@ -765,7 +765,25 @@ void autonomous() {
 
 
   else if (atn == 14){
-    
+    intake.move(127);
+    lift.set_value(true);
+    drivePID(620, 127, 1500, 10, 50, 200, 80, 200, -1, 0);
+    scraper.set_value(true);
+    turnPID(90, 75, 1000, 1.6, 30, -3); 
+    scraper.set_value(false);
+    drivePID(850, 200, 1500, 10, 50, 350, 100, 200, -1, 0);
+    turnPID(143, 75, 400, 1.6, 30, 2); 
+    scraper.set_value(true);
+    drivePIDW(1350, 60, 1900, 600, -1, -1, -1, -1, 15, 50, 0, 675, 30, 0, -1, 0);
+    drivePIDW(-600, 127, 500, 440, -1, -1, -1, -1, 15, 50, 0, 599, 65, 0, -1, 0); 
+    LF.move(-80);
+    LM.move(-80);
+    LB.move(-80);
+    RF.move(-80);
+    RM.move(-80);
+    RB.move(-80);
+    blocker.set_value(false);
+    leverPID(750, 115, 600, 100, 10, 550, 50);
   }
 
 
