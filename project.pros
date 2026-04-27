@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "sawp",
+    "project_name": "4 ball (left)",
     "target": "v5",
     "templates": {
       "kernel": {
